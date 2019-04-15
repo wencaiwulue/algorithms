@@ -7,7 +7,7 @@ class TaskPortion implements Runnable {
     private Random random = new Random(47);
     private CountDownLatch countDownLatch;
 
-    public TaskPortion(CountDownLatch countDownLatch) {
+    TaskPortion(CountDownLatch countDownLatch) {
         this.countDownLatch = countDownLatch;
     }
 
@@ -26,7 +26,7 @@ class WaitingTask implements Runnable {
 
     private CountDownLatch countDownLatch;
 
-    public WaitingTask(CountDownLatch countDownLatch) {
+    WaitingTask(CountDownLatch countDownLatch) {
         this.countDownLatch = countDownLatch;
     }
 
@@ -40,7 +40,7 @@ class WaitingTask implements Runnable {
 }
 
 public class CountDownLatchTest {
-    static final int SIZE = 100;
+    private static final int SIZE = 100;
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
