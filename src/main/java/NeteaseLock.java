@@ -1,4 +1,3 @@
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -68,13 +67,17 @@ public class NeteaseLock implements Lock {
 
     public static void main(String[] args) throws InterruptedException {
         O o = new O();
-        CountDownLatch countDown = new CountDownLatch(10000);
-        for (int i = 0; i < 10000; i++) {
+        int round = 20000;
+        CountDownLatch countDown = new CountDownLatch(round);
+        for (int i = 0; i < round; i++) {
             new Thread(() -> {
-                for (int j = 0; j < 2; j++) {
-                    o.add();
+                try {
+                    for (int j = 0; j < 1; j++) {
+                        o.add();
+                    }
+                } finally {
+                    countDown.countDown();
                 }
-                countDown.countDown();
             }).start();
         }
         countDown.await();

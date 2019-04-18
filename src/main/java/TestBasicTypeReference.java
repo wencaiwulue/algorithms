@@ -57,6 +57,11 @@ public class TestBasicTypeReference {
 
         Optional.ofNullable(null).orElseGet(() -> new Entity("", 1));
 
+        List<Entity> entityList = new ArrayList<>(Arrays.asList(new Entity("l", 0), new Entity("Z", 1)));
+        List<Entity> entityList0 = entityList;
+        entityList.add(new Entity("3", 3));
+        System.out.println(entityList0.size());
+
 
     }
 

@@ -17,8 +17,9 @@ public class Test {
         map.put("login_user_id", "12861553");
         map.put("session_id", "15535053828e85530dbac2ce691c1641");
         map.put("user_interest", "14");
-        String parameters = Joiner.on("&").join(map.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).collect(Collectors.toList()));
+        String parameters = Joiner.on("&").appendTo(new StringBuilder("?"), map.entrySet()).toString();
 
+        System.out.println(Joiner.on(",").join(map.entrySet()));
         System.out.println(parameters);
 
         System.out.println(map.entrySet());
