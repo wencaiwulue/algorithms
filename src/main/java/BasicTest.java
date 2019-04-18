@@ -1,3 +1,5 @@
+import org.springframework.web.reactive.socket.WebSocketHandler;
+
 public class BasicTest {
     public static int x = 1;
     public BasicTest(){
@@ -20,5 +22,10 @@ public class BasicTest {
         t2.setX(4);
         System.out.println(t1.getX());
         System.out.println(t2.getX());
+
+        Integer i = null;
+        System.out.println("asdf"+i);
+
+        WebSocketHandler webSocketHandler;
     }
 }
