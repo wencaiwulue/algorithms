@@ -14,6 +14,7 @@ class TaskPortion implements Runnable {
     public void run() {
         try {
             Thread.sleep(1000);
+            System.out.println("ok, coming in");
             countDownLatch.countDown();
 
         } catch (InterruptedException e) {
@@ -32,6 +33,7 @@ class WaitingTask implements Runnable {
 
     public void run() {
         try {
+            System.out.println("i am waiting...");
             countDownLatch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -40,7 +42,7 @@ class WaitingTask implements Runnable {
 }
 
 public class CountDownLatchTest {
-    private static final int SIZE = 100;
+    private static final int SIZE = 20;
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
