@@ -1,3 +1,5 @@
+package multiple_thread;
+
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
