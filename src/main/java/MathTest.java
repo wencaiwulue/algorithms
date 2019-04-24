@@ -1,5 +1,6 @@
 import java.util.concurrent.TimeUnit;
 
+
 public class MathTest {
     @SuppressWarnings("all")
     public static void test() {

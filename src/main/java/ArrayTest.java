@@ -12,23 +12,21 @@ public class ArrayTest {
         List<String> stringList = Lists.newArrayList("a", "b", "c", "d", "e");
         Iterator<String> iterator = stringList.iterator();
         int size = stringList.size();
-        for (int i = size-1; i >=0; i--) {
-            if ("e".equals(stringList.get(i))){
-                stringList.remove(i);
-            }
-//            System.out.println(stringList.size());
-//            System.out.println(i);
-//            System.out.println(stringList.get(i));
-        }
-        System.out.println("&&&&&&");
-        System.out.println(stringList.size());
-        System.out.println(stringList);
-//        while (iterator.hasNext()){
-//            String str = iterator.next();
-//            if ("c".equals(str)){
-//                stringList.remove(str);
+//        for (int i = size-1; i >=0; i--) {
+//            if ("e".equals(stringList.get(i))){
+//                stringList.remove(i);
 //            }
 //        }
+//        System.out.println("&&&&&&");
+//        System.out.println(stringList.size());
+//        System.out.println(stringList);
+        while (iterator.hasNext()){
+            String str = iterator.next();
+            if ("c".equals(str)){
+                iterator.remove();
+            }
+        }
+        System.out.println(stringList);
 
     }
 
