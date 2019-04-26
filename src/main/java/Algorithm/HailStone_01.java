@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class HailStone_01 {
     public static void main(String[] args) {
-        int stone = 42;
+        int stone = 60;
         System.out.println(hailStone(stone));
         hailStone0(stone);
     }
