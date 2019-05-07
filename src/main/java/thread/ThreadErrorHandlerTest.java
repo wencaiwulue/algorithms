@@ -1,4 +1,4 @@
-package Thread;
+package thread;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.jetbrains.annotations.NotNull;
