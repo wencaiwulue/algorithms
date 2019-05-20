@@ -11,6 +11,7 @@ public class ByteBufferTest {
 
         ByteBuffer byteBuffer = ByteBuffer.wrap("abc".getBytes());
         System.out.println(byteBuffer);
+        System.out.println(Charset.forName("UTF-8").encode("abc"));
 
     }
 }
