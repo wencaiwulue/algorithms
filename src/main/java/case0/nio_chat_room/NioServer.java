@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class NioServer {
+
     public static void main(String[] args) throws Throwable {
         new NioServer().start();
     }
@@ -28,45 +29,23 @@ public class NioServer {
             if (select == 0) {
                 return;
             }
-            if (select > 0) {
-                // 第六步：调用selectKeys方法，获取到事件
-                Set<SelectionKey> selectionKeys = selector.selectedKeys();
-                Iterator<SelectionKey> iterator = selectionKeys.iterator();
-                while (iterator.hasNext()) {
-                    SelectionKey selectionKey = iterator.next();
-                    iterator.remove();
-                    // 第七步：调用业务逻辑handler，处理业务
-                    SelectableChannel channel1 = selectionKey.channel();
-                    if (selectionKey.isAcceptable()) {
-                        acceptHandler(selectionKey, selector);
-                    } else if (selectionKey.isConnectable()) {
-                        acceptHandler((ServerSocketChannel) channel1, selector);
-                    } else if (selectionKey.isReadable()) {
-                        readHandler((SocketChannel) channel1, selector);
-                    } else if (selectionKey.isWritable()) {
-                        writeHandler((SocketChannel) channel1, selector, "sorry");
-                    }
-
+            // 第六步：调用selectKeys方法，获取到事件
+            Set<SelectionKey> selectionKeys = selector.selectedKeys();
+            Iterator<SelectionKey> iterator = selectionKeys.iterator();
+            while (iterator.hasNext()) {
+                SelectionKey selectionKey = iterator.next();
+                iterator.remove();
+                // 第七步：调用业务逻辑handler，处理业务
+                SelectableChannel channel1 = selectionKey.channel();
+                if (selectionKey.isAcceptable()) {
+                    acceptHandler(selectionKey, selector);
+                } else if (selectionKey.isConnectable()) {
+                    acceptHandler((ServerSocketChannel) channel1, selector);
+                } else if (selectionKey.isReadable()) {
+                    readHandler((SocketChannel) channel1, selector);
+                } else if (selectionKey.isWritable()) {
+                    writeHandler((SocketChannel) channel1, selector, "sorry");
                 }
-//                for (SelectionKey selectionKey : selectionKeys) {
-//
-//                    // 第七步：调用业务逻辑handler，处理业务
-//                    SelectableChannel channel1 = selectionKey.channel();
-//                    if (selectionKey.isAcceptable()) {
-//                        acceptHandler((ServerSocketChannel) channel1, selector);
-//                    } else if (selectionKey.isConnectable()) {
-//                        acceptHandler((ServerSocketChannel) channel1, selector);
-//                    } else if (selectionKey.isReadable()) {
-//                        readHandler((SocketChannel) channel1, selector);
-//                    } else if (selectionKey.isWritable()) {
-//                        writeHandler((SocketChannel) channel1, "sorry");
-//                    }
-//
-//
-//                    // 第八步：决定不要不要注册到selector上，即重复第三步
-////                    channel1.configureBlocking(false);
-////                    channel1.register(selector, SelectionKey.OP_CONNECT);
-//                }
             }
         }
     }
