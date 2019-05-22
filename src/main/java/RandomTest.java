@@ -10,10 +10,7 @@ public class RandomTest {
     public static void main(String[] args) {
         int[][] b = {{11, 22, 33, 44}, {1, 2, 3, 4}};
 
-        int a1 = 0;
-        int a2 = 0;
-        int a3 = 0;
-        int a4 = 0;
+        int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
         for (int i = 0; i < 100; i++) {
             int id = getWexinIdByWeight(b);
             if (id == 11) {
@@ -22,14 +19,11 @@ public class RandomTest {
                 a2++;
             } else if (id == 33) {
                 a3++;
-            } else {
+            } else if (id == 44) {
                 a4++;
             }
         }
-        System.out.println(a1);
-        System.out.println(a2);
-        System.out.println(a3);
-        System.out.println(a4);
+        System.out.printf("%s, %s, %s, %s, %s", a1, a2, a3, a4, a1 + a2 + a3 + a4);
 
     }
 
