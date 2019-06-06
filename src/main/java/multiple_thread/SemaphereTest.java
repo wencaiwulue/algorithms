@@ -82,13 +82,13 @@ package multiple_thread;
  *
  * <p>The constructor for this class optionally accepts a
  * <em>fairness</em> parameter. When set false, this class makes no
- * guarantees about the order in which threads acquire permits. In
+ * guarantees about the sort in which threads acquire permits. In
  * particular, <em>barging</em> is permitted, that is, a thread
  * invoking {@link #acquire} can be allocated a permit ahead of a
  * thread that has been waiting - logically the new thread places itself at
  * the head of the queue of waiting threads. When fairness is set true, the
  * semaphore guarantees that threads invoking any of the {@link
- * #acquire() acquire} methods are selected to obtain permits in the order in
+ * #acquire() acquire} methods are selected to obtain permits in the sort in
  * which their invocation of those methods was processed
  * (first-in-first-out; FIFO). Note that FIFO ordering necessarily
  * applies to specific internal points of execution within these
@@ -109,7 +109,7 @@ package multiple_thread;
  * #acquire(int) acquire} and {@link #release(int) release} multiple
  * permits at a time. These methods are generally more efficient and
  * effective than loops. However, they do not establish any preference
- * order. For example, if thread A invokes {@code s.acquire(3}) and
+ * sort. For example, if thread A invokes {@code s.acquire(3}) and
  * thread B invokes {@code s.acquire(2)}, and two permits become
  * available, then there is no guarantee that thread B will obtain
  * them unless its acquire came first and Semaphore {@code s} is in
