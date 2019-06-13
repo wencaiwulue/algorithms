@@ -74,6 +74,30 @@ public class BinTree {
         return list.iterator();
     }
 
+    public Iterator travLevel_test(BinNode node, BinNode node0) throws InterruptedException {
+        LinkedBlockingQueue<BinNode> queue = new LinkedBlockingQueue<>();
+        LinkedBlockingQueue<BinNode> queue0 = new LinkedBlockingQueue<>();
+        List<Object> list = new LinkedList<>();
+        queue.put(node);
+        queue0.put(node0);
+        while (!queue.isEmpty() && !queue0.isEmpty()) {
+            BinNode poll = queue.poll();
+            BinNode poll0 = queue0.poll();
+//            list.add(poll.data);
+//            list.add(poll0.data);
+            if (poll.data != poll0.data) {
+                System.out.println("not match");
+                return null;
+            }
+            if (poll.lChild != null) queue.put(poll.lChild);
+            if (poll.rChild != null) queue.put(poll.rChild);
+
+            if (poll0.lChild != null) queue0.put(poll0.lChild);
+            if (poll0.rChild != null) queue0.put(poll0.rChild);
+        }
+        return list.iterator();
+    }
+
     public Iterator travPre0() {
         List<Object> result = new ArrayList<>();
         Stack<BinNode> stack = new Stack<>();
@@ -99,12 +123,15 @@ public class BinTree {
         Stack<BinNode> stack = new Stack<>();
         List<Object> result = new ArrayList<>();
         stack.add(root);
+        while (!stack.isEmpty()) {
+
+        }
 
         return null;
     }
 
     public Iterator travIn0(Stack<BinNode> stack, BinNode node) {
-//        if (node.)
+//        while (node.lChild=null){}
         return null;
     }
 
@@ -143,6 +170,14 @@ public class BinTree {
         node.rChild.insertAsLc(13);
         node.rChild.insertAsRc(16);
 
+        BinNode node0 = new BinNode(10);
+        node0.insertAsLc(5);
+        node0.insertAsRc(15);
+        node0.lChild.insertAsLc(3);
+        node0.lChild.insertAsRc(6);
+        node0.rChild.insertAsLc(13);
+        node0.rChild.insertAsRc(16);
+
         BinTree tree = new BinTree(node);
         Iterator iterator = tree.travPre();
         System.out.println("this is pre: ");
@@ -173,6 +208,8 @@ public class BinTree {
         Iterator iterator2 = tree.travLevel();
         while (iterator2.hasNext())
             System.out.print(iterator2.next() + " ");
+
+        new BinTree(null).travLevel_test(node, node0);
 
     }
 
