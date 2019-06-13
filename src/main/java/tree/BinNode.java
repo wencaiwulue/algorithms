@@ -1,7 +1,5 @@
 package tree;
 
-import java.util.Iterator;
-
 /**
  * 二叉树结构
  *
@@ -16,32 +14,30 @@ public class BinNode<T> {
     public T data;
     public Integer n;
 
+    public BinNode(BinNode parent, T data) {
+        this.parent = parent;
+        this.data = data;
+    }
+
     public int size() {
-        return 0;
+        int s = 1;
+        if (this.lChild != null) {
+            s += this.lChild.size();
+        }
+        if (this.rChild != null) {
+            s += this.rChild.size();
+        }
+        return s;
     }
 
-    public BinNode insertAsLc() {
-        return null;
+    public BinNode insertAsLc(T data) {
+        this.lChild = new BinNode(this, data);
+        return this.lChild;
     }
 
-    public BinNode insertAsRc() {
-        return null;
-    }
-
-    public Iterator travLevel() {
-        return null;
-    }
-
-    public Iterator travPre() {
-        return null;
-    }
-
-    public Iterator travIn() {
-        return null;
-    }
-
-    public Iterator travPost() {
-        return null;
+    public BinNode insertAsRc(T data) {
+        this.rChild = new BinNode(this, data);
+        return this.rChild;
     }
 
 
