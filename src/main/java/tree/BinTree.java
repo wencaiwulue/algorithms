@@ -90,7 +90,7 @@ public class BinTree {
 
     public void travPre0(Stack<BinNode> stack, BinNode node) {
         // this is previous trave order is: root, left, right. when push into stack order is right left, poll order is left right
-        // this modle is just like merge from button to up
+        // this modle is just like merge from buttom to up
         if (node.rChild != null) stack.add(node.rChild);
         if (node.lChild != null) stack.add(node.lChild);
     }
@@ -117,7 +117,6 @@ public class BinTree {
     }
 
     public Iterator travPost0(Stack<BinNode> stack, BinNode node) {
-//        if (node.)
         return null;
     }
 
