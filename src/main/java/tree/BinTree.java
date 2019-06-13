@@ -12,6 +12,10 @@ public class BinTree<T> {
     public BinNode root;
     public Integer size;
 
+    public BinTree(BinNode root) {
+        this.root = root;
+    }
+
     public Iterator travLevel() throws InterruptedException {
         LinkedBlockingQueue<BinNode> queue = new LinkedBlockingQueue<>();
         List<T> list = new LinkedList<>();
@@ -19,8 +23,10 @@ public class BinTree<T> {
         while (!queue.isEmpty()) {
             BinNode poll = queue.poll();
             list.add((T) poll.data);
-            queue.put(poll.lChild);
-            queue.put(poll.rChild);
+            if (poll.lChild != null)
+                queue.put(poll.lChild);
+            if (poll.rChild != null)
+                queue.put(poll.rChild);
         }
         return list.iterator();
     }
@@ -76,7 +82,9 @@ public class BinTree<T> {
         while (!stack.isEmpty()) {
             BinNode pop = stack.pop();
             if (pop != null) {
+                // 1, visit this node
                 result.add(pop.data);
+                // 2, push this node's right node and left node into stack in order
                 travPre0(stack, pop);
             }
         }
@@ -85,10 +93,80 @@ public class BinTree<T> {
 
     public void travPre0(Stack<BinNode> stack, BinNode node) {
         if (node != null) {
-            // 当问node.data
+            // this is previous trave order is: root, left, right. when push into stack order is right left, poll order is left right
+            // this modle is just like merge from button to up
             if (node.rChild != null) stack.add(node.rChild);
             if (node.lChild != null) stack.add(node.lChild);
         }
+    }
+
+    public Iterator travIn0() {
+        Stack<BinNode> stack = new Stack<>();
+        stack.add(root);
+
+        return null;
+    }
+
+    public Iterator travIn0(Stack<BinNode> stack, BinNode node) {
+        stack.add(root);
+
+        return null;
+    }
+
+    /**
+     * find the leftest node and return this node
+     *
+     * @param node go along with this node
+     * @return return the leftest nonnull node
+     */
+    public BinNode goAlongLeft(BinNode node) {
+        if (node.lChild != null) {
+            goAlongLeft(node.lChild);
+        }
+        return node;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        BinNode node = new BinNode(10);
+        node.insertAsLc(5);
+        node.insertAsRc(15);
+        node.lChild.insertAsLc(3);
+        node.lChild.insertAsRc(6);
+
+        node.rChild.insertAsLc(13);
+        node.rChild.insertAsRc(16);
+
+        BinTree tree = new BinTree(node);
+        Iterator iterator = tree.travPre();
+        System.out.println("this is pre: ");
+        while (iterator.hasNext())
+            System.out.print(iterator.next() + " ");
+        System.out.println();
+
+
+        System.out.println("this is iteration pre:");
+        Iterator iterator3 = tree.travPre0();
+        while (iterator3.hasNext())
+            System.out.print(iterator3.next() + " ");
+        System.out.println();
+
+        System.out.println("this is in: ");
+        Iterator iterator0 = tree.travIn();
+        while (iterator0.hasNext())
+            System.out.print(iterator0.next() + " ");
+        System.out.println();
+
+        System.out.println("this is post: ");
+        Iterator iterator1 = tree.travPost();
+        while (iterator1.hasNext())
+            System.out.print(iterator1.next() + " ");
+        System.out.println();
+
+        System.out.println("this is level: ");
+        Iterator iterator2 = tree.travLevel();
+        while (iterator2.hasNext())
+            System.out.print(iterator2.next() + " ");
+
     }
 
 
