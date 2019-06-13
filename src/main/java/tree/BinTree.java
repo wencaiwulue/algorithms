@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @since 6/13/2019
  */
 @SuppressWarnings("all")
-public class BinTree<T> {
+public class BinTree {
     public BinNode root;
     public Integer size;
 
@@ -16,22 +16,7 @@ public class BinTree<T> {
         this.root = root;
     }
 
-    public Iterator travLevel() throws InterruptedException {
-        LinkedBlockingQueue<BinNode> queue = new LinkedBlockingQueue<>();
-        List<T> list = new LinkedList<>();
-        queue.put(root);
-        while (!queue.isEmpty()) {
-            BinNode poll = queue.poll();
-            list.add((T) poll.data);
-            if (poll.lChild != null)
-                queue.put(poll.lChild);
-            if (poll.rChild != null)
-                queue.put(poll.rChild);
-        }
-        return list.iterator();
-    }
-
-    // --------------------recursion----------------------------
+    // --------------------1, recursion----------------------------
     public Iterator travPre() {
         List<Object> result = new ArrayList<>();
         return travPre(result, root);
@@ -67,49 +52,72 @@ public class BinTree<T> {
 
     public Iterator travPost(List<Object> result, BinNode node) {
         if (node != null) {
-            travPost(result, node.rChild);
             travPost(result, node.lChild);
+            travPost(result, node.rChild);
             result.add(node.data);
         }
         return result.iterator();
     }
 
-    // -------------------iteration----------------------
+    // -------------------2, iteration----------------------
+
+    public Iterator travLevel() throws InterruptedException {
+        LinkedBlockingQueue<BinNode> queue = new LinkedBlockingQueue<>();
+        List<Object> list = new LinkedList<>();
+        queue.put(root);
+        while (!queue.isEmpty()) {
+            BinNode poll = queue.poll();
+            list.add(poll.data);
+            if (poll.lChild != null) queue.put(poll.lChild);
+            if (poll.rChild != null) queue.put(poll.rChild);
+        }
+        return list.iterator();
+    }
+
     public Iterator travPre0() {
         List<Object> result = new ArrayList<>();
         Stack<BinNode> stack = new Stack<>();
         stack.add(root);
         while (!stack.isEmpty()) {
             BinNode pop = stack.pop();
-            if (pop != null) {
-                // 1, visit this node
-                result.add(pop.data);
-                // 2, push this node's right node and left node into stack in order
-                travPre0(stack, pop);
-            }
+            // 1, visit this node
+            result.add(pop.data);
+            // 2, push this node's right node and left node into stack in order
+            travPre0(stack, pop);
         }
         return result.iterator();
     }
 
     public void travPre0(Stack<BinNode> stack, BinNode node) {
-        if (node != null) {
-            // this is previous trave order is: root, left, right. when push into stack order is right left, poll order is left right
-            // this modle is just like merge from button to up
-            if (node.rChild != null) stack.add(node.rChild);
-            if (node.lChild != null) stack.add(node.lChild);
-        }
+        // this is previous trave order is: root, left, right. when push into stack order is right left, poll order is left right
+        // this modle is just like merge from button to up
+        if (node.rChild != null) stack.add(node.rChild);
+        if (node.lChild != null) stack.add(node.lChild);
     }
 
     public Iterator travIn0() {
         Stack<BinNode> stack = new Stack<>();
+        List<Object> result = new ArrayList<>();
         stack.add(root);
 
         return null;
     }
 
     public Iterator travIn0(Stack<BinNode> stack, BinNode node) {
+//        if (node.)
+        return null;
+    }
+
+    public Iterator travPost0() {
+        Stack<BinNode> stack = new Stack<>();
+        List<Object> result = new ArrayList<>();
         stack.add(root);
 
+        return null;
+    }
+
+    public Iterator travPost0(Stack<BinNode> stack, BinNode node) {
+//        if (node.)
         return null;
     }
 
