@@ -9,7 +9,6 @@ import java.util.concurrent.Semaphore;
 public class PrintTest02 {
     public static void main(String[] args) {
         Semaphore semaphore = new Semaphore(8, false);
-        boolean t = true;
         new Thread(() -> {
             int[] a = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
             for (int i1 = 0; i1 < a.length; i1++) {

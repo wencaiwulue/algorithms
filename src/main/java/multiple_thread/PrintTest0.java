@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PrintTest0 {
     public static void main(String[] args) {
-        AtomicInteger atomicInteger = new AtomicInteger(1);
+        AtomicInteger atomicInteger = new AtomicInteger(0);
 
         new Thread(() -> {
             int[] a = new int[]{1, 2, 3, 4, 5};

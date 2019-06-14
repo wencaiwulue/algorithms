@@ -2,9 +2,9 @@ package multiple_thread;
 
 public class PrintTest {
     public static void main(String[] args) {
-        String lock_str = "";
-        new Thread(new Print(new Object[]{'a', 'b', 'c', 'd', 'e'}, lock_str)).start();
-        new Thread(new Print(new Object[]{1, 2, 3, 4, 5}, lock_str)).start();
+        String lockStr = "";
+        new Thread(new Print(new Object[]{'a', 'b', 'c', 'd', 'e'}, lockStr)).start();
+        new Thread(new Print(new Object[]{1, 2, 3, 4, 5}, lockStr)).start();
     }
 
     public static class Print implements Runnable {
@@ -21,8 +21,8 @@ public class PrintTest {
             for (Object o : a) {
                 synchronized (lock.intern()) {
                     try {
-                        lock.notify();
                         System.out.println(o);
+                        lock.notify();
                         lock.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
