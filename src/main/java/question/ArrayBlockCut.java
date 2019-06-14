@@ -12,6 +12,7 @@ import java.util.List;
  * <p>
  * 得到的新数组为： 1，2，4，5，3，6，7
  */
+@SuppressWarnings("all")
 public class ArrayBlockCut {
 
     public static void main(String[] args) {
