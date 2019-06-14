@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import java.math.BigDecimal;
 import java.util.*;
 
+@SuppressWarnings("all")
 public class TestBasicTypeReference {
 
     public static void main(String[] args) {
@@ -71,6 +72,7 @@ public class TestBasicTypeReference {
     }
 }
 
+@SuppressWarnings("all")
 class Entity {
     private String name;
     private Integer id;

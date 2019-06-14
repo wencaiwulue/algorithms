@@ -5,6 +5,7 @@ import java.util.List;
  * @author fengcaiwen
  * @since 6/5/2019
  */
+@SuppressWarnings("all")
 public class CloneAndDeepCloneTest {
     public static void main(String[] args) {
         List<User> users = Collections.singletonList(new User(1, "a", new User(3, "c")));
