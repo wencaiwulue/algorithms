@@ -13,6 +13,7 @@ import java.util.Set;
  * @author fengcaiwen
  * @since 5/20/2019
  */
+@SuppressWarnings("all")
 public class NioClientReadHandler implements Runnable {
 
     private Selector selector;

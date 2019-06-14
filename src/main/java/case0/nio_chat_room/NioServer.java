@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.Set;
 
+@SuppressWarnings("all")
 public class NioServer {
 
     public static void main(String[] args) throws Throwable {
