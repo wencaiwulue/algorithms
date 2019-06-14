@@ -10,11 +10,13 @@ public class PrintTest02 {
     public static void main(String[] args) {
         Semaphore semaphore = new Semaphore(8, false);
         new Thread(() -> {
-            int[] a = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+            int[] a = new int[]{1, 2, 3, 4, 5};
+            int i = 0;
             for (int i1 = 0; i1 < a.length; i1++) {
+                i += 2;
                 while (semaphore.availablePermits() == i1) {
                     try {
-                        semaphore.acquire(i1);
+                        semaphore.acquire(i);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -26,12 +28,14 @@ public class PrintTest02 {
         }).start();
 
         new Thread(() -> {
-            char[] a = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+            char[] a = new char[]{'a', 'b', 'c', 'd', 'e'};
             int length = a.length;
+            int i = 1;
             for (int c = 0; c < a.length; c++) {
+                i += 2;
                 try {
-                    if (semaphore.availablePermits() == length){
-                        semaphore.acquire(length--);
+                    if (semaphore.availablePermits() == length) {
+                        semaphore.acquire(i);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -40,11 +44,6 @@ public class PrintTest02 {
                 semaphore.release(length);
             }
         }).start();
-//        Thread thread = new Thread(new PrintA(semaphore));
-//        Thread thread1 = new Thread(new PrintB(semaphore));
-//        thread.start();
-//        thread1.start();
-//        Consumer consumer = ->{}
     }
 
 }
