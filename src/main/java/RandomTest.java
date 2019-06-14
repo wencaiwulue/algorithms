@@ -23,7 +23,8 @@ public class RandomTest {
                 a4++;
             }
         }
-        System.out.printf("%s, %s, %s, %s, %s", a1, a2, a3, a4, a1 + a2 + a3 + a4);
+        System.out.printf("weight: %d  %d  %d  %d \n", b[1][0], b[1][1], b[1][2], b[1][3]);
+        System.out.printf("times:  %s %s %s %s \ntotal times: %s", a1, a2, a3, a4, a1 + a2 + a3 + a4);
 
     }
 
@@ -31,14 +32,11 @@ public class RandomTest {
     public static int getWexinIdByWeight(int[][] source) {
         int totalWeight = 0;
         int length = source[0].length;
-        for (int i = 0; i < length; i++) {
-            totalWeight += source[1][i];
-        }
-        // 1，构建一个key为range，value为index的map
         RangeMap<Integer, Integer> map = TreeRangeMap.create();
         int from = 0, step = 0;
         for (int i = 0; i < length; i++) {
             step = source[1][i];
+            totalWeight += step;
             map.put(Range.closedOpen(from, from + step), source[0][i]);
             from += step;
         }
