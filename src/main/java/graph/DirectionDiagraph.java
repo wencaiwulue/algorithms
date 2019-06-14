@@ -6,6 +6,7 @@ import java.util.Stack;
  * @author fengcaiwen
  * @since 6/14/2019
  */
+
 public class DirectionDiagraph implements IGraphOperation {
 
     /**
@@ -13,11 +14,23 @@ public class DirectionDiagraph implements IGraphOperation {
      */
     int s;
     /**
-     * vertex
+     * vertex number
      */
     int v;
+
+    /**
+     * edge number
+     */
+    int e;
+    /**
+     * the last vertex to arrived index i
+     */
     Stack<Edge>[] vertex;
-    Boolean[] connected;
+
+    /**
+     * marked or not
+     */
+    Boolean[] marked;
 
     /**
      * initial a direction diagraph with graph and start vertex

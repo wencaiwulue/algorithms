@@ -4,18 +4,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * @author fengcaiwen
  * @since 6/14/2019
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("all")
 public class Graph {
     /**
      * only have one variable, record every vertex, like hashmap solve conflict use chain
      */
+    int v;
+    int e;
     public Vector[] vertex;
 
     public Graph() {
@@ -23,20 +26,23 @@ public class Graph {
 
     public Graph(Path filePath) throws IOException {
 
-        Files.lines(filePath).forEachOrdered(e -> {
-            String[] s = e.split(" ");
-            if (s.length == 1) {
-                this.vertex = new Vector[Integer.valueOf(s[0])];
-                for (int i = 0; i < 10; i++) {
-                    this.vertex[i] = new Vector();
-                }
-            } else {
+        List<String> lines = Files.lines(filePath).map(String::valueOf).collect(Collectors.toList());
+
+        this.v = Integer.valueOf(lines.get(0));
+        this.e = Integer.valueOf(lines.get(1));
+
+        this.vertex = new Vector[this.v];
+        for (int j = 0; j < 10; j++)
+            this.vertex[j] = new Vector();
+
+        lines.stream().skip(2).forEach(e -> {
+            {
+                String[] s = e.split(" ");
                 int from = Integer.valueOf(s[0]);
                 int to = Integer.valueOf(s[1]);
                 assert this.vertex != null;
                 this.vertex[from].add(to);
             }
-
         });
     }
 
