@@ -18,4 +18,10 @@ public class Edge {
         this.to = to;
         this.weight = weight;
     }
+
+    public Edge(int from, int to) {
+        this.from = from;
+        this.to = to;
+        this.weight = Integer.MAX_VALUE;
+    }
 }

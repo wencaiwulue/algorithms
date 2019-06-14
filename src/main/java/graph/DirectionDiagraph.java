@@ -11,13 +11,26 @@ public class DirectionDiagraph implements IGraphOperation {
     /**
      * element i means vertex i, vertex[i] is all vertex i can arrived
      */
+    int s;
+    /**
+     * vertex
+     */
+    int v;
     Stack<Edge>[] vertex;
-    Boolean[] marked;
+    Boolean[] connected;
 
     /**
      * initial a direction diagraph with graph and start vertex
      */
     public DirectionDiagraph(Graph graph, int s) {
+        this.s = s;
+        this.v = graph.vertex.length;
+        // initial array
+        this.vertex = new Stack[v];
+        for (int j = 0; j < v; j++) {
+            this.vertex[j] = new Stack<>();
+        }
+
 
     }
 

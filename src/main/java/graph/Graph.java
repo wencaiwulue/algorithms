@@ -16,7 +16,7 @@ public class Graph {
     /**
      * only have one variable, record every vertex, like hashmap solve conflict use chain
      */
-    private Vector[] vertex;
+    public Vector[] vertex;
 
     public Graph() {
     }
