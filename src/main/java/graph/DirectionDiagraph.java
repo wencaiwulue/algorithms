@@ -50,5 +50,12 @@ public class DirectionDiagraph {
         return -1;
     }
 
+    /**
+     * minimum generate tree
+     */
+    public Iterable minimumGenerateTree() {
+        return null;
+    }
+
 
 }
