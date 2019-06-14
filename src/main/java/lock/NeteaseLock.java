@@ -58,31 +58,32 @@ public class NeteaseLock implements Lock {
         Lock lock = new NeteaseLock();
 
         void add() {
-            lock.lock();
+//            lock.lock();
             try {
                 i++;
             } finally {
-                lock.unlock();
+//                lock.unlock();
             }
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
         O o = new O();
-        int round = 20000;
-        CountDownLatch countDown = new CountDownLatch(round);
+        int round = 2000;
+//        CountDownLatch countDown = new CountDownLatch(round);
         for (int i = 0; i < round; i++) {
             new Thread(() -> {
                 try {
-                    for (int j = 0; j < 1; j++) {
+                    for (int j = 0; j < 10; j++) {
                         o.add();
                     }
                 } finally {
-                    countDown.countDown();
+//                    countDown.countDown();
                 }
             }).start();
         }
-        countDown.await();
+//        countDown.await();
+        Thread.sleep(5000);
         System.out.println(o.i);
     }
 }
