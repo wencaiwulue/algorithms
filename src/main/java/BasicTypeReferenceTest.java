@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @SuppressWarnings("all")
-public class TestBasicTypeReference {
+public class BasicTypeReferenceTest {
 
     public static void main(String[] args) {
         int a = 1;

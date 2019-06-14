@@ -4,7 +4,7 @@ package sort;
  * @author fengcaiwen
  * @since 6/6/2019
  */
-public class BaseBucketSort {
+public class BasicBucketSort {
 
     public static void main(String[] args) {
 
