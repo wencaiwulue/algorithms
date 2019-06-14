@@ -1,6 +1,8 @@
 package sort;
 
 /**
+ * not base on compare
+ *
  * @author fengcaiwen
  * @since 6/6/2019
  */
