@@ -18,6 +18,7 @@ public class DirectionDiagraph implements IGraphOperation {
      * initial a direction diagraph with graph and start vertex
      */
     public DirectionDiagraph(Graph graph, int s) {
+
     }
 
 
