@@ -36,13 +36,11 @@ public class Graph {
             this.vertex[j] = new Vector();
 
         lines.stream().skip(2).forEach(e -> {
-            {
-                String[] s = e.split(" ");
-                int from = Integer.valueOf(s[0]);
-                int to = Integer.valueOf(s[1]);
-                assert this.vertex != null;
-                this.vertex[from].add(to);
-            }
+            String[] i = e.split(" ");
+            int from = Integer.valueOf(i[0]);
+            int to = Integer.valueOf(i[1]);
+            assert this.vertex != null;
+            this.vertex[from].add(new Edge(from, to));
         });
     }
 

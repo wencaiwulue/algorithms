@@ -24,4 +24,13 @@ public class Edge {
         this.to = to;
         this.weight = Integer.MAX_VALUE;
     }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from +
+                ", to=" + to +
+                ", weight=" + weight +
+                '}';
+    }
 }
