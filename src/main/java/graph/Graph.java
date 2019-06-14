@@ -23,8 +23,7 @@ public class Graph {
 
     public Graph(Path filePath) throws IOException {
 
-        Stream<String> lines = Files.lines(filePath);
-        lines.forEachOrdered(e -> {
+        Files.lines(filePath).forEachOrdered(e -> {
             String[] s = e.split(" ");
             if (s.length == 1) {
                 this.vertex = new Vector[Integer.valueOf(s[0])];
