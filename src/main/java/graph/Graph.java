@@ -49,7 +49,7 @@ public class Graph {
     }
 
     public static void main(String[] args) throws IOException {
-        String s = "C:\\Users\\xiaolu\\Desktop\\New Text Document.txt";
+        String s = "New Text Document.txt";
         Graph f = new Graph(Path.of(s));
         System.out.println(f);
     }
