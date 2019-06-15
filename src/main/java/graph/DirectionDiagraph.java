@@ -7,14 +7,15 @@ import java.util.Stack;
  * @since 6/14/2019
  */
 
+@SuppressWarnings("all")
 public class DirectionDiagraph implements IGraphOperation {
 
     /**
-     * element i means vertex i, vertex[i] is all vertex i can arrived
+     * element i means adj i, adj[i] is all adj i can arrived
      */
     int s;
     /**
-     * vertex number
+     * adj number
      */
     int v;
 
@@ -23,7 +24,7 @@ public class DirectionDiagraph implements IGraphOperation {
      */
     int e;
     /**
-     * the last vertex to arrived index i
+     * the last adj to arrived index i
      */
     Stack<Edge>[] vertex;
 
@@ -33,11 +34,11 @@ public class DirectionDiagraph implements IGraphOperation {
     Boolean[] marked;
 
     /**
-     * initial a direction diagraph with graph and start vertex
+     * initial a direction diagraph with graph and start adj
      */
-    public DirectionDiagraph(Graph graph, int s) {
+    public DirectionDiagraph(Graph g, int s) {
         this.s = s;
-        this.v = graph.vertex.length;
+        this.v = g.V();
         // initial array
         this.vertex = new Stack[v];
         for (int j = 0; j < v; j++) {

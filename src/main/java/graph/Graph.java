@@ -3,9 +3,7 @@ package graph;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -14,12 +12,19 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("all")
 public class Graph {
+
     /**
-     * only have one variable, record every vertex, like hashmap solve conflict use chain
+     * adj number
      */
-    int v;
-    int e;
-    public Vector[] vertex;
+    private int v;
+    /**
+     * edge number
+     */
+    private int e;
+    /**
+     * record every adj, like hashmap solve conflict use chain
+     */
+    private Stack<Integer>[] adj;
 
     public Graph() {
     }
@@ -31,28 +36,53 @@ public class Graph {
         this.v = Integer.valueOf(lines.get(0));
         this.e = Integer.valueOf(lines.get(1));
 
-        this.vertex = new Vector[this.v];
-        for (int j = 0; j < 10; j++)
-            this.vertex[j] = new Vector();
+        this.adj = new Stack[this.v];
+        for (int j = 0; j < this.v; j++)
+            this.adj[j] = new Stack();
 
         lines.stream().skip(2).forEach(e -> {
             String[] i = e.split(" ");
             int from = Integer.valueOf(i[0]);
             int to = Integer.valueOf(i[1]);
-            assert this.vertex != null;
-            this.vertex[from].add(new Edge(from, to));
+            // this is undirected graph
+            this.adj[from].push(to);
+            this.adj[to].push(from);
         });
+    }
+
+    public int E() {
+        return e;
+    }
+
+    public int V() {
+        return v;
+    }
+
+    void addEdge(int v, int w) {
+        this.adj[v].push(w);
+    }
+
+    Stack<Integer> adj(int v) {
+        return this.adj[v];
     }
 
     @Override
     public String toString() {
-        return "Graph{" +
-                "vertex=" + Arrays.toString(vertex) +
-                '}';
+        String s = v + " vertices, " + e + " edges\n";
+        for (int i = 0; i < v; i++) {
+            s += i + ": ";
+//            for (int w : this.adj(i)) {
+//                s += w + " ";
+//            }
+            while (!this.adj(i).isEmpty())
+                s += adj(i).pop() + " ";
+            s += "\n";
+        }
+        return s;
     }
 
     public static void main(String[] args) throws IOException {
-        String s = "C:\\Users\\xiaolu\\Desktop\\New Text Document.txt";
+        String s = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\tinyG.txt";
         Graph f = new Graph(Path.of(s));
         System.out.println(f);
     }
