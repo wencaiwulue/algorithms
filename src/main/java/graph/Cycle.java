@@ -12,7 +12,7 @@ public class Cycle {
     private boolean[] marked;
     private boolean hasCycle;
 
-    public Cycle(Graph g) {
+    private Cycle(Graph g) {
         marked = new boolean[g.V()];
         hasCycle = false;
 
@@ -26,7 +26,7 @@ public class Cycle {
      * @param u is a pointer, always point to the last node which from u to v
      * @param v though the u arrived node
      */
-    private void dfs(Graph g, int v, int u) {
+    public void dfs(Graph g, int v, int u) {
         marked[v] = true;
         for (int w : g.adj(v)) {
             if (!marked[w]) {
@@ -37,7 +37,7 @@ public class Cycle {
         }
     }
 
-    public boolean hasCycle() {
+    private boolean hasCycle() {
         return hasCycle;
     }
 
