@@ -8,41 +8,40 @@ import java.util.Stack;
  * @author fengcaiwen
  * @since 6/15/2019 15:09
  */
-@SuppressWarnings("all")
 public class DepthFirstPaths {
     /**
      * visited it or not
      */
-    boolean[] marked;
+    private boolean[] marked;
     /**
      * index i, i mean vertex i, value means the last vertex comes to i
      */
-    int[] edgeTo;
+    private int[] edgeTo;
     /**
      * start vertex
      */
-    final int s;
+    private final int s;
 
     /**
      * find all path which start point is s
      */
-    public DepthFirstPaths(Graph g, int s) {
+    private DepthFirstPaths(Graph g, int s) {
         this.marked = new boolean[g.V()];
         this.edgeTo = new int[g.V()];
         this.s = s;
         dfs(g, this.s);
     }
 
-    public void dfs(Graph g, int v) {
+    private void dfs(Graph g, int v) {
         marked[v] = true;
 //        for (Integer w : g.adj(v)) {
 //            if (marked[w]) continue;
 //            edgeTo[w] = v;
 //            bfs(g, w);
 //        }
-        while (!g.adj(v).isEmpty()){
+        while (!g.adj(v).isEmpty()) {
             int w = g.adj(v).pop();
-            if (!marked[w]){
+            if (!marked[w]) {
                 edgeTo[w] = v;
                 dfs(g, w);
             }
@@ -53,14 +52,14 @@ public class DepthFirstPaths {
     /**
      * exist a path from s to v or not
      */
-    boolean hasPathTo(int v) {
+    private boolean hasPathTo(int v) {
         return marked[v];
     }
 
     /**
      * return path,s --> v, if not exist , return null
      */
-    Iterable<Integer> pathTo(int v) {
+    private Iterable<Integer> pathTo(int v) {
         if (!hasPathTo(v)) return null;
         Stack<Integer> path = new Stack<>();
         while (v != this.s) {
@@ -76,6 +75,7 @@ public class DepthFirstPaths {
         Graph g = new Graph(Path.of(s));
         DepthFirstPaths paths = new DepthFirstPaths(g, 0);
         Iterable<Integer> integers = paths.pathTo(5);
-        integers.forEach(e -> System.out.println(e));
+        assert integers != null;
+        integers.forEach(System.out::println);
     }
 }

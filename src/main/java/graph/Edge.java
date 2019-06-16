@@ -4,11 +4,11 @@ package graph;
  * @author fengcaiwen
  * @since 6/14/2019
  */
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 public class Edge {
-    int from;
-    int to;
-    int weight;
+    private int from;
+    private int to;
+    private int weight;
 
     public Edge() {
     }

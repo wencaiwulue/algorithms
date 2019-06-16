@@ -7,25 +7,25 @@ import java.nio.file.Path;
  * @author fengcaiwen
  * @since 6/15/2019 16:37
  */
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 public class CC {
 
     /**
      * visited it or not
      */
-    boolean[] marked;
+    private boolean[] marked;
 
     /**
      * the flag of cc
      */
-    int[] id;
+    private int[] id;
 
     /**
      * how much flag
      */
-    int count;
+    private int count;
 
-    public CC(Graph g) {
+    private CC(Graph g) {
         id = new int[g.V()];
         marked = new boolean[g.V()];
         for (int v = 0; v < g.V(); v++) {
@@ -37,7 +37,7 @@ public class CC {
         }
     }
 
-    public void dfs(Graph g, int v) {
+    private void dfs(Graph g, int v) {
         marked[v] = true;
         id[v] = count;
         for (int w : g.adj(v)) {
@@ -51,7 +51,7 @@ public class CC {
     /**
      * vertex v and w is connected or not
      */
-    boolean connected(int v, int w) {
+    private boolean connected(int v, int w) {
         return id[v] == id[w];
     }
 

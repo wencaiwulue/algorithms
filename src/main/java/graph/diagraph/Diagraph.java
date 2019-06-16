@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author fengcaiwen
  * @since 6/16/2019 16:26
  */
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 public class Diagraph {
 
     /**
@@ -27,11 +27,12 @@ public class Diagraph {
      */
     private Stack<Integer>[] adj;
 
-    public Diagraph(int v) {
+    private Diagraph(int v) {
         this.v = v;
     }
 
-    public Diagraph(Path filePath) throws IOException {
+    @SuppressWarnings("unchecked")
+    Diagraph(Path filePath) throws IOException {
 
         List<String> lines = Files.lines(filePath).map(String::valueOf).collect(Collectors.toList());
 
@@ -60,7 +61,7 @@ public class Diagraph {
         return v;
     }
 
-    void addEdge(int v, int w) {
+    private void addEdge(int v, int w) {
         this.adj[v].push(w);
         e++;
     }
@@ -71,18 +72,18 @@ public class Diagraph {
 
     @Override
     public String toString() {
-        String s = v + " vertices, " + e + " edges\n";
+        StringBuilder s = new StringBuilder(v + " vertices, " + e + " edges\n");
         for (int i = 0; i < v; i++) {
-            s += i + ": ";
+            s.append(i).append(": ");
 //            for (int w : this.adj(i)) {
 //                s += w + " ";
 //            }
             while (!this.adj(i).isEmpty()) {
-                s += adj(i).pop() + " ";
+                s.append(adj(i).pop()).append(" ");
             }
-            s += "\n";
+            s.append("\n");
         }
-        return s;
+        return s.toString();
     }
 
     public Diagraph reverse() {

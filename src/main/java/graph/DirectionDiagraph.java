@@ -6,36 +6,35 @@ import java.util.Stack;
  * @author fengcaiwen
  * @since 6/14/2019
  */
-
-@SuppressWarnings("all")
 public class DirectionDiagraph implements IGraphOperation {
 
     /**
      * element i means adj i, adj[i] is all adj i can arrived
      */
-    int s;
+    private int s;
     /**
      * adj number
      */
-    int v;
+    private int v;
 
     /**
      * edge number
      */
-    int e;
+    private int e;
     /**
      * the last adj to arrived index i
      */
-    Stack<Edge>[] vertex;
+    private Stack<Edge>[] vertex;
 
     /**
      * marked or not
      */
-    Boolean[] marked;
+    private boolean[] marked;
 
     /**
      * initial a direction diagraph with graph and start adj
      */
+    @SuppressWarnings("unchecked")
     public DirectionDiagraph(Graph g, int s) {
         this.s = s;
         this.v = g.V();

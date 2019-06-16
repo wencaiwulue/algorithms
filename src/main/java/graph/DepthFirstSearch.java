@@ -9,19 +9,19 @@ import java.util.List;
  * @author fengcaiwen
  * @since 2019年6月15日
  */
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 public class DepthFirstSearch {
     private boolean[] marked;
     private int count;
 
-    public DepthFirstSearch(Graph g) {
+    private DepthFirstSearch(Graph g) {
         this.marked = new boolean[g.V()];
     }
 
     /**
      * find all adj which connected to s
      */
-    public Iterable<Integer> search(Graph g, int s) {
+    private Iterable<Integer> search(Graph g, int s) {
         //1, find all adj from s, and foreach
         //2, bfs and push into stack or enqueue
         List<Integer> result = new ArrayList<>();
@@ -29,7 +29,7 @@ public class DepthFirstSearch {
         return result;
     }
 
-    public void dfs(Graph g, int s, List<Integer> reuslt) {
+    private void dfs(Graph g, int s, List<Integer> reuslt) {
         marked[s] = true;
         count++;
         for (Integer vertex : g.adj(s)) {
@@ -58,6 +58,6 @@ public class DepthFirstSearch {
         String s = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\tinyG.txt";
         Graph g = new Graph(Path.of(s));
         Iterable<Integer> integers = new DepthFirstSearch(g).search(g, 0);
-        integers.forEach(e -> System.out.println(e));
+        integers.forEach(System.out::println);
     }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @author fengcaiwen
  * @since 6/14/2019
  */
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 public class Graph {
 
     /**
@@ -29,7 +29,8 @@ public class Graph {
     public Graph() {
     }
 
-    public Graph(Path filePath) throws IOException {
+    @SuppressWarnings("unchecked")
+    Graph(Path filePath) throws IOException {
 
         List<String> lines = Files.lines(filePath).map(String::valueOf).collect(Collectors.toList());
 
@@ -68,17 +69,17 @@ public class Graph {
 
     @Override
     public String toString() {
-        String s = v + " vertices, " + e + " edges\n";
+        StringBuilder s = new StringBuilder(v + " vertices, " + e + " edges\n");
         for (int i = 0; i < v; i++) {
-            s += i + ": ";
+            s.append(i).append(": ");
 //            for (int w : this.adj(i)) {
 //                s += w + " ";
 //            }
             while (!this.adj(i).isEmpty())
-                s += adj(i).pop() + " ";
-            s += "\n";
+                s.append(adj(i).pop()).append(" ");
+            s.append("\n");
         }
-        return s;
+        return s.toString();
     }
 
     public static void main(String[] args) throws IOException {
