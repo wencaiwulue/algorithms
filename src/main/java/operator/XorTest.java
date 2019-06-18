@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class XorTest {
     public static void main(String[] args) {
-        System.out.println(7 ^ 7 ^ 7 ^ 5 ^ 5 ^ 3 ^ 7);
+        System.out.println(7 ^ 7 ^ 7 ^ 5 ^ 5 ^ 3 ^ 7 ^3^1^1);
         System.out.println(7 | 5);
         System.out.println(7 & 5);
         System.out.println(~-9);
@@ -24,7 +24,7 @@ public class XorTest {
         System.out.println(10 ^ 12 ^ 12 & 10 ^ 60 ^ 9);
         System.out.println(15 ^ 10);
         System.out.println(15 ^ 8);
-        int[] integers = new int[]{3, 4, 3, 4, 5, 6, 7, 10, 6, 7};
+        int[] integers = new int[]{3, 4, 3, 4, 5, 5,7, 8};
         System.out.println();
         System.out.println(number(integers));
 
