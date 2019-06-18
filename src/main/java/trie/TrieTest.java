@@ -1,3 +1,5 @@
+package trie;
+
 import org.ahocorasick.trie.Emit;
 import org.ahocorasick.trie.Trie;
 
