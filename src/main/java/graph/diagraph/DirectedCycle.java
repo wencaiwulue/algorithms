@@ -3,7 +3,10 @@ package graph.diagraph;
 import graph.Cycle;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -79,9 +82,9 @@ public class DirectedCycle {
         return cycleElement;
     }
 
-    public static void main(String[] args) throws IOException {
-        String filePath = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\diagraph\\DiagraphTest.txt";
-        Diagraph g = new Diagraph(Path.of(filePath));
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("DiagraphTest.txt");
+        Diagraph g = new Diagraph(Path.of(Objects.requireNonNull(resource).toURI()));
         DirectedCycle dc = new DirectedCycle(g);
         System.out.println(dc.hasCycle());
         System.out.println(dc.cycleElement);

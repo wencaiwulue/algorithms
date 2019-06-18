@@ -1,9 +1,12 @@
 package graph.diagraph;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -96,9 +99,9 @@ public class Diagraph {
         return g;
     }
 
-    public static void main(String[] args) throws IOException {
-        String s = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\tinyDG.txt";
-        Diagraph f = new Diagraph(Path.of(s));
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyDG.txt");
+        Diagraph f = new Diagraph(Path.of(Objects.requireNonNull(resource).toURI()));
         System.out.println(f);
     }
 }

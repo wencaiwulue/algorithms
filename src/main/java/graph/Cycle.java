@@ -1,7 +1,10 @@
 package graph;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * @author fengcaiwen
@@ -41,9 +44,9 @@ public class Cycle {
         return hasCycle;
     }
 
-    public static void main(String[] args) throws IOException {
-        String s = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\tinyG.txt";
-        Graph f = new Graph(Path.of(s));
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyG.txt");
+        Graph f = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
         Cycle c = new Cycle(f);
         System.out.println(c.hasCycle());
     }

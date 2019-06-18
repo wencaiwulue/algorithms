@@ -1,8 +1,6 @@
 package collections;
 
-import java.util.Iterator;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -11,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class StackTest {
     public static void main(String[] args) {
-        Queue<Integer> stack = new LinkedBlockingQueue<>();
+        Stack<Integer> stack = new Stack<>();
         stack.add(0);
         stack.add(1);
         stack.add(2);
@@ -23,9 +21,10 @@ public class StackTest {
             System.out.println(integer);
         }
 
-//        while (!stack.isEmpty()){
-//            System.out.println(stack.peek());
-//        }
-
+        List<Integer> list  = new ArrayList<>();
+        while (!stack.empty()){
+            list.add(stack.pop());
+        }
+        System.out.println(list);
     }
 }
