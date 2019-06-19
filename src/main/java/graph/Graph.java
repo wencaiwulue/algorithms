@@ -1,6 +1,8 @@
 package graph;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -82,9 +84,9 @@ public class Graph {
         return s.toString();
     }
 
-    public static void main(String[] args) throws IOException {
-        String s = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\tinyG.txt";
-        Graph f = new Graph(Path.of(s));
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyG.txt");
+        Graph f = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
         System.out.println(f);
     }
 }

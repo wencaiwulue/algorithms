@@ -1,7 +1,10 @@
 package graph;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -70,9 +73,9 @@ public class DepthFirstPaths {
         return path;
     }
 
-    public static void main(String[] args) throws IOException {
-        String s = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\tinyCG.txt";
-        Graph g = new Graph(Path.of(s));
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyCG.txt");
+        Graph g = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
         DepthFirstPaths paths = new DepthFirstPaths(g, 0);
         Iterable<Integer> integers = paths.pathTo(5);
         assert integers != null;

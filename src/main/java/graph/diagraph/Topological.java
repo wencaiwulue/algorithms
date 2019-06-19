@@ -1,6 +1,8 @@
 package graph.diagraph;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.Stack;
 
@@ -32,9 +34,10 @@ public class Topological {
         reverserPost.add(v);
     }
 
-    public static void main(String[] args) throws IOException {
-        String filePath = "C:\\Users\\Fcw\\Documents\\javaee\\src\\main\\java\\graph\\diagraph\\DiagraphTest.txt";
-        Diagraph g = new Diagraph(Path.of(filePath));
+    public static void main(String[] args) throws IOException, ClassNotFoundException, URISyntaxException {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("DiagraphTest.txt");
+        assert resource != null;
+        Diagraph g = new Diagraph(Path.of(resource.toURI()));
         Topological dc = new Topological(g);
         while (!dc.reverserPost.isEmpty()) {
             System.out.println(dc.reverserPost.pop());
