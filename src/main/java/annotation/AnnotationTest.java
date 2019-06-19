@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.stereotype.Component;
 import sun.misc.Unsafe;
 
+import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 
@@ -11,13 +12,15 @@ import java.lang.reflect.Field;
  * @author fengcaiwen
  * @since 6/18/2019
  */
-@SuppressWarnings({"ReflectionForUnavailableAnnotation"})
+@SuppressWarnings("all")
 @Component
 public class AnnotationTest {
     @Test
     public void test() throws Throwable {
         boolean annotation = this.getClass().isAnnotationPresent(SuppressWarnings.class);
+        Annotation[] declaredAnnotations = this.getClass().getDeclaredAnnotations();
 
+        System.out.println(declaredAnnotations.length);
         System.out.println(annotation);
 
 
