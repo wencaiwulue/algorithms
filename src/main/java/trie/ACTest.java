@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class ACTest {
     public static void main(String[] args) {
-        String s = "aaaa";
+        String s = "abcbab";
 
         Arrays.stream(build(s)).forEach(System.out::println);
         System.out.println("-----------------------------");
@@ -50,11 +50,11 @@ public class ACTest {
         int m = str.length();
         char[] chars = str.toCharArray();
 
-        int[] next = new int[m + 1];
+        int[] next = new int[m];
         next[0] = -1;
         int i = 0, j = -1;
 
-        while (i < m) {
+        while (i < m - 1) {
             if (j < 0 || chars[i] == chars[j]) {
                 i++;
                 j++;
