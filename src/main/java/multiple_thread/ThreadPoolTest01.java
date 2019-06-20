@@ -15,41 +15,57 @@ import java.util.concurrent.locks.LockSupport;
 public class ThreadPoolTest01 {
 
     public static class ThreadPool {
+
+        // task queue
         private Queue<Runnable> tasks = new ConcurrentLinkedQueue<>();
 
+        // after expire time free, thread pool will destroy itself
         private long expire = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5);//minutes
 
-        private final List<Thread> main = new ArrayList<>();
+        // core thread
+        private final List<Thread> threads = new ArrayList<>();
 
+        // running thread amount
         private volatile AtomicInteger running = new AtomicInteger(0);
 
+        // core thread size
+        private int n;
+
         ThreadPool(int n) {
-            for (int i = 0; i < n; i++) {
-                Thread thread = new Thread(() -> {
-                    while (expire > System.currentTimeMillis()) {
-                        Runnable run = tasks.poll();
-                        if (run != null) {
-                            expire += TimeUnit.MINUTES.toMillis(5);
-                            running.incrementAndGet();
-                            run.run();
-                        } else {
-                            running.decrementAndGet();
-                            LockSupport.park();
-                        }
-                    }
-                });
-//                thread.setDaemon(true);
-                thread.start();
-                main.add(thread);
-            }
-            System.out.println("init done");
+            this.n = n;
+            createThreadDynamic();
         }
 
         void getOneAndExec(Runnable run) {
             tasks.add(run);
-            for (Thread thread : main) {
-                LockSupport.unpark(thread);
+            if (threads.size() < n) {
+                createThreadDynamic();
             }
+            if (running.get() != n) {
+                for (Thread thread : threads) {
+                    if (Thread.State.BLOCKED.equals(thread.getState())) {
+                        LockSupport.unpark(thread);
+                    }
+                }
+            }
+        }
+
+        private void createThreadDynamic() {
+            Thread thread = new Thread(() -> {
+                while (expire > System.currentTimeMillis()) {
+                    Runnable runnable = tasks.poll();
+                    if (runnable != null) {
+                        expire += TimeUnit.MINUTES.toMillis(5);
+                        running.incrementAndGet();
+                        runnable.run();
+                    } else {
+                        running.decrementAndGet();
+                        LockSupport.park();
+                    }
+                }
+            });
+            thread.start();
+            threads.add(thread);
         }
 
         boolean isFree() {
