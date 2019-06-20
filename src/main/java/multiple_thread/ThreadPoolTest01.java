@@ -3,6 +3,7 @@ package multiple_thread;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,6 +19,7 @@ public class ThreadPoolTest01 {
 
         // task queue
         private Queue<Runnable> tasks = new ConcurrentLinkedQueue<>();
+        private Queue<FutureTest> futureTasks = new ConcurrentLinkedQueue<>();
 
         // after expire time free, thread pool will destroy itself
         private long expire = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5);//minutes
@@ -36,7 +38,7 @@ public class ThreadPoolTest01 {
             createThreadDynamic();
         }
 
-        void getOneAndExec(Runnable run) {
+        void exec(Runnable run) {
             tasks.add(run);
             if (threads.size() < n) {
                 createThreadDynamic();
@@ -50,15 +52,41 @@ public class ThreadPoolTest01 {
             }
         }
 
+        public FutureTest submit(Callable callable) {
+            FutureTest futureTest = new FutureTest(callable);
+            futureTasks.add(futureTest);
+            if (threads.size() < n) {
+                createThreadDynamic();
+            }
+            if (running.get() != n) {
+                for (Thread thread : threads) {
+                    if (Thread.State.BLOCKED.equals(thread.getState())) {
+                        LockSupport.unpark(thread);
+                    }
+                }
+            }
+            return futureTest;
+        }
+
         private void createThreadDynamic() {
             Thread thread = new Thread(() -> {
                 while (expire > System.currentTimeMillis()) {
                     Runnable runnable = tasks.poll();
+                    FutureTest test;
                     if (runnable != null) {
                         expire += TimeUnit.MINUTES.toMillis(5);
                         running.incrementAndGet();
                         runnable.run();
+                    } else if ((test = futureTasks.poll()) != null) {
+                        try {
+//                            Object result = test.get();
+                            test.setResult("null");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            test.setResult("null");
+                        }
                     } else {
+                        System.out.println("running amount： " + running.get());
                         running.decrementAndGet();
                         LockSupport.park();
                     }
@@ -87,7 +115,7 @@ public class ThreadPoolTest01 {
 
         long start = System.nanoTime();
         for (int i = 0; i < 100; i++) {
-            threadPool.getOneAndExec(runnable);
+            threadPool.exec(runnable);
         }
         while (!threadPool.isFree()) {
 
