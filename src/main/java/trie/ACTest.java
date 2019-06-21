@@ -8,12 +8,12 @@ import java.util.Arrays;
  */
 public class ACTest {
     public static void main(String[] args) {
-        String s = "abcdabd";
+        String s = "chinchilla";
 
         Arrays.stream(build(s)).forEach(System.out::println);
-        System.out.println("-----------------------------");
-        Arrays.stream(build0(s)).forEach(System.out::println);
-//        pare("chinchilla", "chinchilla");
+//        System.out.println("-----------------------------");
+//        Arrays.stream(build0(s)).forEach(System.out::println);
+        pare("chinchilla", "cha");
     }
 
     /**
@@ -67,20 +67,18 @@ public class ACTest {
         return next;
     }
 
-    public static void pare(String content, String pattern) {
+    private static void pare(String content, String pattern) {
         int[] next = build(pattern);
 
-        char[] contentChar = content.toCharArray();
-        char[] patternChar = pattern.toCharArray();
+        char[] t = content.toCharArray();
+        char[] p = pattern.toCharArray();
 
-        int n = contentChar.length;
-        int m = patternChar.length;
+        int n = t.length;
+        int m = p.length;
 
-        int i = 1, j = 0;
-        while (i < n - m && j != m) {
-            int a = contentChar[i];
-            int b = patternChar[j];
-            if (a == b) {
+        int i = 0, j = 0;
+        while (i < n && j != m) {
+            if (j < 0 || t[i] == p[j]) {
                 i++;
                 j++;
             } else {
