@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 public class ACTest {
     public static void main(String[] args) {
-        String s = "abcbab";
+        String s = "abcdabd";
 
         Arrays.stream(build(s)).forEach(System.out::println);
         System.out.println("-----------------------------");
@@ -39,6 +39,7 @@ public class ACTest {
                 i++;
             }
         }
+        int[] ints = Arrays.copyOf(next, m);
         return next;
     }
 
