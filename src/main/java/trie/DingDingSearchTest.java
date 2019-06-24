@@ -38,7 +38,7 @@ public class DingDingSearchTest {
     public Node add(Node node, char c, boolean leaf) {
         if (node == null || node.key == c) return null;
 
-        int index = (int) c - 98;
+        int index = (int) c - 97;
         Node node1 = node.next[index];
         if (node1 == null) {
             Node newNode = new Node(new Node[R], c, 0);
@@ -81,7 +81,7 @@ public class DingDingSearchTest {
             return node;
         }
 
-        int index = (int) c - 98;
+        int index = (int) c - 97;
         Node next = node.next[index];
         if (next == null) {
             return null;
@@ -112,9 +112,17 @@ public class DingDingSearchTest {
     }
 
     public static void main(String[] args) {
+
         DingDingSearchTest test = new DingDingSearchTest();
         String str = "dfcwf";
         test.addStr("fcw");
+        test.addStr("hjh");
+        test.addStr("asdf");
+        test.addStr("fd");
+        test.addStr("dfdf");
+        test.addStr("sdf");
+        test.addStr("asdffsdf");
+        test.addStr("asdfdfdfsd");
         for (int i = 1; i <= str.length(); i++) {
             String substring = str.substring(0, i);
             Node f = test.findStr(substring);
