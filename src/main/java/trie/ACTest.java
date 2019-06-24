@@ -8,12 +8,13 @@ import java.util.Arrays;
  */
 public class ACTest {
     public static void main(String[] args) {
-        String s = "chinchilla";
+        String txt = "abcd";
+        String pattern = "chinchilla";
 
-        Arrays.stream(build(s)).forEach(System.out::println);
+        Arrays.stream(build(txt)).forEach(System.out::println);
 //        System.out.println("-----------------------------");
 //        Arrays.stream(build0(s)).forEach(System.out::println);
-        pare("chinchilla", "cha");
+//        pare(txt, pattern);
     }
 
     /**
@@ -22,15 +23,15 @@ public class ACTest {
     private static int[] build(String str) {
 
         int m = str.length();
-        char[] chars = str.toCharArray();
+        char[] t = str.toCharArray();
 
         int[] next = new int[m + 1];
         next[0] = -1;
         int i = 1, j = 0;
 
         while (i < m) {
-            char a = chars[i];
-            char b = chars[j];
+            char a = t[i];
+            char b = t[j];
             if (a == b) {
                 next[i + 1] = next[i] + 1;
                 i++;
