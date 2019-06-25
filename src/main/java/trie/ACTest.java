@@ -8,22 +8,23 @@ import java.util.Arrays;
  */
 public class ACTest {
     public static void main(String[] args) {
-        String txt = "abcd";
-        String pattern = "chinchilla";
+        // chinchilla, sensitive word check
+        String txt = "钓上一个大王八，大概有五十斤";
+        String pattern = "王八蛋";
 
-        Arrays.stream(build(txt)).forEach(System.out::println);
+//        Arrays.stream(build(txt)).forEach(System.out::println);
 //        System.out.println("-----------------------------");
-//        Arrays.stream(build0(s)).forEach(System.out::println);
-//        pare(txt, pattern);
+//        Arrays.stream(build0(pattern)).forEach(System.out::println);
+        check(txt, pattern);
     }
 
     /**
      * by myself
      */
-    private static int[] build(String str) {
+    private static int[] build(String pattern) {
 
-        int m = str.length();
-        char[] t = str.toCharArray();
+        int m = pattern.length();
+        char[] t = pattern.toCharArray();
 
         int[] next = new int[m + 1];
         next[0] = -1;
@@ -47,10 +48,10 @@ public class ACTest {
     /**
      * copy
      */
-    private static int[] build0(String str) {
+    private static int[] build0(String pattern) {
 
-        int m = str.length();
-        char[] chars = str.toCharArray();
+        int m = pattern.length();
+        char[] chars = pattern.toCharArray();
 
         int[] next = new int[m];
         next[0] = -1;
@@ -68,10 +69,10 @@ public class ACTest {
         return next;
     }
 
-    private static void pare(String content, String pattern) {
+    private static void check(String txt, String pattern) {
         int[] next = build(pattern);
 
-        char[] t = content.toCharArray();
+        char[] t = txt.toCharArray();
         char[] p = pattern.toCharArray();
 
         int n = t.length;
@@ -86,11 +87,10 @@ public class ACTest {
                 j = next[j];
             }
         }
-//        System.out.println(j);
-//        System.out.println(i);
-//        System.out.println(m);
         if (j == m) {
-            System.out.println("ok");
+            System.out.println("found");
+        } else {
+            System.out.println("not found");
         }
 
     }
