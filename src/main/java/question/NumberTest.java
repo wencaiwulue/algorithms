@@ -10,28 +10,39 @@ public class NumberTest {
     public static void main(String[] args) {
         int a = 31415962;
         System.out.println(a);
+
         int none = transfer(a);
+        System.out.println(none);
+
         int b = reduction(none, String.valueOf(a).length());
         System.out.println(b);
     }
 
     private static int transfer(int a) {
         char[] chars = String.valueOf(a).toCharArray();
-        int sum = 0;
+        int sum = 1;
         for (int i = 0; i < chars.length; i++) {
             int val = (int) chars[i];
-            int l = generateTopNPrimeNumber(1000, i + 1);
-            sum += l ^ (val + 1);
+            int prime = generateTopNPrimeNumber(1000, i + 1);
+            sum *= Math.pow(prime, (val + 1));
         }
-        System.out.println(sum);
-
-        // assume we already know this info and sum
-        int b = chars.length;
         return sum;
     }
 
+    // todo
+    // assume we already know this info and sum
     private static int reduction(int sum, int length) {
-        return 0;
+        StringBuilder str = new StringBuilder();
+        for (int i = length; i > 1; i--) {
+            int a = generateTopNPrimeNumber(1000, i);
+            int j = 0;
+            while (sum % a != 0) {
+                sum = sum % a;
+                j++;
+            }
+            str.append(j);
+        }
+        return Integer.valueOf(str.toString());
     }
 
     // generate the level-th pure number
