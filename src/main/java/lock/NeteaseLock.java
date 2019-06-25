@@ -53,37 +53,43 @@ public class NeteaseLock implements Lock {
         return null;
     }
 
-    static class O {
-        int i = 0;
-        Lock lock = new NeteaseLock();
+    public static class Counter {
+        private int p;
+        private Lock lock;
 
-        void add() {
-//            lock.lock();
+        public Counter(int p, Lock lock) {
+            this.p = p;
+            this.lock = lock;
+        }
+
+        public void add() {
             try {
-                i++;
+                lock.lock();
+                // not a atomic operation, not thread safe
+                p++;
             } finally {
-//                lock.unlock();
+                lock.unlock();
             }
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        O o = new O();
+        NeteaseLock lock = new NeteaseLock();
+        Counter counter = new Counter(0, lock);
         int round = 2000;
-//        CountDownLatch countDown = new CountDownLatch(round);
+        CountDownLatch latch = new CountDownLatch(round);
         for (int i = 0; i < round; i++) {
             new Thread(() -> {
                 try {
-                    for (int j = 0; j < 10; j++) {
-                        o.add();
-                    }
+                    for (int j = 0; j < 10; j++)
+                        counter.add();
                 } finally {
-//                    countDown.countDown();
+                    latch.countDown();
                 }
             }).start();
         }
-//        countDown.await();
-        Thread.sleep(5000);
-        System.out.println(o.i);
+        // let all thread finish work
+        latch.await();
+        System.out.println(counter.p);
     }
 }
