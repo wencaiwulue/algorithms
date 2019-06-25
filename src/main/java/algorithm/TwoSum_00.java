@@ -13,7 +13,7 @@ public class TwoSum_00 {
         getIndex(new int[]{3, 2, 4}, 6);
     }
 
-    public static int[] getIndex(int[] nums, int target) throws IOException {
+    public static int[] getIndex(int[] nums, int target) {
         Map<Integer, Integer> differenceMap = new HashMap<>();
         Map<Integer, Integer> indexList = new HashMap<>();
 
