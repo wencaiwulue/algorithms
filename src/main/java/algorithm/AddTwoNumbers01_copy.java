@@ -31,16 +31,16 @@
 //    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 //        ListNode l11 = l1;
 //        ListNode l21 = l2;
-//        int whoIsLonger = -1;
+//        int makeTheSameLength = -1;
 //        for (; ; ) {
 //            ListNode next1 = l1;
 //            ListNode next2 = l2;
 //            if (next1 != null || next2 != null) {
 //                if (next1 == null) {
-//                    whoIsLonger = 2;
+//                    makeTheSameLength = 2;
 //                    l2 = getListNode(l2);
 //                } else if (next2 == null) {
-//                    whoIsLonger = 1;
+//                    makeTheSameLength = 1;
 //                    l1 = getListNode(l1);
 //                } else {
 //                    int i = next1.val + next2.val;
@@ -66,11 +66,11 @@
 //                    }
 //                }
 //            } else {
-//                System.out.println(whoIsLonger == 1 ? l11 : l21);
+//                System.out.println(makeTheSameLength == 1 ? l11 : l21);
 //                break;
 //            }
 //        }
-//        return whoIsLonger == 1 ? l11 : l21;
+//        return makeTheSameLength == 1 ? l11 : l21;
 //
 //    }
 //

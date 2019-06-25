@@ -7,20 +7,27 @@ package algorithm;
 public class AddTwoNumbers01 {
     public static void main(String[] args) {
 //        (2 -> 4 -> 3) + (5 -> 6 -> 4)
-        ListNode l1 = new ListNode(1);
-//        l1.next = new ListNode(9);
-//        l1.next.next = new ListNode(3);
+        ListNode l1 = new ListNode(9);
+        l1.next = new ListNode(9);
+        l1.next.next = new ListNode(3);
 
-        ListNode l2 = new ListNode(9);
-        l2.next = new ListNode(9);
-//        l2.next.next = new ListNode(4);
-//        l2.next.next.next = new ListNode(4);
-        ListNode listNode = addTwoNumbers(l1, l2);
-        for (; ; ) {
-            ListNode next = listNode;
+        ListNode l2 = new ListNode(5);
+        l2.next = new ListNode(6);
+        l2.next.next = new ListNode(4);
+        l2.next.next.next = new ListNode(4);
+
+        // calculate
+        ListNode result = new ListNode(0);
+        ListNode backup = result;
+
+
+        addTwoNumbers(l1, l2, result);
+
+        while (true) {
+            ListNode next = backup;
             if (next != null) {
                 System.out.println(next.val);
-                listNode = next.next;
+                backup = next.next;
             } else {
                 break;
             }
@@ -28,70 +35,35 @@ public class AddTwoNumbers01 {
 
     }
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode l11 = l1;
-        ListNode l21 = l2;
-        int whoIsLonger = -1;
-        for (; ; ) {
-            ListNode next1 = l1;
-            ListNode next2 = l2;
-            if (next1 != null || next2 != null) {
-                if (next1 == null) {
-                    whoIsLonger = 2;
-                    l2 = getListNode(l2);
-                } else if (next2 == null) {
-                    whoIsLonger = 1;
-                    l1 = getListNode(l1);
-                } else {
-                    int i = next1.val + next2.val;
-                    boolean need = false;
-                    if (i > 9) {
-                        i = i - 10;
-                        need = true;
-                    }
-                    next1.val = i;
-                    next2.val = i;
-                    ListNode temp1 = l1;
-                    l1 = l1.next;
-                    l2 = l2.next;
-                    if (need) {
-                        if (l1 != null) {
-                            l1.val += 1;
-                        } else if (l2 != null) {
-                            l2.val += 1;
-                        } else {
-                            l1 = new ListNode(1);
-                            temp1.next = l1;
-                        }
-                    }
-                }
-            } else {
-                System.out.println(whoIsLonger == 1 ? l11 : l21);
+
+    private static void addTwoNumbers(ListNode l1, ListNode l2, ListNode result) {
+
+        while (true) {
+            if (result == null) result = new ListNode(0);
+
+            int i = l1.val + l2.val;
+            boolean need = false;
+            if (i > 9) {
+                i = i % 10;
+                need = true;
+            }
+            result.val += i;
+
+            if (result.next == null) result.next = new ListNode(0);
+            if (need) {
+                result.next.val += 1;
+            }
+            if (l1.next == null && l2.next == null) {
                 break;
             }
+            if (l1.next == null) l1.next = new ListNode(0);
+            if (l2.next == null) l2.next = new ListNode(0);
+            l1 = l1.next;
+            l2 = l2.next;
+            result = result.next;
         }
-        return whoIsLonger == 1 ? l11 : l21;
-
     }
 
-    private static ListNode getListNode(ListNode l2) {
-        boolean need = false;
-        if (l2.val > 9) {
-            l2.val -= 10;
-            need = true;
-        }
-        ListNode temp = l2;
-        l2 = l2.next;
-        if (need) {
-            if (l2 != null) {
-                l2.val += 1;
-            } else {
-                l2 = new ListNode(1);
-                temp.next = l2;
-            }
-        }
-        return l2;
-    }
 
     public static class ListNode {
         int val;
