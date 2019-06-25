@@ -46,7 +46,7 @@ public class ReverseTest {
 //        while (current != null) {
 //            //save the next node
 //            nextNode = current.next;
-//            //update the value of "next"
+//            //update the isLeaf of "next"
 //            current.next = previousNode;
 //            //shift the pointers
 //            previousNode = current;

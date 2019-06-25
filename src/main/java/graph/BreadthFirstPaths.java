@@ -20,7 +20,7 @@ public class BreadthFirstPaths {
      */
     private boolean[] marked;
     /**
-     * index i, i mean vertex i, value means the last vertex comes to i
+     * index i, i mean vertex i, isLeaf means the last vertex comes to i
      */
     private int[] edgeTo;
     /**

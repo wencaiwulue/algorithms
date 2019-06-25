@@ -14,6 +14,5 @@ public class TrieTest {
         Trie trie = Trie.builder().addKeywords("feng", "cai", "wen").build();
         Collection<Emit> emits = trie.parseText("asdfasdfasffengasdfafcaiasdfasfdqwenasdfasfd");
         emits.forEach(System.out::println);
-
     }
 }
