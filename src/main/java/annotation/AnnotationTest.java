@@ -9,6 +9,8 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 
 /**
+ * {@link https://help.eclipse.org/2018-09/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Ftasks%2Ftask-suppress_warnings.htm}
+ *
  * @author fengcaiwen
  * @since 6/18/2019
  */
@@ -30,7 +32,7 @@ public class AnnotationTest {
         Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
         theUnsafe.setAccessible(true);
 
-        Unsafe o = (Unsafe)theUnsafe.get(Object.class);
+        Unsafe o = (Unsafe) theUnsafe.get(Object.class);
         System.out.println(o);
 
     }
