@@ -29,6 +29,7 @@ public class PrintTest01 {
                 }
                 break;
             }
+            System.exit(0);
         }).start();
 
         new Thread(() -> {

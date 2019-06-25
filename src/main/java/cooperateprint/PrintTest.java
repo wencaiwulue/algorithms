@@ -2,9 +2,9 @@ package cooperateprint;
 
 public class PrintTest {
     public static void main(String[] args) {
-        String lockStr = "";
-        new Thread(new Print(new Object[]{'a', 'b', 'c', 'd', 'e'}, lockStr)).start();
-        new Thread(new Print(new Object[]{1, 2, 3, 4, 5}, lockStr)).start();
+        String sameStr = "";
+        new Thread(new Print(new Object[]{'a', 'b', 'c', 'd', 'e'}, sameStr)).start();
+        new Thread(new Print(new Object[]{1, 2, 3, 4, 5}, sameStr)).start();
     }
 
     public static class Print implements Runnable {
