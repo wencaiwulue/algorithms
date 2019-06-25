@@ -16,25 +16,26 @@ import java.util.List;
 public class ArrayBlockCut {
 
     public static void main(String[] args) {
-        List<Integer[]> temp = new ArrayList<>();
-        temp.add(new Integer[]{1, 2, 3});
-        temp.add(new Integer[]{4, 5, 6, 7});
-        temp.add(new Integer[]{8, 9, 10, 11, 12, 12});
-        System.out.println(test(2, temp).toString());
+        List<int[]> temp = new ArrayList<>();
+        temp.add(new int[]{1, 2, 3});
+        temp.add(new int[]{4, 5, 6, 7});
+        temp.add(new int[]{8, 9, 10, 11, 12, 12});
+        temp.add(new int[]{13, 14, 15, 16, 17, 18, 19, 20});
+        System.out.println(test(3, temp).toString());
     }
 
-    private static List<Integer> test(int n, List<Integer[]> list) {
-        int maxLength = 0;
+    private static List<Integer> test(int n, List<int[]> list) {
         List<Integer> result = new ArrayList<>();
-        for (Integer[] integers : list) {
-            maxLength = integers.length > maxLength ? integers.length : maxLength;
+        int max = 0;
+        for (int[] ints : list) {
+            max = ints.length > max ? ints.length : max;
         }
-        int times = maxLength % n == 0 ? maxLength / n : maxLength / n + 1;
-        for (int m = 0; m < times; m++) {
-            for (int t = 0; t < list.size(); t++) {
-                Integer[] temp = list.get(t);
-                for (int j = m * n; j < (m + 1) * n && j < temp.length; j++) {
-                    result.add(temp[j]);
+        int times = max % n == 0 ? max / n : max / n + 1;
+        for (int i = 0; i < times; i++) {
+            for (int j = 0; j < list.size(); j++) {
+                int[] temp = list.get(j);
+                for (int k = i * n; k < (i + 1) * n && k < temp.length; k++) {
+                    result.add(temp[k]);
                 }
             }
         }
