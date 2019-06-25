@@ -25,8 +25,8 @@ public class RandomTest {
                 a4++;
             }
         }
-        System.out.printf("weight: %d  %d  %d  %d \n", b[1][0], b[1][1], b[1][2], b[1][3]);
-        System.out.printf("times:  %s %s %s %s \ntotal times: %s", a1, a2, a3, a4, a1 + a2 + a3 + a4);
+        System.out.printf("weight: %d\t%d\t%d\t%d\n", b[1][0], b[1][1], b[1][2], b[1][3]);
+        System.out.printf("times:  %s\t%s\t%s\t%s\t\ntotal times: %s", a1, a2, a3, a4, a1 + a2 + a3 + a4);
 
     }
 

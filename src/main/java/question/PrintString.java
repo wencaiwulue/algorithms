@@ -9,17 +9,17 @@ public class PrintString {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
-            String s = sc.nextLine();
-            String[] ss = s.split(" ");
+            String line = sc.nextLine();
+            String[] split = line.split(" ");
             List<String> result = new ArrayList<>();
-            for (int j = 1; j < ss.length; j++) {
-                String sss = ss[j];
-                if (sss.length() % 8 != 0)
-                    sss = sss + "00000000";
+            for (int j = 1; j < split.length; j++) {
+                String str = split[j];
+                if (str.length() % 8 != 0)
+                    str = str + "00000000";
 
-                while (sss.length() >= 8) {
-                    result.add(sss.substring(0, 8));
-                    sss = sss.substring(8);
+                while (str.length() >= 8) {
+                    result.add(str.substring(0, 8));
+                    str = str.substring(8);
                 }
             }
             Collections.sort(result);

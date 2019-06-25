@@ -15,20 +15,20 @@ public class BottleAmount {
      */
     public static void main(String[] args) {
         Integer[] a = new Integer[]{1, 2, 3, 4, 5};
-        System.out.println(drink(12));
+        int i = 10;
+        System.out.println(drink(i));
     }
 
-    @SuppressWarnings("all")
-    private static int drink(int 盖子数) {
-        int 喝掉的瓶数 = 0;
-        while (盖子数 > 2) {
-            喝掉的瓶数 += 盖子数 / 3;
-            盖子数 = 盖子数 / 3 + 盖子数 % 3;
+    private static int drink(int cover) {
+        int bottle = 0;
+        while (cover > 2) {
+            bottle += cover / 3;
+            cover = cover / 3 + cover % 3;
         }
-        if (盖子数 == 2) {
-            喝掉的瓶数++;
+        if (cover == 2) {
+            bottle++;
         }
-        return 喝掉的瓶数;
+        return bottle;
     }
 
 }

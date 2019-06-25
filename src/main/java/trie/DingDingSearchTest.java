@@ -113,20 +113,20 @@ public class DingDingSearchTest {
 
     public static void main(String[] args) {
 
-        DingDingSearchTest test = new DingDingSearchTest();
-        String str = "dfcwf";
-        test.addStr("fcw");
-        test.addStr("hjh");
-        test.addStr("asdf");
-        test.addStr("fd");
-        test.addStr("dfdf");
-        test.addStr("sdf");
-        test.addStr("asdffsdf");
-        test.addStr("asdfdfdfsd");
+        DingDingSearchTest searcher = new DingDingSearchTest();
+        String str = "f";
+        searcher.addStr("fcw");
+        searcher.addStr("hjh");
+        searcher.addStr("asdf");
+        searcher.addStr("fd");
+        searcher.addStr("dfdf");
+        searcher.addStr("sdf");
+        searcher.addStr("asdffsdf");
+        searcher.addStr("asdfdfdfsd");
         for (int i = 1; i <= str.length(); i++) {
-            String substring = str.substring(0, i);
-            Node f = test.findStr(substring);
-            System.out.println(f == null || f.value == 0 ? "not found: " + substring : "found: " + substring);
+            String s = str.substring(0, i);
+            Node f = searcher.findStr(s);
+            System.out.println(f == null || f.value == 0 ? "not found: " + s : "found: " + s);
         }
     }
 }
