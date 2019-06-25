@@ -16,9 +16,8 @@ public class DingDingSearchTest {
 
     public Set<String> findName(String name) {
         DiyTrieTest.Node node = trie.findWord(name);
-        if (node != null) {
+        if (node != null)
             return node.value;
-        }
         return Collections.emptySet();
     }
 

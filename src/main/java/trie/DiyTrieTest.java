@@ -24,11 +24,10 @@ public class DiyTrieTest {
 
         // 2, if null, then find the last match node
         char[] chars = word.toCharArray();
-        Node last;
         Node pre = root;
         int i = 0;
         while (i < chars.length) {
-            last = find(pre, chars[i]);
+            Node last = find(pre, chars[i]);
             if (last == null) break;
             i++;
             pre = last;
@@ -38,11 +37,11 @@ public class DiyTrieTest {
         for (int j = i; j < chars.length; j++) {
             Node add;
             // make last node become leaf node todo optimize
-            if (j == chars.length - 1) {
+            if (j == chars.length - 1)
                 add = add(pre, chars[j], val, true);
-            } else {
+            else
                 add = add(pre, chars[j], val, false);
-            }
+
             if (add == null) return;
             pre = add;
         }
@@ -61,9 +60,8 @@ public class DiyTrieTest {
         Node node1 = node.next[index];
         if (node1 == null) {
             Node newNode = new Node(new Node[R], key, val, 0);
-            if (leaf) {
+            if (leaf)
                 newNode.isLeaf = 1;
-            }
             node.next[index] = newNode;
             return newNode;
         } else {
@@ -80,17 +78,15 @@ public class DiyTrieTest {
      * return
      */
     private Node findWord(Node node, String word) {
-        if (node == null) {
-            return null;
-        }
+        if (node == null) return null;
+
         char[] chars = word.toCharArray();
         int i = 0;
         Node last = node;
         while (i < chars.length) {
             last = find(last, chars[i++]);
-            if (last == null) {
+            if (last == null)
                 return null;
-            }
         }
         return last;
     }
@@ -103,11 +99,10 @@ public class DiyTrieTest {
 
         int index = (int) key - 97;
         Node next = node.next[index];
-        if (next == null) {
+        if (next == null)
             return null;
-        } else {
+        else
             return find(node.next[index], key);
-        }
 
     }
 
