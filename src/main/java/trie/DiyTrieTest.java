@@ -17,8 +17,9 @@ public class DiyTrieTest {
 
     public void addWord(String word, String val) {
         // 1, if not null, then add value to this key
-        if (findWord(root, word) != null) {
-            findWord(root, word).value.add(val);
+        Node found = findWord(root, word);
+        if (found != null) {
+            found.value.add(val);
             return;
         }
 
@@ -92,10 +93,7 @@ public class DiyTrieTest {
     }
 
     private Node find(Node node, char key) {
-        if (root == null) return null;
-        if (node.key == key) {
-            return node;
-        }
+        if (root == null || node.key == key) return node;
 
         int index = (int) key - 97;
         Node next = node.next[index];

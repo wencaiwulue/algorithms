@@ -25,8 +25,6 @@ public class DingDingSearchTest {
         for (int i = 0, j = name.length(); i < name.length(); i++, j--) {
             String s = name.substring(0, i + 1);
             String s1 = name.substring(j - 1);
-//            System.out.println(s);
-//            System.out.println(s1);
             trie.addWord(s, name);
             trie.addWord(s1, name);
         }
