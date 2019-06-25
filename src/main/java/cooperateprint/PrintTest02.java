@@ -20,7 +20,7 @@ public class PrintTest02 {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(a[i1]);
+                    System.out.print(a[i1]);
                     semaphore.release(i1);
                 }
             }
@@ -40,7 +40,7 @@ public class PrintTest02 {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(a[c]);
+                System.out.print(a[c]);
                 semaphore.release(length);
             }
         }).start();

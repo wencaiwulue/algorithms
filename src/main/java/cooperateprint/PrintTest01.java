@@ -19,7 +19,7 @@ public class PrintTest01 {
             while (true) {
                 for (int i = 0; i < a.length; i++) {
                     try {
-                        System.out.println(a[i]);
+                        System.out.print(a[i]);
                         lock.lock();
                         condition1.signal();
                         condition0.await();
@@ -36,7 +36,7 @@ public class PrintTest01 {
             while (true) {
                 for (int i = 0; i < a.length; i++) {
                     try {
-                        System.out.println(a[i]);
+                        System.out.print(a[i]);
                         lock.lock();
                         condition0.signal();
                         condition1.await();

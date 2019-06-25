@@ -16,7 +16,7 @@ public class PrintTest0 {
                 while (true) {
                     boolean b = atomicInteger.compareAndSet(1, 2);
                     if (b) {
-                        System.out.println(i1);
+                        System.out.print(i1);
                         atomicInteger.compareAndSet(2, 0);
                         break;
                     }
@@ -30,7 +30,7 @@ public class PrintTest0 {
                 while (true) {
                     boolean b = atomicInteger.compareAndSet(0, 3);
                     if (b) {
-                        System.out.println(c);
+                        System.out.print(c);
                         atomicInteger.compareAndSet(3, 1);
                         break;
                     }

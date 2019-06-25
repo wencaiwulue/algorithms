@@ -15,7 +15,7 @@ public class PrintTest03 {
             for (int i1 : a) {
                 while (true) {
                     if (queue.peek() == Thread.currentThread()) {
-                        System.out.println(i1);
+                        System.out.print(i1);
                         try {
                             queue.put(Thread.currentThread());
                         } catch (InterruptedException e) {
@@ -34,7 +34,7 @@ public class PrintTest03 {
                 while (true) {
                     if (queue.peek() == Thread.currentThread()) {
                         try {
-                            System.out.println(c);
+                            System.out.print(c);
                             queue.put(Thread.currentThread());
                         } catch (InterruptedException e) {
                             e.printStackTrace();

@@ -21,7 +21,7 @@ public class PrintTest {
             for (Object o : a) {
                 synchronized (lock.intern()) {
                     try {
-                        System.out.println(o);
+                        System.out.print(o);
                         lock.notify();
                         lock.wait();
                     } catch (InterruptedException e) {
@@ -29,7 +29,7 @@ public class PrintTest {
                     }
                 }
             }
-
+            System.exit(0);
         }
     }
 }
