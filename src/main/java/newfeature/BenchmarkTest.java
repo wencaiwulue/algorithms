@@ -1,4 +1,4 @@
-package new_feature;
+package newfeature;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;

@@ -1,4 +1,4 @@
-package case0.nio_chat_room;
+package case0.niochatroom;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;

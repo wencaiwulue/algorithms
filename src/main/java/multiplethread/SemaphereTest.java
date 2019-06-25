@@ -1,4 +1,4 @@
-package multiple_thread;
+package multiplethread;
 
 /**
  * A counting semaphore.  Conceptually, a semaphore maintains a set of

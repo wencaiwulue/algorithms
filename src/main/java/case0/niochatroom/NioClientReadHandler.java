@@ -1,4 +1,4 @@
-package case0.nio_chat_room;
+package case0.niochatroom;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

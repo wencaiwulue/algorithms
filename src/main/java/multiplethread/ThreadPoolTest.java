@@ -1,7 +1,6 @@
-package multiple_thread;
+package multiplethread;
 
 import java.util.Queue;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**

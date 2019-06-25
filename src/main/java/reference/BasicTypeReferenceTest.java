@@ -1,3 +1,5 @@
+package reference;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
@@ -34,7 +36,7 @@ public class BasicTypeReferenceTest {
         entity1.setName("lisi");
         entity1.setId(2);
 
-        System.out.println(entity.toString() + "_" + entity1.toString());//output:Entity{name='lisi', id=2}_Entity{name='lisi', id=2}
+        System.out.println(entity.toString() + "_" + entity1.toString());//output:reference.Entity{name='lisi', id=2}_Entity{name='lisi', id=2}
 
         BigDecimal bigDecimal = new BigDecimal(1);
         BigDecimal bigDecimal1 = bigDecimal;
@@ -100,7 +102,7 @@ class Entity {
 
     @Override
     public String toString() {
-        return "Entity{" +
+        return "reference.Entity{" +
                 "name='" + name + '\'' +
                 ", id=" + id +
                 '}';

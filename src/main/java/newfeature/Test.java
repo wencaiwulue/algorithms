@@ -1,10 +1,9 @@
-package new_feature;
+package newfeature;
 
 import com.google.common.base.Joiner;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author fengcaiwen

@@ -1,4 +1,4 @@
-package multiple_thread;
+package print;
 
 import java.util.concurrent.LinkedBlockingQueue;
 

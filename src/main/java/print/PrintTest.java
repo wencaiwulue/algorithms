@@ -1,4 +1,4 @@
-package multiple_thread;
+package print;
 
 public class PrintTest {
     public static void main(String[] args) {
