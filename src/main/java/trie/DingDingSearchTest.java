@@ -31,14 +31,15 @@ public class DingDingSearchTest {
     }
 
     public static void main(String[] args) {
-
         DiyTrieTest trie = new DiyTrieTest();
         DingDingSearchTest searcher = new DingDingSearchTest(trie);
+
         String str = "jh";
         searcher.addName("fcw");
         searcher.addName("hjh");
         searcher.addName("ljw");
         searcher.addName("ljh");
+
         Set<String> node = searcher.findName(str);
         node.forEach(System.out::println);
     }

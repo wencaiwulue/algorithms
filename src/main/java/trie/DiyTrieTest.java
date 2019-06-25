@@ -54,7 +54,7 @@ public class DiyTrieTest {
      * @param val  value
      * @param leaf is ledf or not
      */
-    public Node add(Node node, char key, String val, boolean leaf) {
+    private Node add(Node node, char key, String val, boolean leaf) {
         if (node == null || node.key == key) return null;
 
         int index = (int) key - 97;
