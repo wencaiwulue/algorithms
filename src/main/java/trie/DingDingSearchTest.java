@@ -34,7 +34,7 @@ public class DingDingSearchTest {
         DiyTrieTest trie = new DiyTrieTest();
         DingDingSearchTest searcher = new DingDingSearchTest(trie);
 
-        String str = "jh";
+        String str = "l";
         searcher.addName("fcw");
         searcher.addName("hjh");
         searcher.addName("ljw");
