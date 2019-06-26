@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author fengcaiwen
  * @since 6/13/2019
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unchecked")
 public class BinTree<T extends Comparable> {
     public BinNode<T> root;
     public Integer size;
@@ -201,7 +201,7 @@ public class BinTree<T extends Comparable> {
         tree.insert(13);
         tree.insert(16);
 
-//        tree.delete(3);
+        tree.delete(3);
         tree.delete(5);
         tree.delete(55);
 
