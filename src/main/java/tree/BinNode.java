@@ -6,7 +6,7 @@ package tree;
  * @author fengcaiwen
  * @since 6/12/2019
  */
-@SuppressWarnings("all")
+//@SuppressWarnings("all")
 public class BinNode<T extends Comparable> {
     public BinNode<T> parent;
     public BinNode<T> lChild;
@@ -14,7 +14,7 @@ public class BinNode<T extends Comparable> {
     public T data;
     public Integer n;
 
-    public BinNode(BinNode parent, T data) {
+    public BinNode(BinNode<T> parent, T data) {
         this.parent = parent;
         this.data = data;
     }
@@ -35,21 +35,21 @@ public class BinNode<T extends Comparable> {
     }
 
     public BinNode insertAsLc(T data) {
-        this.lChild = new BinNode(this, data);
+        this.lChild = new BinNode<T>(this, data);
         return this.lChild;
     }
 
     public BinNode insertAsRc(T data) {
-        this.rChild = new BinNode(this, data);
+        this.rChild = new BinNode<T>(this, data);
         return this.rChild;
     }
 
-    public BinNode search(BinNode node, T date) {
+    public BinNode search(BinNode<T> node, T date) {
         if (node == null || node.data == date) return node;
         return search((date.compareTo(node.data) == 1 ? node.rChild : node.lChild), date);
     }
 
-    public BinNode searchLastNotMatch(BinNode node, T date) {
+    public BinNode searchLastNotMatch(BinNode<T> node, T date) {
         if (node.rChild == null || node.rChild == null) return node;
         return searchLastNotMatch((date.compareTo(node.data) == 1 ? node.rChild : node.lChild), date);
     }
@@ -60,9 +60,9 @@ public class BinNode<T extends Comparable> {
             BinNode parent = searchLastNotMatch(node, date);
             // todo optimze
             if (date.compareTo(parent.data) == 1)
-                parent.rChild = new BinNode(parent, date);
+                parent.rChild = new BinNode<T>(parent, date);
             else
-                parent.lChild = new BinNode(parent, date);
+                parent.lChild = new BinNode<T>(parent, date);
         }
         return search;
     }
@@ -77,34 +77,48 @@ public class BinNode<T extends Comparable> {
         return goAlongWithRight(node.rChild);
     }
 
+    // todo
     public BinNode delete(BinNode node, T date) {
-        BinNode search = search(node, date);
-        BinNode backup = search;
-        if (search == null || (search.lChild == null && search.rChild == null)) return null;
+        BinNode del = search(node, date);
+        BinNode backup = del;
+        if (del == null) return null;
 
-        BinNode boss;
-        if (search.lChild == null) {
-            boss = goAlongWithLeft(search.rChild);
-//            boss.parent = search.parent;
-//            search.parent.lChild = boss;
-            search.data = boss.data;
+        if (del.lChild == null && del.rChild == null) {
+            if (del.parent.lChild == del) del.parent.lChild = null;
+            if (del.parent.rChild == del) del.parent.rChild = null;
+            del = null;
+        } else if (del.lChild == null) {
+            BinNode maybe = goAlongWithLeft(del.rChild);
+            BinNode bp = maybe.parent;
+            if (bp.lChild == maybe) bp.lChild = null;
+            if (bp.rChild == maybe) bp.rChild = null;
+            maybe.parent = del.parent;
+            if (del.parent.lChild == del) {
+                del.parent.lChild = maybe;
+            } else if (del.parent.rChild == del) {
+                del.parent.rChild = maybe;
+            }
+            maybe.rChild = backup.rChild;
         } else {
-            boss = goAlongWithRight(search.lChild);
-//            boss.parent = search.parent;
-//            search.parent.rChild = boss;
-            search.data = boss.data;
+            BinNode maybe = goAlongWithLeft(del.rChild);
+            BinNode bp = maybe.parent;
+            if (bp.lChild == maybe) bp.lChild = null;
+            if (bp.rChild == maybe) bp.rChild = null;
+            maybe.parent = del.parent;
+            if (del.parent.lChild == del) {
+                del.parent.lChild = maybe;
+            } else if (del.parent.rChild == del) {
+                del.parent.rChild = maybe;
+            }
+            maybe.lChild = backup.lChild;
         }
 
-        if (boss.parent.lChild == search) boss.parent.lChild = null;
-        if (boss.parent.rChild == search) boss.parent.rChild = null;
-
-        boss = null;
 
         return backup;
     }
 
     public static void main(String[] args) {
-        BinNode node = new BinNode(10);
+        BinNode<Integer> node = new BinNode<>(10);
         node.insertAsLc(5);
         node.insertAsRc(15);
         node.lChild.insertAsLc(3);
