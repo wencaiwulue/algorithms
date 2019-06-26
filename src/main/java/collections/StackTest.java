@@ -17,9 +17,10 @@ public class StackTest {
         stack.add(4);
         stack.add(5);
         Iterator<Integer> iterator = stack.iterator();
-        for (Integer integer : stack) {
-            System.out.println(integer);
-        }
+        iterator.forEachRemaining(e-> System.out.println(e));
+//        for (Integer integer : stack) {
+//            System.out.println(integer);
+//        }
 
         List<Integer> list  = new ArrayList<>();
         while (!stack.empty()){

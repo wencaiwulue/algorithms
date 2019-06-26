@@ -8,12 +8,29 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @since 6/13/2019
  */
 @SuppressWarnings("all")
-public class BinTree {
-    public BinNode root;
+public class BinTree<T extends Comparable> {
+    public BinNode<T> root;
     public Integer size;
 
-    public BinTree(BinNode root) {
-        this.root = root;
+    public BinTree() {
+    }
+
+    //todo
+    public void insert(T data) {
+        if (root == null)
+            root = new BinNode<>(data);
+        else
+            root.insert(root, data);
+    }
+
+    // todo
+    public BinNode search(T data) {
+        return root.search(root, data);
+    }
+
+    // todo
+    public void delete(T data) {
+        root.delete(root, data);
     }
 
     // --------------------1, recursion----------------------------
@@ -74,27 +91,34 @@ public class BinTree {
         return list.iterator();
     }
 
-    public Iterator travLevel_test(BinNode node, BinNode node0) throws InterruptedException {
-        LinkedBlockingQueue<BinNode> queue = new LinkedBlockingQueue<>();
-        LinkedBlockingQueue<BinNode> queue0 = new LinkedBlockingQueue<>();
-        List<Object> list = new LinkedList<>();
-        queue.put(node);
-        queue0.put(node0);
-        while (!queue.isEmpty() && !queue0.isEmpty()) {
-            BinNode poll = queue.poll();
-            BinNode poll0 = queue0.poll();
-//            list.add(poll.data);
-//            list.add(poll0.data);
-            if (poll.data != poll0.data) {
+    /**
+     * evelate this two node is same or not
+     *
+     * @param node1 one
+     * @param node2 other
+     */
+    public Iterator judgeIfTheSameByTravelLevel(BinNode<T> node1, BinNode<T> node2) throws InterruptedException {
+        LinkedBlockingQueue<BinNode<T>> q1 = new LinkedBlockingQueue<>();
+        LinkedBlockingQueue<BinNode<T>> q2 = new LinkedBlockingQueue<>();
+        List<T> list = new LinkedList<>();
+        q1.put(node1);
+        q2.put(node2);
+        while (!q1.isEmpty() && !q2.isEmpty()) {
+            BinNode<T> p1 = q1.poll();
+            BinNode<T> p2 = q2.poll();
+            list.add(p1.data);
+            list.add(p2.data);
+            if (p1.data != p2.data) {
                 System.out.println("not match");
                 return null;
             }
-            if (poll.lChild != null) queue.put(poll.lChild);
-            if (poll.rChild != null) queue.put(poll.rChild);
+            if (p1.lChild != null) q1.put(p1.lChild);
+            if (p1.rChild != null) q1.put(p1.rChild);
 
-            if (poll0.lChild != null) queue0.put(poll0.lChild);
-            if (poll0.rChild != null) queue0.put(poll0.rChild);
+            if (p2.lChild != null) q2.put(p2.lChild);
+            if (p2.rChild != null) q2.put(p2.rChild);
         }
+        System.out.println("match");
         return list.iterator();
     }
 
@@ -120,25 +144,24 @@ public class BinTree {
     }
 
     public Iterator travIn0() {
-        Stack<BinNode> stack = new Stack<>();
-        List<Object> result = new ArrayList<>();
-        stack.add(root);
-        while (!stack.isEmpty()) {
-
-        }
+//        Stack<BinNode<T>> stack = new Stack<>();
+//        List<Object> result = new ArrayList<>();
+//        stack.add(root);
+//        while (!stack.isEmpty()) {
+//
+//        }
 
         return null;
     }
 
     public Iterator travIn0(Stack<BinNode> stack, BinNode node) {
-//        while (node.lChild=null){}
         return null;
     }
 
     public Iterator travPost0() {
-        Stack<BinNode> stack = new Stack<>();
-        List<Object> result = new ArrayList<>();
-        stack.add(root);
+//        Stack<BinNode> stack = new Stack<>();
+//        List<Object> result = new ArrayList<>();
+//        stack.add(root);
 
         return null;
     }
@@ -161,57 +184,48 @@ public class BinTree {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        BinNode node = new BinNode(10);
+        BinNode<Integer> node = new BinNode<>(10);
         node.insertAsLc(5);
         node.insertAsRc(15);
         node.lChild.insertAsLc(3);
         node.lChild.insertAsRc(6);
-
         node.rChild.insertAsLc(13);
         node.rChild.insertAsRc(16);
 
-        BinNode node0 = new BinNode(10);
-        node0.insertAsLc(5);
-        node0.insertAsRc(15);
-        node0.lChild.insertAsLc(3);
-        node0.lChild.insertAsRc(6);
-        node0.rChild.insertAsLc(13);
-        node0.rChild.insertAsRc(16);
+        BinTree<Integer> tree = new BinTree<>();
+        tree.insert(10);
+        tree.insert(5);
+        tree.insert(15);
+        tree.insert(3);
+        tree.insert(6);
+        tree.insert(13);
+        tree.insert(16);
 
-        BinTree tree = new BinTree(node);
-        Iterator iterator = tree.travPre();
-        System.out.println("this is pre: ");
-        while (iterator.hasNext())
-            System.out.print(iterator.next() + " ");
+        Iterator i0 = tree.travPre();
+        System.out.println("trav_pre:");
+        i0.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
 
-
-        System.out.println("this is iteration pre:");
-        Iterator iterator3 = tree.travPre0();
-        while (iterator3.hasNext())
-            System.out.print(iterator3.next() + " ");
+        System.out.println("iteration_pre:");
+        Iterator i1 = tree.travPre0();
+        i1.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
 
-        System.out.println("this is in: ");
-        Iterator iterator0 = tree.travIn();
-        while (iterator0.hasNext())
-            System.out.print(iterator0.next() + " ");
+        System.out.println("trav_in: ");
+        Iterator i2 = tree.travIn();
+        i2.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
 
-        System.out.println("this is post: ");
-        Iterator iterator1 = tree.travPost();
-        while (iterator1.hasNext())
-            System.out.print(iterator1.next() + " ");
+        System.out.println("trav_post:");
+        Iterator i3 = tree.travPost();
+        i3.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
 
-        System.out.println("this is level: ");
-        Iterator iterator2 = tree.travLevel();
-        while (iterator2.hasNext())
-            System.out.print(iterator2.next() + " ");
-
-        new BinTree(null).travLevel_test(node, node0);
-
+        System.out.println("trav_level:");
+        Iterator i4 = tree.travLevel();
+        i4.forEachRemaining(e -> System.out.print(e + " "));
+        System.out.println();
+        new BinTree<Integer>().judgeIfTheSameByTravelLevel(tree.root, node);
     }
-
 
 }
