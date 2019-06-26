@@ -201,6 +201,9 @@ public class BinTree<T extends Comparable> {
         tree.insert(13);
         tree.insert(16);
 
+        tree.delete(5);
+        tree.delete(55);
+
         Iterator i0 = tree.travPre();
         System.out.println("trav_pre:");
         i0.forEachRemaining(e -> System.out.print(e + " "));
@@ -226,6 +229,9 @@ public class BinTree<T extends Comparable> {
         i4.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
         new BinTree<Integer>().judgeIfTheSameByTravelLevel(tree.root, node);
+
+        System.out.println(tree.search(5).data);
+        System.out.println(Optional.ofNullable(tree.search(55)).orElse(new BinNode(-1)).data);
     }
 
 }

@@ -77,18 +77,30 @@ public class BinNode<T extends Comparable> {
         return goAlongWithRight(node.rChild);
     }
 
-    public void delete(BinNode node, T date) {
+    public BinNode delete(BinNode node, T date) {
         BinNode search = search(node, date);
         BinNode backup = search;
-        if (search == null || (search.lChild == null && search.rChild == null)) return;
+        if (search == null || (search.lChild == null && search.rChild == null)) return null;
 
         BinNode boss;
-        if (search.lChild == null)
-            boss = goAlongWithRight(search.rChild);
-        else
-            boss = goAlongWithLeft(search.lChild);
+        if (search.lChild == null) {
+            boss = goAlongWithLeft(search.rChild);
+//            boss.parent = search.parent;
+//            search.parent.lChild = boss;
+            search.data = boss.data;
+        } else {
+            boss = goAlongWithRight(search.lChild);
+//            boss.parent = search.parent;
+//            search.parent.rChild = boss;
+            search.data = boss.data;
+        }
 
-        search = boss;
+        if (boss.parent.lChild == search) boss.parent.lChild = null;
+        if (boss.parent.rChild == search) boss.parent.rChild = null;
+
+        boss = null;
+
+        return backup;
     }
 
     public static void main(String[] args) {
