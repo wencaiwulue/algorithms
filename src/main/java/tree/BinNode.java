@@ -79,36 +79,36 @@ public class BinNode<T extends Comparable> {
 
     // todo
     public BinNode delete(BinNode<T> node, T date) {
-        BinNode tobedel = search(node, date);
-        if (tobedel == null) return null;
+        BinNode remove = search(node, date);
+        if (remove == null) return null;
 
         // 1, if node to be deleted is leaf node, the make it's parent point to null, then done
-        if (tobedel.lChild == null && tobedel.rChild == null) {
-            if (tobedel.parent.lChild == tobedel) tobedel.parent.lChild = null;
-            if (tobedel.parent.rChild == tobedel) tobedel.parent.rChild = null;
+        if (remove.lChild == null && remove.rChild == null) {
+            if (remove.parent.lChild == remove) remove.parent.lChild = null;
+            if (remove.parent.rChild == remove) remove.parent.rChild = null;
         } else {
             // 2, if not, use alternate node to replace the node which to be delete
             // 1), find alternate, make it's parent point to alternate node to be null
             // 2), make to be deleted node's parent point to alternate
             // 3), make to be deleted node's left and right node point to alternate
             BinNode alternate;
-            if (tobedel.rChild == null)
-                alternate = goAlongWithRight(tobedel.lChild);
+            if (remove.rChild == null)
+                alternate = goAlongWithRight(remove.lChild);
             else
-                alternate = goAlongWithLeft(tobedel.rChild);
+                alternate = goAlongWithLeft(remove.rChild);
             BinNode bp = alternate.parent;
             if (bp.lChild == alternate) bp.lChild = null;
             if (bp.rChild == alternate) bp.rChild = null;
-            alternate.parent = tobedel.parent;
-            if (tobedel.parent.lChild == tobedel)
-                tobedel.parent.lChild = alternate;
-            else if (tobedel.parent.rChild == tobedel)
-                tobedel.parent.rChild = alternate;
+            alternate.parent = remove.parent;
+            if (remove.parent.lChild == remove)
+                remove.parent.lChild = alternate;
+            else if (remove.parent.rChild == remove)
+                remove.parent.rChild = alternate;
 
-            alternate.lChild = tobedel.lChild;
-            alternate.rChild = tobedel.rChild;
+            alternate.lChild = remove.lChild;
+            alternate.rChild = remove.rChild;
         }
-        return tobedel;
+        return remove;
     }
 
     public static void main(String[] args) {
