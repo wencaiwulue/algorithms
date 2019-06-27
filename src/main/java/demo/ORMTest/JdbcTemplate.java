@@ -82,7 +82,7 @@ public class JdbcTemplate<T> {
         return first;
     }
 
-    private List<T> query(String sql, Class<T> tClass) throws Throwable {
+    public List<T> query(String sql, Class<T> tClass) throws Throwable {
         Connection connect = getConnect();
         PreparedStatement ps = connect.prepareStatement(sql);
         ResultSet set = ps.executeQuery(sql);
@@ -91,7 +91,7 @@ public class JdbcTemplate<T> {
         return Result2BeanTools.trans(set, tClass);
     }
 
-    private int update(String sql) {
+    public int update(String sql) {
         Connection connect = getConnect();
         try {
             connect.setAutoCommit(false);
