@@ -1,6 +1,8 @@
 package demo.ORMTest.util;
 
 
+import com.google.common.base.Joiner;
+
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -21,7 +23,7 @@ public class Result2BeanTools {
      * @param rs    ResultSet
      * @param clazz type
      */
-    public static <T> List<T> trans(ResultSet rs, Class<T> clazz) throws Throwable {
+    public static <T> List<T> transfer(ResultSet rs, Class<T> clazz) throws Throwable {
         ResultSetMetaData metaData = rs.getMetaData();
         int columnCount = metaData.getColumnCount();
 
@@ -43,5 +45,28 @@ public class Result2BeanTools {
             result.add(t);
         }
         return result;
+    }
+
+    public static <T> String generateSql(T t) {
+        // todo optimize if class name is like AppUser
+        StringBuilder sql = new StringBuilder("insert into " + t.getClass().getSimpleName().toLowerCase() + " set ");
+        List<String> sub = new ArrayList<>();
+        Class<?> aClass = t.getClass();
+        Field[] fields = aClass.getDeclaredFields();
+        for (Field field : fields) {
+            Object value = null;
+            try {
+                value = field.get(t);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if (value != null) {
+                sub.add(field.getName() + "='" + value + "'");
+            }
+        }
+
+        sql.append(Joiner.on(",").join(sub));
+        return sql.toString();
+
     }
 }
