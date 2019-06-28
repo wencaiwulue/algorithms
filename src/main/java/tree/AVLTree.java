@@ -20,7 +20,7 @@ public class AVLTree<T extends Comparable> {
         if (hot == null) return;
         // rotate
         while (hot != null) {
-            BinNode temp = hot.parent;
+            BinNode temp = hot;
             if (Math.abs(updateAndGetHeight(temp.lChild) - updateAndGetHeight(temp.rChild)) > 1) {
                 rotate(tallerChild(tallerChild(temp)));
             }
@@ -60,6 +60,8 @@ public class AVLTree<T extends Comparable> {
          *   /          \            /           \
          *  1            1          1             1
          *  (1)         (2)         (3)         (4)
+         *
+         *  中序遍历顺序就是从小到大的顺序
          */
         if (node3.lChild == node2) {
             if (node2.lChild == node1) {
@@ -100,6 +102,10 @@ public class AVLTree<T extends Comparable> {
             }
         }
         connect34(a, b, c, t1, t2, t3, t4);
+
+        updateAndGetHeight(node1);
+        updateAndGetHeight(node2);
+        updateAndGetHeight(node3);
 
     }
 

@@ -24,9 +24,10 @@ public class BinNode<T extends Comparable> {
     }
 
     /**
-     *
+     * update and return height
      */
     public static int updateAndGetHeight(BinNode node) {
+        if (node == null) return 1;
         int i = 1;
         int j = 1;
         if (node.lChild != null) {
