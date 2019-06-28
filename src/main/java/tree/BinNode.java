@@ -28,6 +28,7 @@ public class BinNode<T extends Comparable> {
      */
     public int updateAndGetHeight() {
         int i = 1;
+
         int j = 1;
         if (this.lChild != null) {
             i += this.lChild.updateAndGetHeight();
