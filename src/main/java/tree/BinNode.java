@@ -23,6 +23,22 @@ public class BinNode<T extends Comparable> {
         this.data = data;
     }
 
+    /**
+     *
+     */
+    public int updateAndGetHeight() {
+        int i = 1;
+        int j = 1;
+        if (this.lChild != null) {
+            i += this.lChild.updateAndGetHeight();
+        }
+        if (this.rChild != null) {
+            j += this.rChild.updateAndGetHeight();
+        }
+        this.n = i > j ? i : j;
+        return this.n;
+    }
+
     public int size() {
         int s = 1;
         if (this.lChild != null) {
@@ -120,7 +136,17 @@ public class BinNode<T extends Comparable> {
         node.rChild.insertAsLc(13);
         node.rChild.insertAsRc(16);
 
+        node.rChild.rChild.insertAsRc(17);
+        node.rChild.rChild.rChild.insertAsRc(18);
+        node.rChild.rChild.rChild.rChild.insertAsRc(22);
+        node.rChild.rChild.rChild.rChild.insertAsLc(20);
+        node.rChild.rChild.rChild.rChild.rChild.insertAsLc(19);
+
         System.out.println(node);
+        System.out.println(node.size());
+        node.updateAndGetHeight();
+
+        System.out.println(node.n);
 
     }
 
