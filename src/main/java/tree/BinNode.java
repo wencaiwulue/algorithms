@@ -26,18 +26,17 @@ public class BinNode<T extends Comparable> {
     /**
      *
      */
-    public int updateAndGetHeight() {
+    public static int updateAndGetHeight(BinNode node) {
         int i = 1;
-
         int j = 1;
-        if (this.lChild != null) {
-            i += this.lChild.updateAndGetHeight();
+        if (node.lChild != null) {
+            i += updateAndGetHeight(node.lChild);
         }
-        if (this.rChild != null) {
-            j += this.rChild.updateAndGetHeight();
+        if (node.rChild != null) {
+            j += updateAndGetHeight(node.rChild);
         }
-        this.n = i > j ? i : j;
-        return this.n;
+        node.n = i > j ? i : j;
+        return node.n;
     }
 
     public int size() {
@@ -67,9 +66,8 @@ public class BinNode<T extends Comparable> {
         return search((date.compareTo(node.data) > 0 ? node.rChild : node.lChild), date, hot);
     }
 
-    public BinNode<T> insert(BinNode<T> node, T data) {
+    public BinNode<T> insert(BinNode<T> node, T data, BinNode hot) {
 
-        BinNode hot = new BinNode(-1);
         BinNode search = search(node, data, hot);
         hot = hot.parent;
         if (search == null) {
@@ -93,8 +91,7 @@ public class BinNode<T extends Comparable> {
     }
 
     // todo
-    public BinNode delete(BinNode<T> node, T date) {
-        BinNode hot = new BinNode(-1);
+    public BinNode delete(BinNode<T> node, T date, BinNode hot) {
         BinNode remove = search(node, date, hot);
         if (remove == null) return null;
 
@@ -145,7 +142,7 @@ public class BinNode<T extends Comparable> {
 
         System.out.println(node);
         System.out.println(node.size());
-        node.updateAndGetHeight();
+        updateAndGetHeight(node);
 
         System.out.println(node.n);
 

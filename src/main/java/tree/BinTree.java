@@ -17,10 +17,13 @@ public class BinTree<T extends Comparable> {
 
     //todo
     public void insert(T data) {
-        if (root == null)
+        if (root == null){
             root = new BinNode<>(data);
-        else
-            root.insert(root, data);
+        }
+        else{
+            BinNode hot = new BinNode(-1);
+            root.insert(root, data, hot);
+        }
     }
 
     // todo
@@ -31,7 +34,8 @@ public class BinTree<T extends Comparable> {
 
     // todo
     public void delete(T data) {
-        root.delete(root, data);
+        BinNode hot = new BinNode(-1);
+        root.delete(root, data, hot);
     }
 
     // --------------------1, recursion----------------------------
