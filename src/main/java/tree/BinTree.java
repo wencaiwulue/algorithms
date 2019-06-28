@@ -21,7 +21,7 @@ public class BinTree<T extends Comparable> {
             root = new BinNode<>(data);
         }
         else{
-            BinNode hot = new BinNode(-1);
+            BinNode<Integer> hot = new BinNode<>(-1);
             root.insert(root, data, hot);
         }
     }

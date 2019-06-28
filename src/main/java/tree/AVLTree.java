@@ -14,7 +14,7 @@ public class AVLTree<T extends Comparable> {
     }
 
     public void insert(T data) {
-        BinNode<T> fakeHot = new BinNode(-1);
+        BinNode<Integer> fakeHot = new BinNode<>(-1);
         root.insert(root, data, fakeHot);
         BinNode hot = fakeHot.parent;
         if (hot == null) return;
