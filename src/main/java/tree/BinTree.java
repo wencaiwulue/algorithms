@@ -25,7 +25,8 @@ public class BinTree<T extends Comparable> {
 
     // todo
     public BinNode search(T data) {
-        return root.search(root, data);
+        BinNode hot = new BinNode(new BinNode(null, -1), -1);
+        return root.search(root, data, hot);
     }
 
     // todo

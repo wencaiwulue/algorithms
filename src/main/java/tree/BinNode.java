@@ -44,25 +44,23 @@ public class BinNode<T extends Comparable> {
         return this.rChild;
     }
 
-    public BinNode search(BinNode<T> node, T date) {
+    public BinNode search(BinNode<T> node, T date, BinNode hot) {
         if (node == null || node.data == date) return node;
-        return search((date.compareTo(node.data) > 0 ? node.rChild : node.lChild), date);
-    }
-
-    public BinNode searchLastNotMatch(BinNode<T> node, T date) {
-        if (node.lChild == null || node.rChild == null) return node;
-        return searchLastNotMatch((date.compareTo(node.data) > 0 ? node.rChild : node.lChild), date);
+        hot.parent = node;
+        return search((date.compareTo(node.data) > 0 ? node.rChild : node.lChild), date, hot);
     }
 
     public BinNode<T> insert(BinNode<T> node, T data) {
-        BinNode search = search(node, data);
+
+        BinNode hot = new BinNode(-1);
+        BinNode search = search(node, data, hot);
+        hot = hot.parent;
         if (search == null) {
-            BinNode parent = searchLastNotMatch(node, data);
             // todo optimze
-            if (data.compareTo(parent.data) > 0)
-                parent.rChild = new BinNode<T>(parent, data);
+            if (data.compareTo(hot.data) > 0)
+                hot.rChild = new BinNode<T>(hot, data);
             else
-                parent.lChild = new BinNode<T>(parent, data);
+                hot.lChild = new BinNode<T>(hot, data);
         }
         return search;
     }
@@ -79,7 +77,8 @@ public class BinNode<T extends Comparable> {
 
     // todo
     public BinNode delete(BinNode<T> node, T date) {
-        BinNode remove = search(node, date);
+        BinNode hot = new BinNode(-1);
+        BinNode remove = search(node, date, hot);
         if (remove == null) return null;
 
         // 1, if node to be deleted is leaf node, the make it's parent point to null, then done

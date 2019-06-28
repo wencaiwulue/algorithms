@@ -107,10 +107,6 @@ public class JdbcTemplate<T> {
             try {
                 connect.rollback();
             } catch (Throwable e1) {
-                if (e1.getMessage().contains("SQLSyntaxErrorException"))
-                    System.out.println("bad grammar");
-                else
-                    e1.printStackTrace();
                 e1.printStackTrace();
             }
             if (e.getMessage().contains("SQLSyntaxErrorException"))
