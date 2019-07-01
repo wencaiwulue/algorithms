@@ -8,7 +8,7 @@ package reference;
 public class ReferenceTest {
     public static void main(String[] args) {
 
-        Entity e = /*new Entity("1",2)*/null;
+        Entity e = new Entity("1",2)/*null*/;
         change(e);
 //        unchange(e);
         System.out.println(e);

@@ -2,7 +2,6 @@ package demo.ORMTest;
 
 import demo.ORMTest.util.Result2BeanTools;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
@@ -14,9 +13,9 @@ import java.util.concurrent.atomic.LongAdder;
  * @author fengcaiwen
  * @since 6/26/2019
  */
-@SuppressWarnings("unchecked")
+
 @Component
-public class JdbcTemplate<T> {
+public class JdbcTemplate {
 
     // jdbc url
     private String url;
@@ -87,7 +86,7 @@ public class JdbcTemplate<T> {
         }
     }
 
-    public List<T> query(String sql, Class<T> tClass) throws Throwable {
+    public <T> List<T> query(String sql, Class<T> tClass) throws Throwable {
         Connection connect = getConnection();
         PreparedStatement ps = connect.prepareStatement(sql);
         ResultSet set = ps.executeQuery(sql);
@@ -125,7 +124,7 @@ public class JdbcTemplate<T> {
         return -1;
     }
 
-    public long insert(T t) {
+    public <T> long insert(T t) {
         Connection connect = getConnection();
         String sql = Result2BeanTools.generateSql(t);
         System.out.println(sql);
