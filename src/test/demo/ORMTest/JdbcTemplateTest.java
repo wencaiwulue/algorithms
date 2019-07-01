@@ -44,12 +44,16 @@ public class JdbcTemplateTest {
         String sql = "select * from user ";
         Class<User> userClass = User.class;
 
-        CountDownLatch latch = new CountDownLatch(10000);
+        int a = Runtime.getRuntime().availableProcessors();
+        System.out.println(a);
+        CountDownLatch latch = new CountDownLatch(a);
         List<Thread> threadList = new LinkedList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < a; i++) {
             threadList.add(new Thread(() -> {
                 try {
-                    jdbcTemplate.query(sql, userClass);
+                    for (int j = 0; j < 10000; j++) {
+                        jdbcTemplate.query(sql, userClass);
+                    }
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 } finally {

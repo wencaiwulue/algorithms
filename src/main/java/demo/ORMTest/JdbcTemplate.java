@@ -29,7 +29,7 @@ public class JdbcTemplate<T> {
     // available connection
     private static ConcurrentLinkedDeque<Connection> connectionPool = new ConcurrentLinkedDeque<>();
 
-    private static final int coreSize = 99;
+    private static final int coreSize = 32;
     private static volatile LongAdder current = new LongAdder();
 
     public JdbcTemplate() {
