@@ -44,7 +44,7 @@ public class Diagraph {
 
         this.adj = new Stack[this.v];
         for (int j = 0; j < this.v; j++) {
-            this.adj[j] = new Stack();
+            this.adj[j] = new Stack<>();
         }
 
         lines.stream().skip(2).forEach(e -> {

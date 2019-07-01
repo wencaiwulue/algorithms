@@ -17,10 +17,18 @@ public class StackTest {
         stack.add(4);
         stack.add(5);
         Iterator<Integer> iterator = stack.iterator();
-        iterator.forEachRemaining(e-> System.out.println(e));
+        iterator.forEachRemaining(System.out::println);
 //        for (Integer integer : stack) {
 //            System.out.println(integer);
 //        }
+
+        Stack<Integer>[] stacks = new Stack[10];
+        for (int i = 0; i < 10; i++) {
+            stacks[i] = new Stack<Integer>();
+        }
+
+        Integer peek = stacks[0].peek();
+        System.out.println();
 
         List<Integer> list  = new ArrayList<>();
         while (!stack.empty()){
