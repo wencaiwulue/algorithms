@@ -4,7 +4,7 @@ package question;
  * @author fengcaiwen
  * @since 7/2/2019
  */
-public class Solution {
+public class FrogJumpTest {
 
     public static void main(String[] args) {
         int n = 5;
