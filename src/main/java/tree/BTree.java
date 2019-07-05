@@ -77,6 +77,24 @@ public class BTree<T extends Comparable> {
     //          /\    -->         \
     //        []  []               [][][]
     public void underflow(BTNode node) {
+
+        int i = node.parent.child.indexOf(node);
+        BTNode lb = (BTNode) node.parent.child.get(i - 1);
+        BTNode rb = (BTNode) node.parent.child.get(i + 1);
+        int minBranch = BigDecimal.valueOf(m).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).subtract(BigDecimal.ONE).intValue();
+        // combine
+        if ((lb.keys.size() - 1 < minBranch) && (rb.keys.size() - 1 < minBranch)) {
+            T o = (T) node.parent.keys.get(i - 1);
+
+        } else if (lb.keys.size() - 1 < minBranch) {
+
+            // borrow
+        } else if (rb.keys.size() - 1 < minBranch) {
+            // borrow
+        } else {
+            // borrow
+        }
+
         // todo
     }
 
@@ -114,19 +132,16 @@ public class BTree<T extends Comparable> {
         }
 
         // exchange
-        // todo
-        BTNode temp = hot;
-        hot.parent = search.parent;
-        hot.keys = search.keys;
-        hot.child = search.child;
-
-        search.keys = temp.keys;
-        search.child = temp.child;
-        search.parent = temp.parent;
-
+        search.parent = hot.parent;
+        int index = search.keys.indexOf(key);
+        search.keys.set(index, hot.keys.get(0));
         // remove leaf
+        hot.keys.remove(0);
+        hot.child.remove(1);
 
-
+        // ⌈m/2⌉-1
+        int minBranch = BigDecimal.valueOf(m).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).subtract(BigDecimal.ONE).intValue();
+        if (hot.keys.size() < minBranch) underflow(hot);
     }
 
     public BTNode search(BTNode node, T key) {
