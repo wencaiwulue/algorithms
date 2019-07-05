@@ -73,7 +73,7 @@ public class BTree<T extends Comparable> {
     // this node needs to underflow
     // try to borrow node from left or right brother, if brother do not have enough node to borrow(bigger than ⌈m/2⌉ or not)
     // try to combine this node parent and right or left node become a big node
-    //   [][][][][]         [][][][]
+    //    [][][][][]         [][][][]
     //          /\    -->         \
     //        []  []               [][][]
     public void underflow(BTNode node) {
