@@ -79,17 +79,17 @@ public class BTree<T extends Comparable> {
     public void underflow(BTNode node) {
 
         int i = node.parent.child.indexOf(node);
-        BTNode lb = (BTNode) node.parent.child.get(i - 1);
-        BTNode rb = (BTNode) node.parent.child.get(i + 1);
+        BTNode lb = i - 1 < 0 ? null : (BTNode) node.parent.child.get(i - 1);
+        BTNode rb = i + 1 > node.parent.child.size() ? null : (BTNode) node.parent.child.get(i + 1);
         int minBranch = BigDecimal.valueOf(m).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).subtract(BigDecimal.ONE).intValue();
         // combine
-        if ((lb.keys.size() - 1 < minBranch) && (rb.keys.size() - 1 < minBranch)) {
+        if ((lb == null || lb.keys.size() - 1 < minBranch) && (rb == null || (rb.keys.size() - 1 < minBranch))) {
             T o = (T) node.parent.keys.get(i - 1);
 
-        } else if (lb.keys.size() - 1 < minBranch) {
 
+        } else if (lb != null && lb.keys.size() - 1 > minBranch) {
             // borrow
-        } else if (rb.keys.size() - 1 < minBranch) {
+        } else if (rb != null && rb.keys.size() - 1 > minBranch) {
             // borrow
         } else {
             // borrow
