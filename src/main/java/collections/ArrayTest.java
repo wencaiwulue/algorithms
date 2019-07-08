@@ -27,14 +27,14 @@ public class ArrayTest {
 //        System.out.println(users[0].getName());
 
         Map<String, List<DeepCloneAndShadowCloneTest.User>> map = new HashMap<>();
-        map.put("test", list);
+        map.put("check196", list);
 
         List<DeepCloneAndShadowCloneTest.User> userList = new ArrayList<>();
 
-        final List<DeepCloneAndShadowCloneTest.User> test = map.get("test");
+        final List<DeepCloneAndShadowCloneTest.User> test = map.get("check196");
         test.get(0).setName("haha");
 
-        System.out.println(map.get("test").get(0).getName());
+        System.out.println(map.get("check196").get(0).getName());
 
 
         int a  =1;

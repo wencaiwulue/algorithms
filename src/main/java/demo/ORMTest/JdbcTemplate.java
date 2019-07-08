@@ -33,7 +33,7 @@ public class JdbcTemplate {
 
     public JdbcTemplate() {
         // if do not set data source, use default
-        String url = "jdbc:mysql://localhost:3306/test";
+        String url = "jdbc:mysql://localhost:3306/check196";
         Properties p = new Properties();
         p.setProperty("user", "root");
         p.setProperty("password", "12345678");

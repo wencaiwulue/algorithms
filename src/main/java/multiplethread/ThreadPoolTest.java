@@ -96,7 +96,7 @@ public class ThreadPoolTest {
 
 //        Thread thread = new Thread(() -> {
 //            while (true) {
-//                System.out.println("test");
+//                System.out.println("check196");
 //            }
 //        });
 //        thread.setDaemon(true);

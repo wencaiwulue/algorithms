@@ -79,7 +79,7 @@ public class ThreadPoolTest01 {
                         runnable.run();
                     } else if ((test = futureTasks.poll()) != null) {
                         try {
-//                            Object result = test.get();
+//                            Object result = check196.get();
                             test.setResult("null");
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -67,7 +67,7 @@ public class JsonDeepCloneTest {
                     Objects.equals(name, user.name);
         }
 
-        // todo test without this method, check it out
+        // todo check196 without this method, check it out
 //        @Override
 //        public int hashCode() {
 //            return Objects.hash(id, name);

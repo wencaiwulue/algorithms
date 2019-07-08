@@ -43,7 +43,7 @@ public class FrogJumpTest {
 
 
 //        System.out.printf("lower:\t%s\n", Integer.parseInt("1011001000000111", 2));
-//        System.out.printf("test:\t%s\n", Integer.parseInt("100000000000000", 2));
+//        System.out.printf("check196:\t%s\n", Integer.parseInt("100000000000000", 2));
 //        System.out.println("100000000000000".length());
     }
 
