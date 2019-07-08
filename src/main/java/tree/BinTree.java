@@ -17,10 +17,9 @@ public class BinTree<T extends Comparable> {
 
     //todo
     public void insert(T data) {
-        if (root == null){
+        if (root == null) {
             root = new BinNode<>(data);
-        }
-        else{
+        } else {
             BinNode<Integer> hot = new BinNode<>(-1);
             root.insert(root, data, hot);
         }
