@@ -9,7 +9,7 @@ import java.util.List;
  * @author fengcaiwen
  * @since 7/5/2019
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("all")
 public class BTree<T extends Comparable> {
 
     // root
@@ -36,9 +36,11 @@ public class BTree<T extends Comparable> {
     // second: combine this node with it's parent, fix relationship
     // third: check parent needs to be overflow or not, if root, grow one level
     //
-    // [][][][]                   [][][][][]                      []
-    //         \              -->        /  \           -->      /  \
-    //          [][][][][]             [][]  [][]             [][]   [][]
+    //   [][]                       [][][]
+    //   [][][]                     [][][][]                       []
+    //         \              -->        /  \           -->       /  \
+    //          [][][][]              [][]    []               [][]   []
+    //          [][][][][]            [][][]  [][]             [][][] [][]
     //                                                                / \
     //                                                             [][]  [][]
     public void overflow(BTNode node) {
@@ -46,23 +48,34 @@ public class BTree<T extends Comparable> {
         if (node.keys.size() <= m - 1) return;
 
         // find middle of this node key
-        int middle = BigDecimal.valueOf(node.keys.size()).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).intValue();
-
-        // find the index of this node's parent child
-        int pi = node.parent.child.indexOf(node);
+//        int ceil = (int) Math.ceil(node.keys.size() / 2);
+        int middle = BigDecimal.valueOf(node.keys.size()).divide(BigDecimal.valueOf(2), RoundingMode.DOWN).intValue();
 
         BTNode left = new BTNode();
         BTNode right = new BTNode();
         left.keys.addAll(node.keys.subList(0, middle));
-        left.child.addAll(node.child.subList(0, middle + 1));
-        left.parent = node.parent;
         right.keys.addAll(node.keys.subList(middle + 1, node.keys.size()));
-        right.child.addAll(node.child.subList(middle + 2, node.child.size()));
-        right.parent = node.parent;
+        left.child.addAll(node.child.subList(0, middle + 1));
+        right.child.addAll(node.child.subList(middle + 1, node.child.size()));
 
-        node.parent.keys.add(pi, node.keys.get(middle));
-        node.parent.child.set(pi, left);
-        node.parent.child.set(pi + 1, right);
+        // root
+        if (node.parent == null) {
+            node.parent = new BTNode();
+            root = node.parent;
+            right.parent = node.parent;
+            left.parent = node.parent;
+            node.parent.keys.add(node.keys.get(middle));
+            node.parent.child.add(0, left);
+            node.parent.child.add(1, right);
+        } else {
+            // find the index of this node's parent child
+            int pi = node.parent.child.indexOf(node);
+            right.parent = node.parent;
+            left.parent = node.parent;
+            node.parent.keys.add((pi - 1) + 1, node.keys.get(middle));
+            node.parent.child.set(pi, left);
+            node.parent.child.add(pi + 1, right);
+        }
 
         overflow(node.parent);
     }
@@ -95,7 +108,11 @@ public class BTree<T extends Comparable> {
             node.child.add(0, rb.child.remove(0));
         } else {
             // combine
-            T o = (T) node.parent.keys.get(rank - 1);
+            T parent = (T) node.parent.keys.get(rank - 1);
+            BTNode new0 = new BTNode<>(parent, lb, rb);
+            if (lb != null) node.child.remove(lb);
+            if (rb != null) node.child.remove(rb);
+            node.child.set(rank, new0);
         }
 
     }
