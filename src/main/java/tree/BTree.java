@@ -112,6 +112,7 @@ public class BTree<T extends Comparable> {
             BTNode new0 = new BTNode<>(parent, lb, rb);
             if (lb != null) node.child.remove(lb);
             if (rb != null) node.child.remove(rb);
+            // todo
             node.child.set(rank, new0);
         }
 
