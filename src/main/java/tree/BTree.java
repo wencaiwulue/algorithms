@@ -32,88 +32,95 @@ public class BTree<T extends Comparable> {
     }
 
     // this node needs to overflow
-    // first: take the min key and node to it's parent
-    // second: if it's parent also needs to flow, try step first
-    // third: until to root, maybe all tree grow one level
+    // first: split this node into three parts, left, this node, right
+    // second: combine this node with it's parent, fix relationship
+    // third: check parent needs to be overflow or not, if root, grow one level
     //
     // [][][][]                   [][][][][]                      []
-    //         \              -->           \           -->      /  \
-    //          [][][][][]                   [][][][]         [][]   [][]
-    //                                                                   \
-    //                                                                    [][][][]
+    //         \              -->        /  \           -->      /  \
+    //          [][][][][]             [][]  [][]             [][]   [][]
+    //                                                                / \
+    //                                                             [][]  [][]
     public void overflow(BTNode node) {
-        T o = (T) node.keys.remove(0);
-        BTNode b = (BTNode) node.child.remove(1);
+        // 1, if not reach threshold, then return
+        if (node.keys.size() <= m - 1) return;
 
+        // find middle of this node key
         int middle = BigDecimal.valueOf(node.keys.size()).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).intValue();
-        BTNode parent = node.parent;
-        if (parent != null) {
-            parent.keys.add(o);
-            parent.child.add(b);
-            if (parent.keys.size() > m - 1) overflow(parent);
-        } else {
-            // root node, split into two parts
-            BTNode lc = new BTNode();
-            lc.parent = b;
-            lc.keys.addAll(node.keys.subList(0, middle));
-            lc.child.addAll(node.child.subList(0, middle + 1));
 
-            BTNode rc = new BTNode();
-            rc.parent = b;
-            rc.keys.addAll(node.keys.subList(middle, node.keys.size() - 1));
-            rc.child.addAll(node.child.subList(middle + 1, node.child.size() - 1));
+        // find the index of this node's parent child
+        int pi = node.parent.child.indexOf(node);
 
-            b.parent = null;
-            // todo check it
-            b.child.add(0, lc);
-            b.child.add(1, rc);
-        }
+        BTNode left = new BTNode();
+        BTNode right = new BTNode();
+        left.keys.addAll(node.keys.subList(0, middle));
+        left.child.addAll(node.child.subList(0, middle + 1));
+        left.parent = node.parent;
+        right.keys.addAll(node.keys.subList(middle + 1, node.keys.size()));
+        right.child.addAll(node.child.subList(middle + 2, node.child.size()));
+        right.parent = node.parent;
+
+        node.parent.keys.add(pi, node.keys.get(middle));
+        node.parent.child.set(pi, left);
+        node.parent.child.set(pi + 1, right);
+
+        overflow(node.parent);
     }
 
     // this node needs to underflow
     // try to borrow node from left or right brother, if brother do not have enough node to borrow(bigger than ⌈m/2⌉ or not)
     // try to combine this node parent and right or left node become a big node
-    //    [][][][][]         [][][][]
-    //          /\    -->         \
-    //        []  []               [][][]
+    //    [][][][][]         [][][][]                          [][][][]         [][][][]
+    //          /\    -->         \                 or             /  \   -->       / \
+    //        []  []               [][][]                  [][][][]    []     [][][]   [][]
     public void underflow(BTNode node) {
+        int min = BigDecimal.valueOf(m).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).subtract(BigDecimal.ONE).intValue();
 
-        int i = node.parent.child.indexOf(node);
-        BTNode lb = i - 1 < 0 ? null : (BTNode) node.parent.child.get(i - 1);
-        BTNode rb = i + 1 > node.parent.child.size() ? null : (BTNode) node.parent.child.get(i + 1);
-        int minBranch = BigDecimal.valueOf(m).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).subtract(BigDecimal.ONE).intValue();
-        // combine
-        if ((lb == null || lb.keys.size() - 1 < minBranch) && (rb == null || (rb.keys.size() - 1 < minBranch))) {
-            T o = (T) node.parent.keys.get(i - 1);
+        if (node.keys.size() > min) return;
 
-
-        } else if (lb != null && lb.keys.size() - 1 > minBranch) {
-            // borrow
-        } else if (rb != null && rb.keys.size() - 1 > minBranch) {
-            // borrow
+        int rank = node.parent.child.indexOf(node);
+        BTNode lb = rank - 1 < 0 ? null : (BTNode) node.parent.child.get(rank - 1);
+        BTNode rb = rank + 1 > node.parent.child.size() ? null : (BTNode) node.parent.child.get(rank + 1);
+        if (lb != null && lb.keys.size() - 1 > min) {
+            // borrow from left brother
+            T bak = (T) node.parent.keys.get(rank - 1);
+            node.parent.keys.set(rank - 1, (T) lb.keys.remove(lb.keys.size() - 1));
+            node.keys.add(0, bak);
+            node.child.add(0, lb.child.remove(lb.child.size() - 1));
+        } else if (rb != null && rb.keys.size() - 1 > min) {
+            // borrow from right brother
+            T bak = (T) node.parent.keys.get(rank - 1);
+            node.parent.keys.set(rank - 1, rb.keys.remove(0));
+            node.keys.add(0, bak);
+            node.child.add(0, rb.child.remove(0));
         } else {
-            // borrow
+            // combine
+            T o = (T) node.parent.keys.get(rank - 1);
         }
 
-        // todo
     }
 
     // maybe need to overflow
-    public boolean insert(T key, BTNode lc, BTNode rc) {
+    public boolean insert(T key) {
         BTNode search = search(root, key);
         if (search != null) return false;
 
-        // should insert at hot node
-        for (int i = 0; i < hot.keys.size(); i++) {
-            int cmp = key.compareTo(hot.keys.get(i));
-            if (cmp < 0) {
-                hot.keys.add(i, key);
-                hot.child.add(i + 1, new BTNode(key, (BTNode) hot.child.get(i), (BTNode) hot.child.get(i + 1)));
+        // should insert at hot node, todo attention this line, because of java feature reference, we can't change reference
+        BTNode realHot = hot.parent;
+
+        int p = 0;
+        for (int i = 0; i < realHot.keys.size(); i++) {
+            int cmp = key.compareTo(realHot.keys.get(i));
+            if (cmp > 0)
+                p = i + 1;
+            else
                 break;
-            }
         }
 
-        if (hot.keys.size() > m - 1) overflow(hot);
+        realHot.keys.add(p, key);
+        realHot.child.add(p + 1, null);
+
+        overflow(realHot);
 
         return true;
     }
@@ -126,27 +133,56 @@ public class BTree<T extends Comparable> {
         BTNode search = search(root, key);
         if (search == null) return;
 
+        BTNode realHot = hot.parent;
+
+        // this is leaf node
+        if (search.child.size() == 0) {
+            int rank = search.keys.indexOf(key);
+            search.keys.remove(key);
+            search.child.remove(rank + 1);
+        } else {
+            // this is inner node, use successor to replace this node
+
+            // find successor
+            int rank = search.keys.indexOf(key);
+            BTNode u = (BTNode) search.child.get(rank + 1);
+            while (true) {
+                if (u.child.size() != 0 && u.child.get(0) != null)
+                    u = (BTNode) u.child.get(0);
+                else
+                    break;
+            }
+
+            // replace
+            search.keys.set(rank, u.keys.get(0));
+            u.keys.remove(0);
+            u.child.remove(1);
+
+            // maybe underflow
+            underflow(u);
+        }
+
         // find successor, it is hot
-        while (hot.child != null && hot.child.size() != 0) {
-            hot = (BTNode) hot.child.get(0);
+        while (hot.child != null && realHot.child.size() != 0) {
+            realHot = (BTNode) realHot.child.get(0);
         }
 
         // exchange
-        search.parent = hot.parent;
+        search.parent = realHot.parent;
         int index = search.keys.indexOf(key);
-        search.keys.set(index, hot.keys.get(0));
+        search.keys.set(index, realHot.keys.get(0));
         // remove leaf
-        hot.keys.remove(0);
-        hot.child.remove(1);
+        realHot.keys.remove(0);
+        realHot.child.remove(1);
 
         // ⌈m/2⌉-1
         int minBranch = BigDecimal.valueOf(m).divide(BigDecimal.valueOf(2), RoundingMode.CEILING).subtract(BigDecimal.ONE).intValue();
-        if (hot.keys.size() < minBranch) underflow(hot);
+        if (realHot.keys.size() < minBranch) underflow(realHot);
     }
 
     public BTNode search(BTNode node, T key) {
         while (true) {
-            hot = node;
+            hot.parent = node;
             int m = 0;
             // find key match or not
             for (int i = 0; i < node.keys.size(); i++)
@@ -157,13 +193,12 @@ public class BTree<T extends Comparable> {
                     else if (cmp < 0)
                         m = i;
                     else
-                        break;
+                        return null;
                 }
 
-
-            BTNode child = (BTNode) node.child.get(m + 1);
-            if (child == null) return null;
-            node = child;
+            if (m + 1 > node.child.size()) return null;
+            node = (BTNode) node.child.get(m + 1);
+            if (node == null) return null;
         }
     }
 
@@ -175,7 +210,7 @@ public class BTree<T extends Comparable> {
         // root node
         public BTNode() {
             parent = null;
-            child.add(1, null);
+            child.add(0, null);
         }
 
         // another part node
