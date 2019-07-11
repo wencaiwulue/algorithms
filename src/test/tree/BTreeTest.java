@@ -19,6 +19,7 @@ public class BTreeTest {
         tree.insert(575);
         tree.insert(693);
         tree.insert(911);
+        tree.remove(911);
         System.out.println(1);
     }
 }
