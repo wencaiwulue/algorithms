@@ -6,7 +6,7 @@ package tree;
  * @author fengcaiwen
  * @since 6/12/2019
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("all")
 public class BinNode<T extends Comparable> {
     public BinNode<T> parent;
     public BinNode<T> lChild;

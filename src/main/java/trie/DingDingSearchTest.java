@@ -7,15 +7,16 @@ import java.util.Set;
  * @author fengcaiwen
  * @since 6/24/2019
  */
+@SuppressWarnings("all")
 public class DingDingSearchTest {
-    private DiyTrieTest trie;
+    private DiyTrie trie;
 
-    public DingDingSearchTest(DiyTrieTest trie) {
+    public DingDingSearchTest(DiyTrie trie) {
         this.trie = trie;
     }
 
     public Set<String> findName(String name) {
-        DiyTrieTest.Node node = trie.findWord(name);
+        DiyTrie.Node node = trie.findWord(name);
         if (node != null)
             return node.value;
         return Collections.emptySet();
@@ -31,7 +32,7 @@ public class DingDingSearchTest {
     }
 
     public static void main(String[] args) {
-        DiyTrieTest trie = new DiyTrieTest();
+        DiyTrie trie = new DiyTrie();
         DingDingSearchTest searcher = new DingDingSearchTest(trie);
 
         String str = "l";
