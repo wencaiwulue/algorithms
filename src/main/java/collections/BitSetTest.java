@@ -4,22 +4,31 @@ package collections;
  * @author fengcaiwen
  * @since 4/24/2019
  */
-@SuppressWarnings("all")
 public class BitSetTest {
 
     public static void main(String[] args) {
-        setRankReverse(123123L, 1);
+        long a = 123123L;
+        int rank = 1;
+        System.out.println(setRankReverse(a, rank));
+        System.out.println(isHighOrLow(a, rank));
     }
 
     /**
-     * reverse the rank of bit binary a
+     * reverse the rank of bit of binary a
      */
     private static long setRankReverse(long a, int rank) {
         System.out.println(Long.toBinaryString(~a));
         System.out.println(Long.toBinaryString((1L << rank)));
         System.out.printf("%s\n", Long.toBinaryString(a));
-        System.out.printf("%s\n", Long.toBinaryString(~(~a ^ (1L << rank))));
+        System.out.printf("%s\n", Long.toBinaryString(~((~a) ^ (1L << rank))));
         return ~((~a) ^ (1L << rank));
+    }
+
+    /**
+     * judge the rank of bit of binary a is high or low
+     */
+    private static int isHighOrLow(long a, int rank) {
+        return (int) (1L & (a >> rank));
     }
 
 
