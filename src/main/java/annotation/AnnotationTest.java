@@ -32,7 +32,7 @@ public class AnnotationTest {
         Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
         theUnsafe.setAccessible(true);
 
-        Unsafe o = (Unsafe) theUnsafe.get(Object.class);
+        Unsafe o = (Unsafe) theUnsafe.get(null);
         System.out.println(o);
 
     }
