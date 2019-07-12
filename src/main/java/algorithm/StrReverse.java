@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  */
 public class StrReverse {
     public static void main(String[] args) {
-        String s = "str";
+        String s = "abcde";
         System.out.println(reverse(s));
 
         System.out.println(check196("132"));
