@@ -40,31 +40,27 @@ public class ThreadPoolTest01 {
 
         void exec(Runnable run) {
             tasks.add(run);
-            if (threads.size() < n) {
+            if (threads.size() < n)
                 createThreadDynamic();
-            }
-            if (running.get() != n) {
-                for (Thread thread : threads) {
-                    if (Thread.State.BLOCKED.equals(thread.getState())) {
+
+            if (running.get() != n)
+                for (Thread thread : threads)
+                    if (Thread.State.BLOCKED.equals(thread.getState()))
                         LockSupport.unpark(thread);
-                    }
-                }
-            }
+
         }
 
         public FutureTest submit(Callable callable) {
             FutureTest futureTest = new FutureTest(callable);
             futureTasks.add(futureTest);
-            if (threads.size() < n) {
+            if (threads.size() < n)
                 createThreadDynamic();
-            }
-            if (running.get() != n) {
-                for (Thread thread : threads) {
-                    if (Thread.State.BLOCKED.equals(thread.getState())) {
+
+            if (running.get() != n)
+                for (Thread thread : threads)
+                    if (Thread.State.BLOCKED.equals(thread.getState()))
                         LockSupport.unpark(thread);
-                    }
-                }
-            }
+
             return futureTest;
         }
 
@@ -117,9 +113,10 @@ public class ThreadPoolTest01 {
         for (int i = 0; i < 100; i++) {
             threadPool.exec(runnable);
         }
-        while (!threadPool.isFree()) {
 
-        }
+        while (true)
+            if (threadPool.isFree()) break;
+
         long end = System.nanoTime();
 
         System.out.println(TimeUnit.NANOSECONDS.toSeconds(end - start) + " ms");
