@@ -17,7 +17,7 @@ public class UnsafeTest {
         Test test = new Test();
         Thread thread = new Thread(() -> {
             try {
-                test.test1(true);
+                test.test1();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
@@ -30,7 +30,10 @@ public class UnsafeTest {
             try {
                 run = test.getClass().getDeclaredField("run");
                 run.setAccessible(true);
-                run.set(test, true);
+                run.set(test, 0);
+                long l = unsafe.objectFieldOffset(run);
+                System.out.println(l);
+//                unsafe.getAndSetObject(test, l, 0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -39,12 +42,11 @@ public class UnsafeTest {
         thread.start();
         thread1.start();
 
-//        unsafe.staticFieldOffset(run);
 
     }
 
     public static class Test {
-        private static boolean run = true;
+        private int run = 1;
 
 
 //        public Test() throws InterruptedException {
@@ -61,19 +63,17 @@ public class UnsafeTest {
 //            }
 //        }
 
-        public static void test0(boolean flag) throws InterruptedException {
-            while (flag) {
-                System.out.println("running");
-                Thread.sleep(1000);
-                test0(flag);
-            }
-        }
+//        public static void test0() throws InterruptedException {
+//            while (run) {
+//                System.out.println("running");
+//                Thread.sleep(1000);
+//            }
+//        }
 
-        public void test1(boolean flag) throws InterruptedException {
-            while (flag) {
+        public void test1() throws InterruptedException {
+            while (run == 1) {
                 System.out.println("running");
                 Thread.sleep(1000);
-                test1(flag);
             }
         }
     }
