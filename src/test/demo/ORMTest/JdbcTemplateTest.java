@@ -34,7 +34,7 @@ public class JdbcTemplateTest {
 
     @Test
     public void insert() {
-        User user = new User("z", 1);
+        User user = new User("b", 1);
         long id = jdbcTemplate.insert(user);
         System.out.println(id);
     }
@@ -48,19 +48,19 @@ public class JdbcTemplateTest {
         System.out.println(a);
         CountDownLatch latch = new CountDownLatch(a);
         List<Thread> threadList = new LinkedList<>();
-        for (int i = 0; i < a; i++) {
+        for (int i = 0; i < a; i++)
             threadList.add(new Thread(() -> {
                 try {
-                    for (int j = 0; j < 10000; j++) {
+                    for (int j = 0; j < 10000; j++)
                         jdbcTemplate.query(sql, userClass);
-                    }
+
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 } finally {
                     latch.countDown();
                 }
             }));
-        }
+
         long start = System.nanoTime();
         threadList.forEach(Thread::start);
 

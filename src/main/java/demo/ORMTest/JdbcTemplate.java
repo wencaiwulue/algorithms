@@ -33,7 +33,7 @@ public class JdbcTemplate {
 
     public JdbcTemplate() {
         // if do not set data source, use default
-        String url = "jdbc:mysql://localhost:3306/check196";
+        String url = "jdbc:mysql://localhost:3306/test";
         Properties p = new Properties();
         p.setProperty("user", "root");
         p.setProperty("password", "12345678");
@@ -133,9 +133,8 @@ public class JdbcTemplate {
             PreparedStatement ps = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
-            while (resultSet.next()) {
+            if (resultSet.next())
                 return resultSet.getLong(1);
-            }
 
         } catch (SQLException e) {
             try {
