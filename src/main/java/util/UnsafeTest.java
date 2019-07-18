@@ -33,7 +33,7 @@ public class UnsafeTest {
                 run.set(test, 0);
                 long l = unsafe.objectFieldOffset(run);
                 System.out.println(l);
-//                unsafe.getAndSetObject(test, l, 0);
+                unsafe.getAndSetObject(test, l, 0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -47,28 +47,6 @@ public class UnsafeTest {
 
     public static class Test {
         private int run = 1;
-
-
-//        public Test() throws InterruptedException {
-//            test1(run);
-//            System.out.println("end1");
-//        }
-//
-//        static {
-//            try {
-//                test0(run);
-//                System.out.println("end1");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//        public static void test0() throws InterruptedException {
-//            while (run) {
-//                System.out.println("running");
-//                Thread.sleep(1000);
-//            }
-//        }
 
         public void test1() throws InterruptedException {
             while (run == 1) {
