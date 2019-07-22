@@ -16,18 +16,18 @@ public class BitSetTest {
     /**
      * reverse the rank of bit of binary a
      */
-    private static long setRankReverse(long a, int rank) {
-        System.out.println(Long.toBinaryString(~a));
-        System.out.println(Long.toBinaryString((1L << rank)));
-        System.out.printf("%s\n", Long.toBinaryString(a));
-        System.out.printf("%s\n", Long.toBinaryString(~((~a) ^ (1L << rank))));
+    public static long setRankReverse(long a, int rank) {
+//        System.out.println(Long.toBinaryString(~a));
+//        System.out.println(Long.toBinaryString((1L << rank)));
+//        System.out.printf("%s\n", Long.toBinaryString(a));
+//        System.out.printf("%s\n", Long.toBinaryString(~((~a) ^ (1L << rank))));
         return ~((~a) ^ (1L << rank));
     }
 
     /**
      * judge the rank of bit of binary a is high or low
      */
-    private static int isHighOrLow(long a, int rank) {
+    public static int isHighOrLow(long a, int rank) {
         return (int) (1L & (a >> rank));
     }
 

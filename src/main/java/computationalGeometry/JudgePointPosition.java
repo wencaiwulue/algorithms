@@ -31,7 +31,7 @@ public class JudgePointPosition {
 
     }
 
-    public void run_v1(Point[] s, int n) {
+    public void grahamScan(Point[] s, int n) {
         int start = LTL(s, n);
         Point startPoint = s[start];
         Point[] points = sort(s, n);
@@ -48,7 +48,7 @@ public class JudgePointPosition {
             if (isLeft(ordered.get(1), ordered.get(0), ordered.get(0))) {
                 ordered.push(unordered.pop());
             } else {
-                unordered.push(ordered.pop());
+                ordered.pop();
             }
         }
 
