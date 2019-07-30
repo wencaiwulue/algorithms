@@ -130,6 +130,9 @@ public class ACTest {
         return index;
     }
 
+    /**
+     * https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/description/?utm_source=LCUS&utm_medium=ip_redirect&utm_campaign=transfer2china
+     */
     public static List<Integer> findSubstring(String s, String[] words) {
 
         List<Integer[]> list = new ArrayList<>();
