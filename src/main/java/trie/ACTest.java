@@ -1,6 +1,8 @@
 package trie;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author fengcaiwen
@@ -9,13 +11,18 @@ import java.util.Arrays;
 public class ACTest {
     public static void main(String[] args) {
         // chinchilla, sensitive word check
-        String txt = "钓上一个大王八，大概有五十斤";
-        String pattern = "王八蛋";
+//        String txt = "钓上一个大王八，大概有五十斤王八";
+//        String pattern = "王八";
 
 //        Arrays.stream(build(txt)).forEach(System.out::println);
 //        System.out.println("-----------------------------");
 //        Arrays.stream(build0(pattern)).forEach(System.out::println);
-        check(txt, pattern);
+//        List<Integer> integers = checkv1(txt, pattern);
+//        System.out.println(integers);
+        String s = "barfoothefoobarman";
+        String[] words = new String[]{"foob", "arma"};
+        List<Integer> substring = findSubstring(s, words);
+        System.out.println(substring);
     }
 
     /**
@@ -92,6 +99,71 @@ public class ACTest {
         } else {
             System.out.println("not found");
         }
+
+    }
+
+    private static List<Integer> checkv1(String txt, String pattern) {
+        int[] next = build(pattern);
+
+        char[] t = txt.toCharArray();
+        char[] p = pattern.toCharArray();
+
+        int n = t.length;
+        int m = p.length;
+
+        List<Integer> index = new ArrayList<>();
+        int i = 0, j = 0;
+        while (i < n) {
+
+            if (j < 0 || t[i] == p[j]) {
+                i++;
+                j++;
+            } else {
+                j = next[j];
+            }
+
+            if (m == j) {
+                index.add(i - m);
+                j = -1;
+            }
+        }
+        return index;
+    }
+
+    public static List<Integer> findSubstring(String s, String[] words) {
+
+        List<Integer[]> list = new ArrayList<>();
+
+        for (int i = 0; i < words.length; i++) {
+            List<Integer> integers1 = checkv1(s, words[i]);
+//            System.out.println(integers1);
+            Integer[] integers = integers1.toArray(new Integer[0]);
+            list.add(integers);
+//            System.out.println(Arrays.toString(integers));
+        }
+
+        List<Integer> finalR = new ArrayList<>();
+
+        for (int j = 0; j < list.get(0).length; j++) {
+            int d = words[0].length();
+            int last = -1;
+            int min = Integer.MAX_VALUE;
+            for (int i = 0; i < list.size(); i++) {
+                Integer integer = list.get(i)[j];
+                if (min > integer)
+                    min = integer;
+                if (last != -1) {
+                    if (Math.abs(integer - last) == d) {
+                        finalR.add(min);
+                        min = Integer.MAX_VALUE;
+                    }
+                }
+                last = integer;
+
+            }
+
+        }
+        return finalR;
 
     }
 }

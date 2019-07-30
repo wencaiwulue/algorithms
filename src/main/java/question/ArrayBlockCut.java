@@ -24,7 +24,7 @@ public class ArrayBlockCut {
         System.out.println(test(3, temp).toString());
     }
 
-    private static List<Integer> test(int n, List<int[]> list) {
+    public static List<Integer> test(int n, List<int[]> list) {
         List<Integer> result = new ArrayList<>();
         int max = 0;
         for (int[] ints : list) {

@@ -3,6 +3,10 @@ package demo.ORMTest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static collections.BitSetTest.isHighOrLow;
 import static collections.BitSetTest.setRankReverse;
@@ -18,6 +22,27 @@ public class LeecodeTest {
 //        maxProfit(ints);
         totalCandy(ints);
         System.out.println(NumberOf1(Integer.MAX_VALUE));
+
+        System.out.println(Integer.toBinaryString(993));
+        System.out.println(Integer.toBinaryString(992));
+        System.out.println(Integer.toBinaryString(993 & 992));
+        System.out.println((12 & 11));
+        System.out.println(match("{}{}{}{}]"));
+    }
+
+
+    public static boolean match(String str) {
+        char[] chars = str.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for (char aChar : chars) {
+            if (aChar == '{' || aChar == '(' || aChar == '[') {
+                stack.push(aChar);
+            } else if (aChar == '}' || aChar == ')' || aChar == ']') {
+                if (stack.isEmpty()) return false;
+                else stack.pop();
+            }
+        }
+        return stack.isEmpty();
     }
 
     public static int maxProfit(int[] prices) {
