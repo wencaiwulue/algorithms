@@ -1,12 +1,6 @@
 package demo.ORMTest;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
 
 import static collections.BitSetTest.isHighOrLow;
 import static collections.BitSetTest.setRankReverse;
@@ -19,6 +13,8 @@ public class LeecodeTest {
 
     public static void main(String[] args) {
         int[] ints = new int[]{7, 5, 2, 4, 6, 1, 3};
+        int[] test = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int[] s = new int[]{-3, -25, 20, 20, 1, -3, 6, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
 //        maxProfit(ints);
         totalCandy(ints);
         System.out.println(NumberOf1(Integer.MAX_VALUE));
@@ -28,6 +24,7 @@ public class LeecodeTest {
         System.out.println(Integer.toBinaryString(993 & 992));
         System.out.println((12 & 11));
         System.out.println(match("{}{}{}{}]"));
+        maxSumOfNumSet(test);
     }
 
 
@@ -144,7 +141,88 @@ public class LeecodeTest {
     }
 
 
-//    public static void main(String[] args) {
-//        System.out.println(NumberOf1(3));
-//    }
+    public static int[] maxSumOfNumSet(int[] nums) {
+        int[] s = new int[]{-1, 1, -3, 61, -16, -23, 0, -7, 1, -5, -22, 5, -4, 7};
+//        int[] s = new int[]{1, -3, 6, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
+        nums = s;
+        int start = 0;
+        int lastIsP = 0;
+        int pl = 0;
+        int nl = 0;
+        int ns = 0;
+        int ps = 0;
+        int total = 0;
+        int totalMax = 0;
+        int resultStart = 0;
+        int resultEnd = 0;
+        int leftP = 0;
+        int leftPl = 0;
+        int leftN = 0;
+        int leftNl = 0;
+        for (int i = 0; i < nums.length; i++) {
+            boolean b = nums[i] > 0;
+            if (b) {
+                // p -> p
+                if (lastIsP == 1) {
+                    pl++;
+                    ps += nums[i];
+                    total += nums[i];
+                } else {
+                    leftN = ns;
+                    // n->p
+                    pl = 1;
+                    ps = nums[i];
+                    total += nums[i];
+                }
+            } else {
+                // from p -> n
+                leftP = ps;
+                if (lastIsP == 1) {
+                    // valuable
+                    if ((ps + ns) > 0) {
+                        ps = 0;
+                        ns = nums[i];
+                        pl = 0;
+                        nl = 1;
+                        total += nums[i];
+                    } else {
+
+                        {
+                            if (totalMax < (ps + nums[i])) {
+                                totalMax = ps + nums[i];
+                                resultStart = start;
+                                resultEnd = (i - nl - pl);
+                            }
+                            if (leftP + leftN < 0) {
+                                total += -(leftN + lastIsP);
+                                resultStart = start;
+                                resultEnd = (i - nl - pl);
+                            }
+                        }
+
+                        // no valuable
+                        total = ps + nums[i];
+                        start = i - pl;
+                        ps = 0;
+                        ns = nums[i];
+                        pl = 0;
+                        nl = 1;
+                    }
+                    // from n -> n
+                } else {
+                    nl++;
+                    ns += nums[i];
+                    total += nums[i];
+                }
+            }
+            lastIsP = b ? 1 : 0;
+        }
+
+        System.out.println(totalMax);
+        System.out.println(Arrays.toString(nums));
+        System.out.println(String.format("from: %s ~ %s", resultStart, resultEnd));
+        return null;
+    }
+
+
 }
