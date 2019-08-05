@@ -1,6 +1,6 @@
 package algorithm;
 
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,11 +9,13 @@ import java.util.Map;
  * @since 5/22/2019
  */
 public class TwoSum {
-    public static void main(String[] args) throws IOException {
-        getIndex(new int[]{3, 2, 4}, 6);
+    public static void main(String[] args) {
+        int t = 6;
+        int[] nums = new int[]{3, 2, 4};
+        System.out.println(Arrays.toString(getIndex(nums, t)));
     }
 
-    public static int[] getIndex(int[] nums, int target) {
+    private static int[] getIndex(int[] nums, int target) {
         Map<Integer, Integer> differenceMap = new HashMap<>();
         Map<Integer, Integer> indexList = new HashMap<>();
 
@@ -29,7 +31,6 @@ public class TwoSum {
                 if (differenceMap.get(nums[i]) == i) {
                     continue;
                 }
-                System.out.printf("%d, %d", indexList.get(nums[i]), differenceMap.get(nums[i]));
                 return new int[]{indexList.get(nums[i]), differenceMap.get(nums[i])};
             }
         }
