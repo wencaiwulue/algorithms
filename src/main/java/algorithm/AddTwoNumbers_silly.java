@@ -4,7 +4,7 @@ package algorithm;
  * @author fengcaiwen
  * @since 5/28/2019
  */
-public class AddTwoNumbers01_copy {
+public class AddTwoNumbers_silly {
     public static void main(String[] args) {
 //        (2 -> 4 -> 3) + (5 -> 6 -> 4)
         ListNode l1 = new ListNode(1);
@@ -28,7 +28,7 @@ public class AddTwoNumbers01_copy {
 
     }
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode l11 = l1;
         ListNode l21 = l2;
         int makeTheSameLength = -1;

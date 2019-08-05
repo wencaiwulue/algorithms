@@ -15,7 +15,7 @@ import java.util.List;
  * <p>
  * https://rosettacode.org/wiki/Hailstone_sequence
  */
-public class HailStone_01 {
+public class HailStone {
     public static void main(String[] args) {
         int stone = 60;
         System.out.println(hailStone(stone));

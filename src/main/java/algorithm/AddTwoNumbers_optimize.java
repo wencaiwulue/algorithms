@@ -4,7 +4,7 @@ package algorithm;
  * @author fengcaiwen
  * @since 5/28/2019
  */
-public class AddTwoNumbers01 {
+public class AddTwoNumbers_optimize {
     public static void main(String[] args) {
 //        (2 -> 4 -> 3) + (5 -> 6 -> 4)
         ListNode l1 = new ListNode(9);

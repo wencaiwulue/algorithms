@@ -8,7 +8,7 @@ import java.util.Map;
  * @author fengcaiwen
  * @since 5/22/2019
  */
-public class TwoSum_00 {
+public class TwoSum {
     public static void main(String[] args) throws IOException {
         getIndex(new int[]{3, 2, 4}, 6);
     }
