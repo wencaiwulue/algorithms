@@ -28,7 +28,6 @@ public class TotalCandyTest {
                 a = setRankReverse(a, rank);
             String s2 = "0" + Long.toBinaryString(a);
             String s = s2.substring(s2.length() - rank);
-            System.out.println("s:" + s);
 //            String s1 = s.replaceAll("1", "");
 //            sum += (s.length() - s1.length());
             if (!s.equals(""))
@@ -46,7 +45,6 @@ public class TotalCandyTest {
         for (int i = 0; i < n.length; i++) {
             map.put(ints[i], i);
         }
-        System.out.println(map);
         return map;
     }
 
