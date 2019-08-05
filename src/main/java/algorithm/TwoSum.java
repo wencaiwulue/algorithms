@@ -35,6 +35,5 @@ public class TwoSum {
             }
         }
         return new int[]{-1, -1};
-//        System.out.println(map.toString());
     }
 }
