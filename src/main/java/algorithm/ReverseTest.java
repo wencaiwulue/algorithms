@@ -16,7 +16,7 @@ public class ReverseTest {
 
     }
 
-    public static ListNode reverse(ListNode current) {
+    private static ListNode reverse(ListNode current) {
         ListNode nextNode = null;
         ListNode previousNode = null;
         while (current != null) {

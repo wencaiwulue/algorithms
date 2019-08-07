@@ -11,15 +11,15 @@ public class StrReverse {
         String s = "abcde";
         System.out.println(reverse(s));
 
-        System.out.println(check196("132"));
+        System.out.println(test("132"));
     }
 
-    private static String check196(String str) {
+    private static String test(String str) {
         if (str.equals(reverse(str))) {
             return str;
         } else {
             BigDecimal sum = new BigDecimal(str).add(new BigDecimal(reverse(str)));
-            return check196(sum.toString());
+            return test(sum.toString());
         }
     }
 
