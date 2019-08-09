@@ -18,8 +18,8 @@ public class PrintTest01 {
             while (true) {
                 for (int i = 0; i < a.length; i++) {
                     try {
-                        System.out.print(a[i]);
                         lock.lock();
+                        System.out.print(a[i]);
                         condition1.signal();
                         condition0.await();
                     } catch (InterruptedException e) {
@@ -36,8 +36,8 @@ public class PrintTest01 {
             while (true) {
                 for (int i = 0; i < a.length; i++) {
                     try {
-                        System.out.print(a[i]);
                         lock.lock();
+                        System.out.print(a[i]);
                         condition0.signal();
                         condition1.await();
                     } catch (InterruptedException e) {
