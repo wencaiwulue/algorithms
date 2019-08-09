@@ -1,9 +1,13 @@
 package computationalGeometry;
 
+import com.google.common.base.Joiner;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.DoubleStream;
 
 /**
@@ -41,14 +45,13 @@ public class Print {
     }
 
     public static void printHeart3(double n) {
-        List<Integer> list = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
         int p0 = 0, p1 = 4, p2 = 2, p3 = 0;
         for (int i = 0; i < n; i++) {
             double t = i * (1 / n);
             double y = Math.pow(1 - t, 3) * p0 + 3 * Math.pow(1 - t, 2) * t * p1 + 3 * p2 * Math.pow(t, 2) * (1 - t) + Math.pow(t, 3) * p3;
-            list.add(BigDecimal.valueOf(y).multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP).intValue());
+            map.put(i, BigDecimal.valueOf(y).multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP).intValue());
         }
-        System.out.println(list);
     }
 
 
