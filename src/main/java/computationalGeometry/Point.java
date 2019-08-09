@@ -18,6 +18,18 @@ public class Point {
         this.y = y;
     }
 
+    public static Point of(double x, double y){
+        return new Point(x, y);
+    }
+
     public static Point X = new Point(0, 1);
     public static Point Y = new Point(1, 0);
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

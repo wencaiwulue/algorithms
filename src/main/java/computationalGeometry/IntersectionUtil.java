@@ -24,4 +24,10 @@ public class IntersectionUtil {
         double y = d2 / (d1 + d2) * c.y + d1 / (d1 + d2) * d.y;
         return new Point(x, y);
     }
+
+    public static void main(String[] args) {
+        Point point = detectIntersection(Point.of(2, 2), Point.of(4, 4), Point.of(4, 2), Point.of(2, 4));
+        assert point != null;
+        System.out.println(point.toString());
+    }
 }
