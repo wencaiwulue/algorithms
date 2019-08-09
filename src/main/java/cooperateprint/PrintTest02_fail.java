@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore;
  * @author fengcaiwen
  * @since 6/10/2019
  */
-public class PrintTest02 {
+public class PrintTest02_fail {
     public static void main(String[] args) {
         Semaphore semaphore = new Semaphore(8, false);
         new Thread(() -> {
