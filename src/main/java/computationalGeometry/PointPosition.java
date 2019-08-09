@@ -9,15 +9,14 @@ import java.util.stream.Stream;
  * @author fengcaiwen
  * @since 7/15/2019
  */
-@SuppressWarnings("all")
-public class JudgePointPosition {
+public class PointPosition {
 
     /**
      * step:
      * 1, find the start point
      * 2, from s to each elements, find the next point t, make t's  right have no point
      */
-    public void run(Point[] s, int n) {
+    public static void run(Point[] s, int n) {
         int start = LTL(s, n);
         for (int i = 0; i < s.length; i++) {
             int counter = 0;
@@ -31,7 +30,7 @@ public class JudgePointPosition {
 
     }
 
-    public void grahamScan(Point[] s, int n) {
+    public static void grahamScan(Point[] s, int n) {
         int start = LTL(s, n);
         Point startPoint = s[start];
         Point[] points = sort(s, n);
@@ -57,15 +56,9 @@ public class JudgePointPosition {
     /**
      * cosφ=A1A2+B1B2/[√(A1^2+B1^2)√(A2^2+B2^2)]
      */
-    public Point[] sort(Point[] s, int n) {
+    private static Point[] sort(Point[] s, int n) {
         // cos = a*
-        Point[] points = Stream.of(s).sorted(new Comparator<Point>() {
-            @Override
-            public int compare(Point o1, Point o2) {
-                return BigDecimal.valueOf(calDegree(o1, Point.X)).compareTo(BigDecimal.valueOf(calDegree(o2, Point.X)));
-            }
-        }).toArray(Point[]::new);
-        return points;
+        return Stream.of(s).sorted(Comparator.comparing(o -> BigDecimal.valueOf(calDegree(o, Point.X)))).toArray(Point[]::new);
     }
 
     /**
@@ -73,7 +66,7 @@ public class JudgePointPosition {
      * a   b
      * cosα=ab/|a||b|=（x1y1+x2,y2）/(根号（x1^2+y1^2）根号（x2^2+y1^2）)
      */
-    public double calDegree(Point a, Point b) {
+    private static double calDegree(Point a, Point b) {
 //        Math.cos();
         return (a.x * b.y + b.x * b.y) / Math.pow(Math.pow(Math.pow(a.x, 2) + Math.pow(a.y, 2), 0.5) * Math.pow(Math.pow(b.x, 2) * Math.pow(b.y, 2), 0.5), 0.5);
     }
@@ -81,7 +74,7 @@ public class JudgePointPosition {
     /**
      * find min y from s, if is a list, return min x of list
      */
-    public int LTL(Point[] s, int n) {
+    private static int LTL(Point[] s, int n) {
         int rank = 0;
         for (int i = 0; i < s.length; i++)
             if (s[rank].y > s[i].y || (s[rank].y == s[i].y && s[rank].x > s[i].x))
@@ -94,7 +87,7 @@ public class JudgePointPosition {
      * ->
      * a：(x1, y1), point A:(x2, y2)
      */
-    private boolean isLeft(int x1, int y1, int x2, int y2) {
+    private static boolean isLeft(double x1, double y1, double x2, double y2) {
         // a'=(-y1, x1) or (y1, -x1), return a' x A = (-y1, x1) x (x2, y2)
         return (-y1 * x2 + x1 * y2) > 0;
     }
@@ -103,7 +96,7 @@ public class JudgePointPosition {
      * ->
      * pq and point s
      */
-    public boolean isLeft(Point p, Point q, Point s) {
+    public static boolean isLeft(Point p, Point q, Point s) {
         return isLeft(q.x - p.x, q.y - p.y, s.x, s.y);
     }
 
