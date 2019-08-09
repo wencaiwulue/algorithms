@@ -56,7 +56,7 @@ public class PointPosition {
     /**
      * cosφ=A1A2+B1B2/[√(A1^2+B1^2)√(A2^2+B2^2)]
      */
-    private static Point[] sort(Point[] s, int n) {
+    public static Point[] sort(Point[] s, int n) {
         // cos = a*
         return Stream.of(s).sorted(Comparator.comparing(o -> BigDecimal.valueOf(calDegree(o, Point.X)))).toArray(Point[]::new);
     }
@@ -66,7 +66,7 @@ public class PointPosition {
      * a   b
      * cosα=ab/|a||b|=（x1y1+x2,y2）/(根号（x1^2+y1^2）根号（x2^2+y1^2）)
      */
-    private static double calDegree(Point a, Point b) {
+    public static double calDegree(Point a, Point b) {
 //        Math.cos();
         return (a.x * b.y + b.x * b.y) / Math.pow(Math.pow(Math.pow(a.x, 2) + Math.pow(a.y, 2), 0.5) * Math.pow(Math.pow(b.x, 2) * Math.pow(b.y, 2), 0.5), 0.5);
     }
@@ -74,7 +74,7 @@ public class PointPosition {
     /**
      * find min y from s, if is a list, return min x of list
      */
-    private static int LTL(Point[] s, int n) {
+    public static int LTL(Point[] s, int n) {
         int rank = 0;
         for (int i = 0; i < s.length; i++)
             if (s[rank].y > s[i].y || (s[rank].y == s[i].y && s[rank].x > s[i].x))
@@ -87,7 +87,7 @@ public class PointPosition {
      * ->
      * a：(x1, y1), point A:(x2, y2)
      */
-    private static boolean isLeft(double x1, double y1, double x2, double y2) {
+    public static boolean isLeft(double x1, double y1, double x2, double y2) {
         // a'=(-y1, x1) or (y1, -x1), return a' x A = (-y1, x1) x (x2, y2)
         return (-y1 * x2 + x1 * y2) > 0;
     }

@@ -6,12 +6,12 @@ package computationalGeometry;
  */
 public class Point {
     public boolean isEdge;
-    public int from;
-    public int to;
 
     public double x;
     public double y;
 
+    public Point() {
+    }
 
     public Point(double x, double y) {
         this.x = x;

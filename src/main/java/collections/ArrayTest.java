@@ -2,10 +2,10 @@ package collections;
 
 import clone.DeepCloneAndShadowCloneTest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author fengcaiwen
@@ -27,18 +27,22 @@ public class ArrayTest {
 //        System.out.println(users[0].getName());
 
         Map<String, List<DeepCloneAndShadowCloneTest.User>> map = new HashMap<>();
-        map.put("check196", list);
+        map.put("test", list);
 
         List<DeepCloneAndShadowCloneTest.User> userList = new ArrayList<>();
 
-        final List<DeepCloneAndShadowCloneTest.User> test = map.get("check196");
+        final List<DeepCloneAndShadowCloneTest.User> test = map.get("test");
         test.get(0).setName("haha");
 
-        System.out.println(map.get("check196").get(0).getName());
+        System.out.println(map.get("test").get(0).getName());
 
 
-        int a  =1;
+        int a = 1;
         System.out.println(a++);
+
+        int[] b = new int[]{1, 2, 3, 4, 5, 3, 32};
+        List<Integer> collect = Arrays.stream(b).sorted().distinct().boxed().collect(Collectors.toList());
+        List<Integer> integers = IntStream.range(1, 1000000).boxed().collect(Collectors.toList());
 
 
     }
