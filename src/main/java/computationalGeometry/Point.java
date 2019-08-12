@@ -22,8 +22,8 @@ public class Point {
         return new Point(x, y);
     }
 
-    public static Point X = new Point(0, 1);
-    public static Point Y = new Point(1, 0);
+    public static Point Y = new Point(0, 1);
+    public static Point X = new Point(1, 0);
 
     @Override
     public String toString() {

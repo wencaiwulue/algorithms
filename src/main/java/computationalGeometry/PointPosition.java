@@ -1,10 +1,6 @@
 package computationalGeometry;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Stack;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * @author fengcaiwen
@@ -17,7 +13,8 @@ public class PointPosition {
      * 1, find the start point
      * 2, from s to each elements, find the next point t, make t's  right have no point
      */
-    public static void run(Point[] s, int n) {
+    public static List<Point> run(Point[] s, int n) {
+        List<Point> list = new ArrayList<>();
         int start = LTL(s, n);
         for (int i = 0; i < s.length; i++) {
             int counter = 0;
@@ -25,41 +22,62 @@ public class PointPosition {
                 if (start != i && start != j && i != j)
                     if (isLeft(s[start], s[i], s[j])) counter++;
 
-            if (counter == s.length - 1 - 1)
+            if (counter == s.length - 1 - 1) {
                 s[i].isEdge = true;
-        }
-
-    }
-
-    public static void grahamScan(Point[] s, int n) {
-        int start = LTL(s, n);
-        Point startPoint = s[start];
-        Point[] points = sort(s, n);
-
-        Stack<Point> ordered = new Stack<>();
-        Stack<Point> unordered = new Stack<>();
-        ordered.push(startPoint);
-        ordered.push(points[0]);
-        for (int i = 1; i < s.length; i++) {
-            unordered.push(points[i]);
-        }
-
-        while (!unordered.empty()) {
-            if (isLeft(ordered.get(1), ordered.get(0), ordered.get(0))) {
-                ordered.push(unordered.pop());
-            } else {
-                ordered.pop();
+                list.add(s[i]);
             }
         }
 
+        return list;
+
+    }
+
+    /*
+     *  1, find the lowest amd the leftest point as start
+     *  2, sort array s by degree asc
+     *  3, from start and start[0], check start[1]
+     * */
+    public static Stack<Point> grahamScan(Point[] s, int n) {
+        int start = LTL(s, n);
+        Point sp = s[start];
+        Point[] sorted = sort(s, n, sp);
+
+        Stack<Point> visited = new Stack<>();
+        Stack<Point> unvisited = new Stack<>();
+
+        visited.push(sp);
+        visited.push(sorted[0]);
+
+        // attention: sort by degree base on start point
+        // cut head and tail, the smallest and the biggest
+        for (int i = 1; i <= s.length - 1; i++) {
+            unvisited.push(sorted[i]);
+        }
+
+        while (!unvisited.empty()) {
+            Point p1 = visited.get(visited.size() - 2);
+            Point p2 = visited.get(visited.size() - 1);
+            System.out.println(String.format("(%s, %s)->(%s, %s)", p1.x, p1.y, p2.x, p2.y));
+
+            if (isLeft(visited.get(visited.size() - 2), visited.get(visited.size() - 1), unvisited.get(0))) {
+                visited.push(unvisited.remove(0));
+            } else {
+                visited.pop();
+            }
+        }
+        return visited;
     }
 
     /**
      * cosφ=A1A2+B1B2/[√(A1^2+B1^2)√(A2^2+B2^2)]
      */
-    private static Point[] sort(Point[] s, int n) {
+    private static Point[] sort(Point[] s, int n, Point base) {
         // cos = a*
-        return Arrays.stream(s).sorted(Comparator.comparing(o -> BigDecimal.valueOf(calDegree(o, Point.X)))).toArray(Point[]::new);
+        return Arrays.stream(s).sorted((o1, o2) -> {
+            double v1 = calculateDegree(new Point(o1.x - base.x, o1.y - base.y), Point.X);
+            double v2 = calculateDegree(new Point(o2.x - base.x, o2.y - base.y), Point.X);
+            return Double.compare(v1, v2);
+        }).toArray(Point[]::new);
     }
 
     /**
@@ -67,9 +85,15 @@ public class PointPosition {
      * a   b
      * cosα=ab/|a||b|=（x1y1+x2,y2）/(根号（x1^2+y1^2）根号（x2^2+y1^2）)
      */
-    private static double calDegree(Point a, Point b) {
-//        Math.cos();
-        return (a.x * b.y + b.x * b.y) / Math.pow(Math.pow(Math.pow(a.x, 2) + Math.pow(a.y, 2), 0.5) * Math.pow(Math.pow(b.x, 2) * Math.pow(b.y, 2), 0.5), 0.5);
+    private static double calculateDegree(Point a, Point b) {
+        double v = (a.x * b.x + a.y * b.y) / (Math.pow(Math.pow(a.x, 2) + Math.pow(a.y, 2), 0.5) * Math.pow(Math.pow(b.x, 2) + Math.pow(b.y, 2), 0.5));
+        return Math.acos(v);
+    }
+
+    public static void main(String[] args) {
+        double v = calculateDegree(new Point(1, 1), new Point(1, 0));
+        System.out.println(v / (2 * 3.1415926) * 360);
+        System.out.println(v);
     }
 
     /**
