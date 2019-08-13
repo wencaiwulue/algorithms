@@ -36,7 +36,7 @@ public class ConvexHull {
 
         Point[] points = Files.lines(of).skip(1).map(e -> {
             String[] s = e.split(" ");
-            return new Point(Integer.valueOf(s[0]), Integer.valueOf(s[1]));
+            return new Point(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
         }).toArray(Point[]::new);
         List<Point> hull = PointPosition.grahamScan(points, points.length);
 

@@ -22,7 +22,7 @@ public class PointPosition {
                 if (start != i && start != j && i != j)
                     if (isLeft(s[start], s[i], s[j])) counter++;
 
-            if (counter == s.length - 1 - 1) {
+            if (counter >= s.length - 1 - 1 - 1 - 1) {
                 s[i].isEdge = true;
                 list.add(s[i]);
             }

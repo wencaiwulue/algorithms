@@ -1,2 +1,0 @@
-JMH S 25 new_feature.BenchmarkTest S 49 new_feature.generated.BenchmarkTest_testA_jmhTest S 5 testA S 10 Throughput I 1 1 A 1 1 1 E E E E E E E I 1 1 E E E E E E U 11 NANOSECONDS E E 
-JMH S 25 new_feature.BenchmarkTest S 49 new_feature.generated.BenchmarkTest_testB_jmhTest S 5 testB S 10 Throughput I 1 1 A 1 1 1 E E E E E E E I 1 1 E E E E E E U 11 NANOSECONDS E E 
