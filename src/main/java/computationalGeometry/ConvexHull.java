@@ -1,16 +1,11 @@
 package computationalGeometry;
 
-import graph.Graph;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static computationalGeometry.PointPosition.grahamScan;
 
 /**
  * @author fengcaiwen
@@ -31,7 +26,7 @@ public class ConvexHull {
     //
     //(p1 × p2 × ... × pm × m) mod (n + 1)
     public static void test() throws URISyntaxException, IOException {
-        URL resource = Thread.currentThread().getContextClassLoader().getResource("convex.txt");
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("convex/convex.txt");
         Path of = Path.of(Objects.requireNonNull(resource).toURI());
 
         Point[] points = Files.lines(of).skip(1).map(e -> {
