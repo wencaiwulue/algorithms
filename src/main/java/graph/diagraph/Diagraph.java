@@ -34,13 +34,13 @@ public class Diagraph {
         this.v = v;
     }
 
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
     Diagraph(Path filePath) throws IOException {
 
         List<String> lines = Files.lines(filePath).map(String::valueOf).collect(Collectors.toList());
 
-        this.v = Integer.valueOf(lines.get(0));
-        this.e = Integer.valueOf(lines.get(1));
+        this.v = Integer.parseInt(lines.get(0));
+        this.e = Integer.parseInt(lines.get(1));
 
         this.adj = new Stack[this.v];
         for (int j = 0; j < this.v; j++) {
@@ -49,8 +49,8 @@ public class Diagraph {
 
         lines.stream().skip(2).forEach(e -> {
             String[] i = e.split(" ");
-            int v = Integer.valueOf(i[0]);
-            int w = Integer.valueOf(i[1]);
+            int v = Integer.parseInt(i[0]);
+            int w = Integer.parseInt(i[1]);
             // this is directed graph
             this.adj[v].push(w);
         });
@@ -100,7 +100,7 @@ public class Diagraph {
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyDG.txt");
+        URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyCG.txt");
         Diagraph f = new Diagraph(Path.of(Objects.requireNonNull(resource).toURI()));
         System.out.println(f);
     }
