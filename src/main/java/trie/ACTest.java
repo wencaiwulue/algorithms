@@ -1,5 +1,8 @@
 package trie;
 
+
+import com.google.common.base.Strings;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +22,8 @@ public class ACTest {
 //        Arrays.stream(build0(pattern)).forEach(System.out::println);
 //        List<Integer> integers = checkv1(txt, pattern);
 //        System.out.println(integers);
-        String s = "barfoothefoobarman";
-        String[] words = new String[]{"foob", "arma"};
+        String s = "wordgoodgoodgoodbestword";
+        String[] words = new String[]{"word","good","best","word"};
         List<Integer> substring = findSubstring(s, words);
         System.out.println(substring);
     }
@@ -102,7 +105,7 @@ public class ACTest {
 
     }
 
-    private static List<Integer> checkv1(String txt, String pattern) {
+    private static List<Integer> check_v1(String txt, String pattern) {
         int[] next = build(pattern);
 
         char[] t = txt.toCharArray();
@@ -130,15 +133,17 @@ public class ACTest {
         return index;
     }
 
-    /**
+    /*
      * https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/description/?utm_source=LCUS&utm_medium=ip_redirect&utm_campaign=transfer2china
      */
     public static List<Integer> findSubstring(String s, String[] words) {
 
+        if (null == s || "".equals(s)) return new ArrayList<>();
+
         List<Integer[]> list = new ArrayList<>();
 
         for (int i = 0; i < words.length; i++) {
-            List<Integer> integers1 = checkv1(s, words[i]);
+            List<Integer> integers1 = check_v1(s, words[i]);
 //            System.out.println(integers1);
             Integer[] integers = integers1.toArray(new Integer[0]);
             list.add(integers);
@@ -146,9 +151,16 @@ public class ACTest {
         }
 
         List<Integer> finalR = new ArrayList<>();
+        int minLength = Integer.MAX_VALUE;
+        for (Integer[] integers : list) {
+            minLength = Math.min(integers.length, minLength);
+        }
 
-        for (int j = 0; j < list.get(0).length; j++) {
-            int d = words[0].length();
+        for (int j = 0; j < minLength; j++) {
+            int d = 0;
+            if (words.length != 0)
+                d = words[0].length();
+
             int last = -1;
             int min = Integer.MAX_VALUE;
             for (int i = 0; i < list.size(); i++) {
