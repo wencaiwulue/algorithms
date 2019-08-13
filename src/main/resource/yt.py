@@ -1,21 +1,19 @@
-import numpy as np
+# coding=utf-8
 import matplotlib.pyplot as plt
-#产生测试数据
-x = np.arange(10)
-y = x
+
 fig = plt.figure()
-ax1 = fig.add_subplot(111)
-#设置标题
-ax1.set_title('Scatter Plot')
-#设置X轴标签
+ax1 = fig.add_subplot()
+# 设置标题
+ax1.set_title('convex hull')
+# 设置X轴标签
 plt.xlabel('X')
-#设置Y轴标签
+# 设置Y轴标签
 plt.ylabel('Y')
-#画散点图
-a=1
-for i,j in [(0,59),(-1*100,102),(0,172),(1*100,214),(2*100,230),(3*100,225),(4*100,201),(5*100,163),(6*100,115),(7*100,59)]:
-    ax1.scatter(i,j,c = 'r',marker = 'o')
-#设置图标
+# 画散点图
+for i, j in [(7, 9), (-8, -1), (-3, -1), (1, 4), (-3, 9), (6, -4), (7, 5), (6, 6), (-6, 10), (0, 8)]:
+    ax1.scatter(i, j, c='r', marker='o')
+    plt.text(i, j, (i, j), ha='center', va='bottom', fontsize=10)
+# 设置图标
 plt.legend('x1')
-#显示所画的图
+# 显示所画的图
 plt.show()
