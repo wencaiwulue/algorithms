@@ -1,7 +1,5 @@
 package computationalGeometry;
 
-import hash.HashTest;
-
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,13 +12,14 @@ import java.util.stream.Stream;
  * @since 8/6/2019
  */
 public class IntersectionUtil {
-
-    // 两点式直线公式：(x - x1) / (x2 - x1) = (y - y1) / (y2 - y1)
-    // --> x(y2 - y1) + y(x1 - x2) + x1(y1 - y2) + y1(x2 - x1) = 0
-    // A = y2-y1, B = x1-x2, C = x1(y1 - y2) + y1(x2 - x1)
-    // (x,y) = d2/(d1+d2) * (x3,y3) + d1/(d1+d2) * (x4,y4)
-    // d2/(d1+d2) = |A*x4 + B*y4 + C|/(|A*x4 + B*y4 + C|+|A*x3 + B*y3 + C|)
-    // d1/(d1+d2) = |A*x3 + B*y3 + C|/(|A*x4 + B*y4 + C|+|A*x3 + B*y3 + C|)
+    /*
+     * 两点式直线公式：(x - x1) / (x2 - x1) = (y - y1) / (y2 - y1)
+     * --> x(y2 - y1) + y(x1 - x2) + x1(y1 - y2) + y1(x2 - x1) = 0
+     * A = y2-y1, B = x1-x2, C = x1(y1 - y2) + y1(x2 - x1)
+     * (x,y) = d2/(d1+d2) * (x3,y3) + d1/(d1+d2) * (x4,y4)
+     * d2/(d1+d2) = |A*x4 + B*y4 + C|/(|A*x4 + B*y4 + C|+|A*x3 + B*y3 + C|)
+     * d1/(d1+d2) = |A*x3 + B*y3 + C|/(|A*x4 + B*y4 + C|+|A*x3 + B*y3 + C|)
+     */
     public static Point detectIntersection(Point a, Point b, Point c, Point d) {
 
         // whether intersect ?
@@ -35,8 +34,8 @@ public class IntersectionUtil {
     }
 
     /*
-    输入: 一系列线段
-    输出: 相交的点坐标
+     * 输入: 一系列线段
+     * 输出: 相交的点坐标
      */
     public static void test(String fullName) throws Exception {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fullName);
@@ -54,7 +53,7 @@ public class IntersectionUtil {
 
     }
 
-    /**
+    /*
      * attention:
      * 这里不考虑退化情况，比如一条线段垂直, 或者两个线段一部分重叠
      * <p>
@@ -63,8 +62,9 @@ public class IntersectionUtil {
      * status: top --> bottom
      * 1, get all lines points value and sort it by x asc --represent sweep line, means this point, we need to stop and check
      * 2, sweep line position:
-     * (1), p, check p with event stack top(1), intersection detect, if intersect, push one event to event stack
-     * (2), q,
+     *      (1), p, check p with event stack top(1), intersection detect, if intersect, push one event to event stack
+     *      (2), q, pop whole line
+     *      (3), intersection, exchange two lines and check whether have intersection or not?
      *
      * @param lines lines
      * @return points
@@ -80,6 +80,7 @@ public class IntersectionUtil {
         // sweep line moving
         while (!eventStack.isEmpty()) {
             Event pop = eventStack.pop();
+            // is line start point
             if (pop.isFrom()) {
                 if (!statusStack.isEmpty()) {
                     Line line = statusStack.get(statusStack.size() - 1);
@@ -96,10 +97,12 @@ public class IntersectionUtil {
                     }
                 }
                 statusStack.add(pop.line);
+                // is line end point
             } else if (pop.isTo()) {
                 // remove whole line
                 statusStack.removeIf(e -> e.q.equals(pop.point));
 
+                // is intersection
             } else if (pop.isIntersect()) {
                 // exchange the rank of line and line2 in statusStack
                 Line line = pop.line;
