@@ -11,7 +11,7 @@ import java.util.List;
  * The Hailstone sequence of numbers can be generated from a starting positive integer,   n   by:
  *   If   n   is     1     then the sequence ends.
  *   If   n   is   even then the next   n   of the sequence   = n/2
- *   If   n   is   odd   then the next   n   of the sequence   = (3 * n) + 1
+ *   If   n   is   odd  then the next   n   of the sequence   = (3 * n) + 1
  * https://rosettacode.org/wiki/Hailstone_sequence
  */
 public class HailStone {
