@@ -113,8 +113,11 @@ public class PointPosition {
      * a：(x1, y1), point A:(x2, y2)
      */
     private static boolean isLeft(double x1, double y1, double x2, double y2) {
-        // a'=(-y1, x1) or (y1, -x1), return a' x A = (-y1, x1) x (x2, y2)
-        // 为什么要找a'向量呢？其实这个向量和(x1, y1)的点乘为0，也就是cosφ = 0, 所以φ = 90°,也就是说, a'向量是a向量的法向量
+        // a'=(-y1, x1) or (y1, -x1), return a' * A = (-y1, x1) * (x2, y2)
+        // todo: 点乘是对应位相乘的数量和，叉乘是相交乘的数量差
+        // todo: 二维向量叉乘公式a（x1，y1），b（x2，y2），则 a × b=（x1y2 - x2y1）
+        // todo: 二维向量点乘公式a（x1，y1），b（x2，y2），则 a * b=（x1x2 + y1y2）
+        // 为什么要找a'向量呢？其实这个向量和(x1, y1)的点乘为0，也就是cosφ = 0, 所以φ = 90°,也就是说, a'向量是a向量的一个垂直向量。
         return (-y1 * x2 + x1 * y2) > 0;
     }
 
