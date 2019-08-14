@@ -3,9 +3,8 @@ package trie;
 
 import com.google.common.base.Strings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author fengcaiwen
@@ -22,10 +21,13 @@ public class ACTest {
 //        Arrays.stream(build0(pattern)).forEach(System.out::println);
 //        List<Integer> integers = checkv1(txt, pattern);
 //        System.out.println(integers);
-        String s = "wordgoodgoodgoodbestword";
-        String[] words = new String[]{"word","good","best","word"};
+        String s = "barfoothefoobarman";
+        String[] words = new String[]{"foo", "bar"};
         List<Integer> substring = findSubstring(s, words);
         System.out.println(substring);
+        System.out.println(1 ^ 2 ^ 3 ^ 4);
+        System.out.println(1 ^ 2 ^ 3 ^ 12);
+        System.out.println();
     }
 
     /**
@@ -163,19 +165,50 @@ public class ACTest {
 
             int last = -1;
             int min = Integer.MAX_VALUE;
+//            for (int i = 0; i < list.size(); i++) {
+//                Integer integer = list.get(i)[j];
+//                if (min > integer)
+//                    min = integer;
+//                if (last != -1) {
+//                    if (Math.abs(integer - last) == d) {
+//                        finalR.add(min);
+//                        min = Integer.MAX_VALUE;
+//                    }
+//                }
+//                last = integer;
+//
+//            }
+
+            Map<Integer, Integer> rankMap = new HashMap<>();
             for (int i = 0; i < list.size(); i++) {
-                Integer integer = list.get(i)[j];
-                if (min > integer)
-                    min = integer;
-                if (last != -1) {
-                    if (Math.abs(integer - last) == d) {
-                        finalR.add(min);
-                        min = Integer.MAX_VALUE;
+                for (Integer integer : list.get(i)) {
+                    rankMap.put(integer, i + 1);
+                }
+            }
+            int dd = 0;
+            if (words.length != 0)
+                dd = words[0].length();
+            if (dd == 0) return new ArrayList<>();
+            for (int i = 0; i < s.length() / dd; i++) {
+                int m = Integer.MAX_VALUE;
+
+                BitSet set = new BitSet(words.length);
+                for (int k = 0; k < words.length; k++) {
+                    System.out.println(i * dd + k * dd);
+                    if (rankMap.containsKey(i * dd + k * dd)) {
+                        set.set(rankMap.get(i * dd + k * dd), true);
+                        m = Math.min(m, rankMap.getOrDefault(i * dd + k * dd, Integer.MAX_VALUE));
                     }
                 }
-                last = integer;
 
+                boolean flag = true;
+                for (int k = 0; k < words.length; k++) {
+                    flag = flag && set.get(k + 1);
+                }
+                if (flag && set.length() > 0)
+                    finalR.add(m);
             }
+
 
         }
         return finalR;
