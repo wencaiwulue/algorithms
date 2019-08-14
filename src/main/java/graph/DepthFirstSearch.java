@@ -59,7 +59,8 @@ public class DepthFirstSearch {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyG.txt");
-        Graph g = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Graph g = new Graph(Path.of(resource.toURI()));
         Iterable<Integer> integers = new DepthFirstSearch(g).search(g, 0);
         integers.forEach(System.out::println);
     }

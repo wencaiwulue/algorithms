@@ -101,7 +101,8 @@ public class Diagraph {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyCG.txt");
-        Diagraph f = new Diagraph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Diagraph f = new Diagraph(Path.of(resource.toURI()));
         System.out.println(f);
     }
 }

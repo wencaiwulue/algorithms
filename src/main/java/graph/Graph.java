@@ -36,8 +36,8 @@ public class Graph {
 
         List<String> lines = Files.lines(filePath).map(String::valueOf).collect(Collectors.toList());
 
-        this.v = Integer.valueOf(lines.get(0));
-        this.e = Integer.valueOf(lines.get(1));
+        this.v = Integer.parseInt(lines.get(0));
+        this.e = Integer.parseInt(lines.get(1));
 
         this.adj = new Stack[this.v];
         for (int j = 0; j < this.v; j++)
@@ -45,8 +45,8 @@ public class Graph {
 
         lines.stream().skip(2).forEach(e -> {
             String[] i = e.split(" ");
-            int from = Integer.valueOf(i[0]);
-            int to = Integer.valueOf(i[1]);
+            int from = Integer.parseInt(i[0]);
+            int to = Integer.parseInt(i[1]);
             // this is undirected graph
             this.adj[from].push(to);
             this.adj[to].push(from);
@@ -86,7 +86,8 @@ public class Graph {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyG.txt");
-        Graph f = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Graph f = new Graph(Path.of(resource.toURI()));
         System.out.println(f);
     }
 }

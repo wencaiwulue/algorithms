@@ -84,7 +84,8 @@ public class DirectedCycle {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("DiagraphTest.txt");
-        Diagraph g = new Diagraph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Diagraph g = new Diagraph(Path.of(resource.toURI()));
         DirectedCycle dc = new DirectedCycle(g);
         System.out.println(dc.hasCycle());
         System.out.println(dc.cycleElement);

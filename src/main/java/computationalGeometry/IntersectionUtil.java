@@ -1,5 +1,12 @@
 package computationalGeometry;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
 /**
  * @author fengcaiwen
  * @since 8/6/2019
@@ -23,6 +30,19 @@ public class IntersectionUtil {
         double x = d2 / (d1 + d2) * c.x + d1 / (d1 + d2) * d.x;
         double y = d2 / (d1 + d2) * c.y + d1 / (d1 + d2) * d.y;
         return new Point(x, y);
+    }
+
+    /*
+    输入: 一系列线段
+    输出: 相交的点坐标
+     */
+    public static void test(String fullName) throws Exception {
+        URL resource = Thread.currentThread().getContextClassLoader().getResource(fullName);
+        assert resource != null;
+        Path of = Path.of(resource.toURI());
+        Stream<String> lines = Files.lines(of);
+
+
     }
 
     public static void main(String[] args) {

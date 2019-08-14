@@ -46,7 +46,8 @@ public class Cycle {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyG.txt");
-        Graph f = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Graph f = new Graph(Path.of(resource.toURI()));
         Cycle c = new Cycle(f);
         System.out.println(c.hasCycle());
     }

@@ -75,7 +75,8 @@ public class DepthFirstPaths {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyCG.txt");
-        Graph g = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Graph g = new Graph(Path.of(resource.toURI()));
         DepthFirstPaths paths = new DepthFirstPaths(g, 0);
         Iterable<Integer> integers = paths.pathTo(5);
         assert integers != null;

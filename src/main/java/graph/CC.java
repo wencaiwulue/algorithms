@@ -74,7 +74,8 @@ public class CC {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyG.txt");
-        Graph f = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Graph f = new Graph(Path.of(resource.toURI()));
         CC c = new CC(f);
         System.out.println(c.connected(8, 9));
         System.out.println(c.connected(1, 9));

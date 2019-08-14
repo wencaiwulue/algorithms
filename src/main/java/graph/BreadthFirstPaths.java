@@ -80,7 +80,8 @@ public class BreadthFirstPaths {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("tinyCG.txt");
-        Graph g = new Graph(Path.of(Objects.requireNonNull(resource).toURI()));
+        assert resource != null;
+        Graph g = new Graph(Path.of(resource.toURI()));
         BreadthFirstPaths paths = new BreadthFirstPaths(g, 0);
         Objects.requireNonNull(paths.pathTo(1)).forEach(e -> System.out.print(e + " "));
         System.out.println();
