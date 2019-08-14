@@ -1,6 +1,9 @@
 package computationalGeometry;
 
 /**
+ * 将一个单调多边形三角剖分
+ * 将一个多边形单调化
+ *
  * @author fengcaiwen
  * @since 8/14/2019
  */
@@ -14,7 +17,7 @@ public class PolygonTriangle {
      * 输出: 剖分出来的三角形
      */
     public static void test(String fullName) throws Exception {
-
+        // todo: 如何将一个单调多边形分成单调的两部分
     }
 
     /*
