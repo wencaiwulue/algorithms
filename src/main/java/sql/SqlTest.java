@@ -16,7 +16,7 @@ public class SqlTest {
         p.setProperty("user", "root");
         p.setProperty("password", "12345678");
         Connection connect = new com.mysql.cj.jdbc.Driver().connect(url, p);
-        // todo: 测试结果表明，无论两种写法都是ok的，可能是因为数据库的行级锁的原因，不过这样有个问题就是数据库的瓶颈，如果要秒杀的商品很多，比如1万个，直接打到库上去可能会炸。
+        // todo: 测试结果表明，无论两种写法都是ok的，可能是因为数据库的行级锁的原因，不过这样有个问题就是数据库的瓶颈，如果要秒杀的商品很多，比如1万个，直接打到库上去可能会炸。网上有许多帖子，有多办法，消息队列或者是缓存，还有曲线救国的暂扣
 //        String sql = "update product set quantity = quantity -1 where quantity - 1 >= 0 and id = 1";
         String sql = "update product set quantity = quantity -1 where quantity >= 1 and id = 1";
         connect.setAutoCommit(true);
