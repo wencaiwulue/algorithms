@@ -27,6 +27,7 @@ public class SqlTest {
             new Thread(() -> {
                 while (true)
                     // 两秒钟够启动2000个左右的线程，机器不同，数量应该不同
+                    // 两秒后秒杀活动开始喽！！！
                     while (start + 2000 < System.currentTimeMillis()) {
                         try {
                             PreparedStatement ps = connect.prepareStatement(sql);
