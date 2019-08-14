@@ -69,7 +69,7 @@ public class PointPosition {
     }
 
     /**
-     * cosφ=A1A2+B1B2/[√(A1^2+B1^2)√(A2^2+B2^2)]
+     * cosφ=a*b/|a||b|= (x1x2+y1y2)/(√(x1^2+y1^2)√(x2^2+y2^2))
      */
     private static Point[] sort(Point[] s, int n, Point base) {
         // cos = a*
@@ -83,7 +83,8 @@ public class PointPosition {
     /**
      * ->  ->
      * a   b
-     * cosα=ab/|a||b|=（x1y1+x2,y2）/(根号（x1^2+y1^2）根号（x2^2+y1^2）)
+     * cosφ=a*b/|a||b|=（x1y1+x2y2）/(根号（x1^2+y1^2）根号（x2^2+y1^2）)
+     * 注意: 这里是点乘
      */
     private static double calculateDegree(Point a, Point b) {
         double v = (a.x * b.x + a.y * b.y) / (Math.pow(Math.pow(a.x, 2) + Math.pow(a.y, 2), 0.5) * Math.pow(Math.pow(b.x, 2) + Math.pow(b.y, 2), 0.5));
