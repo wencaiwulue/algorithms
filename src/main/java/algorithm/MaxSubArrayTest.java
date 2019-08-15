@@ -1,6 +1,8 @@
 package algorithm;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author fengcaiwen
@@ -32,6 +34,7 @@ public class MaxSubArrayTest {
         int leftPl = 0;
         int leftN = 0;
         int leftNl = 0;
+        Map<Integer, String> result = new HashMap<>();
         for (int i = 1; i < nums.length; i++) {
             boolean b = nums[i] > 0;
             if (b) {
@@ -74,23 +77,13 @@ public class MaxSubArrayTest {
                         nl = 1;
                     }
 
-                    {
-                        if (totalMax < (ps + nums[i])) {
-                            totalMax = ps + nums[i];
-                            resultStart = start;
-                            resultEnd = (i - nl - pl);
-                        }
-                        if (leftP + leftN < 0) {
-                            total += -(leftN + lastIsP);
-                            resultStart = start;
-                            resultEnd = (i - nl - pl);
-                        }
-                    }
+                    result.put(totalMax, resultStart + "~" + resultEnd);
+
                     // from n -> n 负-->负
                 } else {
                     nl++;
                     ns += nums[i];
-                    total = total < nums[i] ? nums[i] : total;
+                    total += nums[i];
                     totalMax = totalMax < nums[i] ? nums[i] : totalMax;
                 }
             }
@@ -100,5 +93,6 @@ public class MaxSubArrayTest {
         System.out.println(totalMax);
         System.out.println(Arrays.toString(nums));
         System.out.println(String.format("from: %s ~ %s", resultStart, resultEnd));
+        System.out.println(result);
     }
 }
