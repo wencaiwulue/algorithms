@@ -15,7 +15,6 @@ import java.util.BitSet;
  * @author fengcaiwen
  * @since 6/18/2019
  */
-@SuppressWarnings("all")
 @Component
 public class AnnotationTest {
 
