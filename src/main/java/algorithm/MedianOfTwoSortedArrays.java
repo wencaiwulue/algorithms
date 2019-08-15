@@ -37,6 +37,41 @@ public class MedianOfTwoSortedArrays {
         return result;
     }
 
+    public static double findMedianSortedArrays_v1(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int t = m + n;
+        int[] ints = new int[n + m];
+        int i = 0, j = 0;
+        int v = 0;
+        int v1 = 0;
+        for (int p = 0; p < t; p++) {
+            if (i >= m && j >= n) break;
+            if (i >= m) {
+                v = Integer.MAX_VALUE;
+            } else if (j >= n) {
+                v1 = Integer.MAX_VALUE;
+            } else {
+                v = nums1[i];
+                v1 = nums2[j];
+            }
+            if (v > v1)
+                ints[p] = nums2[j++];
+            else
+                ints[p] = nums1[i++];
+        }
+
+        double result;
+
+        if (t % 2 == 0) {
+            result = (ints[(t >> 1) - 1] + ints[t >> 1]) / 2d;
+        } else {
+            result = ints[t >> 1];
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         int[] nums1 = new int[]{1, 2};
         int[] nums2 = new int[]{3, 4};
