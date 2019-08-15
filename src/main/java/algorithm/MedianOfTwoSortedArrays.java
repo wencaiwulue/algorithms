@@ -75,6 +75,11 @@ public class MedianOfTwoSortedArrays {
     public static void main(String[] args) {
         int[] nums1 = new int[]{1, 2};
         int[] nums2 = new int[]{3, 4};
-        System.out.println(findMedianSortedArrays(nums1, nums2));
+        long start = System.nanoTime();
+        double v = findMedianSortedArrays(nums1, nums2);
+        long end = System.nanoTime();
+        System.out.printf("%s ns\n", end - start);
+
+        System.out.println(v);
     }
 }
