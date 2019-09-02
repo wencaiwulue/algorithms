@@ -54,12 +54,14 @@ public class AVLTree<T extends Comparable> {
         BinNode node3 = node.parent.parent;
 
         /*
-         *      3        3          3         3
-         *     /        /            \         \
-         *    2        2              2         2
-         *   /          \            /           \
-         *  1            1          1             1
-         *  (1)         (2)         (3)         (4)
+         *           3        3          3         3
+         *          / \      / \        / \       / \
+         *         2        2              2         2
+         *        / \      / \            / \       / \
+         *       1            1          1             1
+         *      / \          / \        / \           / \
+         *
+         *       (1)         (2)         (3)         (4)
          *
          *  中序遍历顺序就是从小到大的顺序
          */
@@ -111,10 +113,10 @@ public class AVLTree<T extends Comparable> {
 
     /*
      *        b
-     *      /  \
-     *     a    c
-     *   /  \  / \
-     *  t1 t2 t3 t4
+     *      /   \
+     *     a     c
+     *   /  \   /  \
+     *  t1  t2 t3  t4
      */
     public void connect34(BinNode a, BinNode b, BinNode c, BinNode t1, BinNode t2, BinNode t3, BinNode t4) {
         b.lChild = a;
@@ -124,6 +126,34 @@ public class AVLTree<T extends Comparable> {
         c.lChild = t3;
         c.rChild = t4;
     }
+
+    /*
+     *     |                  |
+     *     a                  b
+     *    / \       ->       / \
+     *   t1  b              a   t3
+     *      / \            / \
+     *     t2  t3         t1  t2
+     */
+    public void leftRotate(BinNode node) {
+        BinNode a = node;
+        BinNode b = node.rChild;
+
+    }
+
+    /*
+     *       |              |
+     *       a              b
+     *      / \     ->     / \
+     *     b   t3         t1  a
+     *    / \                / \
+     *   t1 t2              t2  t3
+     */
+    public void rightRotate(BinNode node) {
+
+    }
+
+    public void connect(){}
 
     public BinNode tallerChild(BinNode node) {
         if (node.lChild == null) return node.rChild;
