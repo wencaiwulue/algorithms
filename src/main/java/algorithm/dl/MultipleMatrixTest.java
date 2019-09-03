@@ -13,7 +13,7 @@ public class MultipleMatrixTest {
     /*
      * find the order and calculate
      *
-     * assume you have know knowledge about matrix, otherwise, please google
+     * assume you have know knowledge about matrix, otherwise, please google/bing
      *
      * assume:
      * m[i, j] = k, from Ai to Aj, k is best cut point, it will cut off two parts, Ai A(i+1) ... Ak, A(k+1) A(K+2)... Aj
