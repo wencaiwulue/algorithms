@@ -69,6 +69,7 @@ public class MultipleMatrixTest {
         return m;
     }
 
+    // todo
     public static Matrix calculate(ArrayList<Matrix> matrices, Matrix m) {
         return null;
     }
