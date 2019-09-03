@@ -64,14 +64,26 @@ public class MultipleMatrixTest {
                 }
             }
         }
-        System.out.println(m);
-        System.out.println(s);
+//        System.out.println(m);
+//        System.out.println(s);
         return m;
     }
 
-    // todo
-    public static Matrix calculate(ArrayList<Matrix> matrices, Matrix m) {
-        return null;
+    /*
+     * excellent, use system stack to calculate
+     *
+     */
+    public static Matrix calculate(ArrayList<Matrix> matrices, Matrix m, int from, int to) {
+        if (from + 1 == to) {
+            return matrices.get(from - 1).multiply(matrices.get(to - 1));
+        } else if (from == to) {
+            return matrices.get(from - 1);
+        }
+
+        int i = m.get(from, to);
+        Matrix a = calculate(matrices, m, from, i);
+        Matrix b = calculate(matrices, m, i + 1, to);
+        return a.multiply(b);
     }
 
 
@@ -80,7 +92,7 @@ public class MultipleMatrixTest {
      * A(5x4) * A(4x7) = A(5x7)
      *
      */
-    public static Matrix simple(Matrix a, Matrix b) {
+    public static Matrix simpleMultiply(Matrix a, Matrix b) {
         assertEquals(a.columns, b.rows);
         Matrix c = new Matrix(a.rows, b.columns);
         for (int i = 1; i < a.rows + 1; i++) {
@@ -128,6 +140,10 @@ public class MultipleMatrixTest {
             return columns;
         }
 
+        public Matrix multiply(Matrix b) {
+            return simpleMultiply(this, b);
+        }
+
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -138,6 +154,23 @@ public class MultipleMatrixTest {
             }
             return sb.toString();
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Matrix matrix = (Matrix) o;
+            return rows == matrix.rows &&
+                    columns == matrix.columns &&
+                    Arrays.equals(value, matrix.value);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hash(rows, columns);
+            result = 31 * result + Arrays.hashCode(value);
+            return result;
+        }
     }
 
     public static void main(String[] args) {
@@ -145,12 +178,17 @@ public class MultipleMatrixTest {
         Matrix b = new Matrix(IntStream.range(0, 20).toArray(), 5, 4);
         Matrix c = new Matrix(IntStream.range(0, 12).toArray(), 4, 3);
         Matrix d = new Matrix(IntStream.range(0, 6).toArray(), 3, 2);
-        List<Matrix> matrices = Arrays.asList(a, b, c, d);
-//        Collections.reverse(matrices);
-        test(new ArrayList<>(matrices));
+        ArrayList<Matrix> matrices = new ArrayList<>(Arrays.asList(a, b, c, d));
+        Matrix m = test(matrices);
 //        for (int i = 0; i < matrices.size(); i++) {
 //            System.out.println(matrices.get(i));
 //        }
+        Matrix result1 = a.multiply(b).multiply(c).multiply(d);
+        System.out.println();
+        Matrix result2 = calculate(matrices, m, 1, m.rows);
+        System.out.println(result1);
+        System.out.println(result2);
+        System.out.println(result1.equals(result2));
     }
 
 }
