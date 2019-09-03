@@ -6,6 +6,8 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * find the best way to calculate multiple matrix
+ *
  * @author fengcaiwen
  * @since 9/2/2019
  */
@@ -112,8 +114,11 @@ public class MultipleMatrixTest {
     }
 
     public static class Matrix {
+        // multiple matrix actually can express as a array
         private int[] value;
+        // the rows of matrix
         private int rows;
+        // the columns of matrix
         private int columns;
 
         public Matrix(int[] ints, int rows, int columns) {
