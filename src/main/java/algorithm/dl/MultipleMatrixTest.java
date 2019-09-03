@@ -1,6 +1,6 @@
 package algorithm.dl;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
@@ -25,9 +25,9 @@ public class MultipleMatrixTest {
      * to m , j>i make sense
      *
      */
-    public static void test(ArrayList<Matrix> matrix) {
-        Matrix m = new Matrix(2, matrix.size());
-        Matrix s = new Matrix(2, matrix.size());
+    public static Matrix test(ArrayList<Matrix> matrices) {
+        Matrix m = new Matrix(matrices.size(), matrices.size());
+        Matrix s = new Matrix(matrices.size(), matrices.size());
         for (int i = 0; i < m.rows; i++) {
             for (int j = 0; j < m.columns; j++) {
                 m.set(i + 1, j + 1, Integer.MAX_VALUE);
@@ -35,22 +35,44 @@ public class MultipleMatrixTest {
             }
         }
 
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix.size(); j++) {
-                int times = 0;
-                for (int k = 0; k < j - i; k++) {
-                    Matrix a = matrix.get(i);
-                    Matrix b = matrix.get(j);
-                    times += a.rows * a.columns * b.columns;
-                }
-                if (times < s.get(i, j)) {
-                    s.set(i, j, times);
-                    m.set(i, j, j - i);
+        for (int i = 1; i < matrices.size() + 1; i++) {
+            for (int j = 1; j < matrices.size() + 1; j++) {
+                if (j < i) continue;
+                for (int k = i; k <= j; k++) {
+                    int timesA = 0;
+                    int timesB = 0;
+
+                    Matrix c = matrices.get(i - 1);
+                    for (int l = i + 1; l <= k; l++) {
+                        Matrix a = matrices.get(l - 1);
+                        timesA += c.rows * c.columns * a.columns;
+                        c = new Matrix(c.rows, a.columns);
+                    }
+
+                    Matrix d = matrices.get(k - 1);
+                    for (int l = k + 1 + 1; l <= j; l++) {
+                        Matrix b = matrices.get(l - 1);
+                        timesB += d.rows * d.columns * b.columns;
+                        d = new Matrix(d.rows, b.columns);
+                    }
+
+                    int i1 = c.rows * c.columns * d.columns;
+                    if (timesA + timesB + i1 < s.get(i, j)) {
+                        s.set(i, j, timesA + timesB + i1);
+                        m.set(i, j, k);
+                    }
                 }
             }
         }
-
+        System.out.println(m);
+        System.out.println(s);
+        return m;
     }
+
+    public static Matrix calculate(ArrayList<Matrix> matrices, Matrix m) {
+        return null;
+    }
+
 
     /*
      *
@@ -118,14 +140,16 @@ public class MultipleMatrixTest {
     }
 
     public static void main(String[] args) {
-        int[] ints = IntStream.range(1, 9).toArray();
-        System.out.println(ints.length);
-        Matrix a = new Matrix(ints, 2, 4);
-        Matrix b = new Matrix(IntStream.range(1, 13).toArray(), 4, 3);
-        Matrix c = simple(a, b);
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
+        Matrix a = new Matrix(IntStream.range(0, 30).toArray(), 6, 5);
+        Matrix b = new Matrix(IntStream.range(0, 20).toArray(), 5, 4);
+        Matrix c = new Matrix(IntStream.range(0, 12).toArray(), 4, 3);
+        Matrix d = new Matrix(IntStream.range(0, 6).toArray(), 3, 2);
+        List<Matrix> matrices = Arrays.asList(a, b, c, d);
+//        Collections.reverse(matrices);
+        test(new ArrayList<>(matrices));
+//        for (int i = 0; i < matrices.size(); i++) {
+//            System.out.println(matrices.get(i));
+//        }
     }
 
 }
