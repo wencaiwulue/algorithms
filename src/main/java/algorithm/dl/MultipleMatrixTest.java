@@ -26,6 +26,8 @@ public class MultipleMatrixTest {
      *
      */
     public static Matrix test(ArrayList<Matrix> matrices) {
+
+        // init two matrix, fill full with Integer.MAX_VALUE
         Matrix m = new Matrix(matrices.size(), matrices.size());
         Matrix s = new Matrix(matrices.size(), matrices.size());
         for (int i = 0; i < m.rows; i++) {
@@ -41,7 +43,6 @@ public class MultipleMatrixTest {
                 for (int k = i; k <= j; k++) {
                     int timesA = 0;
                     int timesB = 0;
-
                     Matrix c = matrices.get(i - 1);
                     for (int l = i + 1; l <= k; l++) {
                         Matrix a = matrices.get(l - 1);
@@ -57,6 +58,8 @@ public class MultipleMatrixTest {
                     }
 
                     int i1 = c.rows * c.columns * d.columns;
+
+                    // if k is best cut point, it should: s(i, k) + s(k+1, j) < s(i, j), otherwise, do nothing
                     if (timesA + timesB + i1 < s.get(i, j)) {
                         s.set(i, j, timesA + timesB + i1);
                         m.set(i, j, k);
@@ -71,7 +74,6 @@ public class MultipleMatrixTest {
 
     /*
      * excellent, use system stack to calculate
-     *
      */
     public static Matrix calculate(ArrayList<Matrix> matrices, Matrix m, int from, int to) {
         if (from + 1 == to) {
@@ -112,7 +114,7 @@ public class MultipleMatrixTest {
         private int columns;
 
         public Matrix(int[] ints, int rows, int columns) {
-            assertEquals(rows * columns, ints.length);
+            assertEquals(ints.length, rows * columns);
             this.value = ints;
             this.rows = rows;
             this.columns = columns;
