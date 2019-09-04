@@ -93,6 +93,42 @@ public class MultipleMatrixTest {
         return a.multiply(b);
     }
 
+    /*
+     * expression
+     *
+     */
+    public static String calculatePath(ArrayList<Matrix> matrices, Matrix m, int from, int to) {
+        if (from + 1 == to) {
+            return String.format("(A%s*A%s)", from, to);
+        } else if (from == to) {
+            return String.format("A%s", from);
+        }
+
+        int i = m.get(from, to);
+        String a = calculatePath(matrices, m, from, i);
+        String b = calculatePath(matrices, m, i + 1, to);
+        return String.format("(%s)*(%s)", a, b);
+    }
+
+    public static int calculatePathStep(ArrayList<Matrix> matrices, Matrix m, int from, int to) {
+        if (from + 1 == to) {
+            Matrix a = matrices.get(from - 1);
+            Matrix b = matrices.get(to - 1);
+            return a.rows * a.columns * b.columns;
+        } else if (from == to) {
+            return 0;
+        }
+
+        int i = m.get(from, to);
+        int a = calculatePathStep(matrices, m, from, i);
+        Matrix am = calculate(matrices, m, from, i);
+        int b = calculatePathStep(matrices, m, i + 1, to);
+        Matrix bm = calculate(matrices, m, i + 1, to);
+        int increment = am.rows * am.columns * bm.columns;
+
+        return a + b + increment;
+    }
+
 
     /*
      *
@@ -184,21 +220,27 @@ public class MultipleMatrixTest {
     }
 
     public static void main(String[] args) {
-        Matrix a = new Matrix(IntStream.range(0, 30).toArray(), 6, 5);
-        Matrix b = new Matrix(IntStream.range(0, 20).toArray(), 5, 4);
-        Matrix c = new Matrix(IntStream.range(0, 12).toArray(), 4, 3);
-        Matrix d = new Matrix(IntStream.range(0, 6).toArray(), 3, 2);
-        ArrayList<Matrix> matrices = new ArrayList<>(Arrays.asList(a, b, c, d));
+        Matrix a = new Matrix(IntStream.range(0, 30 * 35).toArray(), 30, 35);
+        Matrix b = new Matrix(IntStream.range(0, 35 * 15).toArray(), 35, 15);
+        Matrix c = new Matrix(IntStream.range(0, 15 * 5).toArray(), 15, 5);
+        Matrix d = new Matrix(IntStream.range(0, 5 * 10).toArray(), 5, 10);
+        Matrix e = new Matrix(IntStream.range(0, 10 * 20).toArray(), 10, 20);
+        Matrix f = new Matrix(IntStream.range(0, 20 * 25).toArray(), 20, 25);
+        ArrayList<Matrix> matrices = new ArrayList<>(Arrays.asList(/*a, */b, c, d, e/*, f*/));
         Matrix m = test(matrices);
+        System.out.println(m);
 //        for (int i = 0; i < matrices.size(); i++) {
 //            System.out.println(matrices.get(i));
 //        }
-        Matrix result1 = a.multiply(b).multiply(c).multiply(d);
-        System.out.println();
-        Matrix result2 = calculate(matrices, m, 1, m.rows);
-        System.out.println(result1);
-        System.out.println(result2);
-        System.out.println(result1.equals(result2));
+//        Matrix result1 = a.multiply(b).multiply(c).multiply(d);
+//        System.out.println();
+//        Matrix result2 = calculate(matrices, m, 1, m.rows);
+        String s = calculatePath(matrices, m, 1, m.rows);
+        System.out.println(s);
+        System.out.println(calculatePathStep(matrices, m, 1, m.rows));
+//        System.out.println(result1);
+//        System.out.println(result2);
+//        System.out.println(result1.equals(result2));
     }
 
 }
