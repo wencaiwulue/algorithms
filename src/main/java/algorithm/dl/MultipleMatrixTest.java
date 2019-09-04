@@ -46,27 +46,27 @@ public class MultipleMatrixTest {
             for (int j = 1; j < matrices.size() + 1; j++) {
                 if (j < i) continue;
                 for (int k = i; k <= j; k++) {
-                    int timesA = 0;
-                    int timesB = 0;
+                    int partA = 0;
+                    int partB = 0;
                     Matrix c = matrices.get(i - 1);
                     for (int l = i + 1; l <= k; l++) {
                         Matrix a = matrices.get(l - 1);
-                        timesA += c.rows * c.columns * a.columns;
+                        partA += c.rows * c.columns * a.columns;
                         c = new Matrix(c.rows, a.columns);
                     }
 
                     Matrix d = matrices.get(k - 1);
                     for (int l = k + 1 + 1; l <= j; l++) {
                         Matrix b = matrices.get(l - 1);
-                        timesB += d.rows * d.columns * b.columns;
+                        partB += d.rows * d.columns * b.columns;
                         d = new Matrix(d.rows, b.columns);
                     }
 
-                    int i1 = c.rows * c.columns * d.columns;
+                    int increment = c.rows * c.columns * d.columns;
 
                     // if k is best cut point, it should: s(i, k) + s(k+1, j) < s(i, j), otherwise, do nothing
-                    if (timesA + timesB + i1 < s.get(i, j)) {
-                        s.set(i, j, timesA + timesB + i1);
+                    if (partA + partB + increment < s.get(i, j)) {
+                        s.set(i, j, partA + partB + increment);
                         m.set(i, j, k);
                     }
                 }
