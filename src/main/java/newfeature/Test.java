@@ -1,14 +1,14 @@
 package newfeature;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,5 +56,11 @@ public class Test {
 
         String s = Base64.getEncoder().encodeToString("qbucket:qkey ".getBytes());
         System.out.println(s);
+
+        List<String> strings = Arrays.asList("a", "b", "c");
+        System.out.println(strings);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String[] strings1 = new String[]{"a", "b", "c"};
+        System.out.println(strings1.toString());
     }
 }

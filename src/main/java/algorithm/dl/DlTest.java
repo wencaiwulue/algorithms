@@ -3,10 +3,7 @@ package algorithm.dl;
 import graph.Edge;
 import graph.WeightDirectGraph;
 
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -14,8 +11,8 @@ import java.util.stream.Collectors;
  * @since 8/29/2019
  */
 public class DlTest {
-    // find the low cost path
 
+    // find the low cost path
     public static void test(WeightDirectGraph g, int from, int to) {
         Map<String, Integer> path = new HashMap<>();
         ArrayDeque<Integer> t = new ArrayDeque<>();
@@ -29,6 +26,11 @@ public class DlTest {
         }
 
 
+    }
+
+    public static void main(String[] args) {
+        List<String> lis = null;
+        lis.forEach(e -> System.out.println(e));
     }
 
 }
