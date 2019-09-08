@@ -18,27 +18,28 @@ public class MultipleMatrixTest {
      * assume you have know knowledge about matrix, otherwise, please google/bing
      *
      * assume:
-     * m[i, j] = k, from Ai to Aj, k is best cut point, it will cut off two parts, Ai A(i+1) ... Ak, A(k+1) A(K+2)... Aj
-     * s[i, j] = cost, the step of Ai * A(i+1) * ... * Aj = cost
+     * s[i, j] = k, from Ai to Aj, k is best cut point, it will cut off two parts, Ai A(i+1) ... Ak, A(k+1) A(K+2)... Aj
+     * m[i, j] = cost, the step of Ai * A(i+1) * ... * Aj = cost
      *
      * Ai Ai+1 ... Aj
      * assume Ak and A(k+1) is the cut point
      *
      * so:
-     * s(i, k)+s(k+1, j) < s(i,j)
-     * if i = j, then s(i, j)=0
+     * if i = j, m[i,j]=0
+     * if i < j, m[i,j]=min{m[i,k] + m[k+1, j] + p(i-1)p(k)p(j)}
+     *
      * to m , j>i make sense
      *
      */
     public static Matrix test(ArrayList<Matrix> matrices) {
 
         // init two matrix, fill full with Integer.MAX_VALUE
-        Matrix m = new Matrix(matrices.size(), matrices.size());
         Matrix s = new Matrix(matrices.size(), matrices.size());
-        for (int i = 0; i < m.rows; i++) {
-            for (int j = 0; j < m.columns; j++) {
-                m.set(i + 1, j + 1, Integer.MAX_VALUE);
-                s.set(i + 1, j + 1, Integer.MAX_VALUE);
+        Matrix m = new Matrix(matrices.size(), matrices.size());
+        for (int i = 0; i < s.rows; i++) {
+            for (int j = 0; j < s.columns; j++) {
+//                s.set(i + 1, j + 1, Integer.MAX_VALUE);
+//                m.set(i + 1, j + 1, Integer.MAX_VALUE);
             }
         }
 
@@ -64,17 +65,19 @@ public class MultipleMatrixTest {
 
                     int increment = c.rows * c.columns * d.columns;
 
-                    // if k is best cut point, it should: s(i, k) + s(k+1, j) < s(i, j), otherwise, do nothing
-                    if (partA + partB + increment < s.get(i, j)) {
-                        s.set(i, j, partA + partB + increment);
-                        m.set(i, j, k);
+                    int pa = matrices.get(i - 1).rows * matrices.get(k - 1).columns * matrices.get(j - 1).columns;
+
+                    // if k is best cut point, it should: m(i, k) + m(k+1, j) < m(i, j), otherwise, do nothing
+                    if (/*partA + partB + increment*/pa + m.get(i, k) + m.get(k + 1, j) < m.get(i, j)) {
+                        m.set(i, j, partA + partB + increment);
+                        s.set(i, j, k);
                     }
                 }
             }
         }
 //        System.out.println(m);
 //        System.out.println(s);
-        return m;
+        return s;
     }
 
     /*
@@ -108,6 +111,17 @@ public class MultipleMatrixTest {
         String a = calculatePath(matrices, m, from, i);
         String b = calculatePath(matrices, m, i + 1, to);
         return String.format("(%s)*(%s)", a, b);
+    }
+
+    public static void calculatePathV2(Matrix s, int i, int j) {
+        if (i == j) {
+            System.out.printf("A(%s)", i);
+        } else {
+            System.out.println("(");
+            calculatePathV2(s, i, s.get(i, j));
+            calculatePathV2(s, s.get(i, j) + 1, j);
+            System.out.println(")");
+        }
     }
 
     public static int calculatePathStep(ArrayList<Matrix> matrices, Matrix m, int from, int to) {
@@ -149,9 +163,31 @@ public class MultipleMatrixTest {
         return c;
     }
 
+    public static Matrix matrixChainOrder(ArrayList<Integer> matrices) {
+        int n = matrices.size();
+        Matrix s = new Matrix(matrices.size(), matrices.size());
+        Matrix m = new Matrix(matrices.size(), matrices.size());
+        for (int i = 1; i <= n; i++)
+            m.set(i, i, 0);
+        for (int l = 2; l <= n; l++) {
+            for (int i = 1; i <= n - l + 1; i++) {
+                int j = i + l - 1;
+                m.set(i, j, Integer.MAX_VALUE);
+                for (int k = i; k <= j - 1; k++) {
+                    int q = m.get(i, k) + m.get(k + 1, j) + matrices.get(i - 1) * matrices.get(k - 1) * matrices.get(j - 1);
+                    if (q < m.get(i, j)) {
+                        m.set(i, j, q);
+                        s.set(i, j, k);
+                    }
+                }
+            }
+        }
+        return s;
+    }
+
     public static class Matrix {
         // multiple matrix actually can express as a array
-        private int[] value;
+        private int[][] value;
         // the rows of matrix
         private int rows;
         // the columns of matrix
@@ -159,23 +195,23 @@ public class MultipleMatrixTest {
 
         public Matrix(int[] ints, int rows, int columns) {
             assertEquals(ints.length, rows * columns);
-            this.value = ints;
+            this.value = null;
             this.rows = rows;
             this.columns = columns;
         }
 
         public Matrix(int rows, int columns) {
-            this.value = new int[rows * columns];
+            this.value = new int[rows + 1][columns + 1];
             this.rows = rows;
             this.columns = columns;
         }
 
         public int get(int x, int y) {
-            return this.value[(x - 1) * columns + (y - 1)];
+            return this.value[x][y];
         }
 
         public void set(int x, int y, int value) {
-            this.value[(x - 1) * columns + (y - 1)] = value;
+            this.value[x][y] = value;
         }
 
         public int getRows() {
@@ -226,21 +262,28 @@ public class MultipleMatrixTest {
         Matrix d = new Matrix(IntStream.range(0, 5 * 10).toArray(), 5, 10);
         Matrix e = new Matrix(IntStream.range(0, 10 * 20).toArray(), 10, 20);
         Matrix f = new Matrix(IntStream.range(0, 20 * 25).toArray(), 20, 25);
-        ArrayList<Matrix> matrices = new ArrayList<>(Arrays.asList(/*a, */b, c, d, e/*, f*/));
-        Matrix m = test(matrices);
-        System.out.println(m);
+        ArrayList<Matrix> matrices = new ArrayList<>(Arrays.asList(a, b, c, d, e, f));
+//        Matrix m = test(matrices);
+//        System.out.println(m);
 //        for (int i = 0; i < matrices.size(); i++) {
 //            System.out.println(matrices.get(i));
 //        }
 //        Matrix result1 = a.multiply(b).multiply(c).multiply(d);
 //        System.out.println();
 //        Matrix result2 = calculate(matrices, m, 1, m.rows);
-        String s = calculatePath(matrices, m, 1, m.rows);
-        System.out.println(s);
-        System.out.println(calculatePathStep(matrices, m, 1, m.rows));
+//        String s = calculatePath(matrices, m, 1, m.rows);
+//        System.out.println(s);
+//        System.out.println(calculatePathStep(matrices, m, 1, m.rows));
+//        System.out.println("v2");
+//        System.out.println(matrixChainOrder(new ArrayList<>(Arrays.asList(30, 35, 15, 5, 10, 20, 25))));
+//        calculatePathV2(m, 1, 6);
+
 //        System.out.println(result1);
 //        System.out.println(result2);
 //        System.out.println(result1.equals(result2));
+        int[][] aa = new int[][]{{3, 4, 5}, {1, 2, 3}};
+        System.out.println(aa.length);
+        System.out.println(aa[0].length);
     }
 
 }

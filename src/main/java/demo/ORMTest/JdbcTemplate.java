@@ -1,5 +1,6 @@
 package demo.ORMTest;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import demo.ORMTest.util.Result2BeanTools;
 import org.springframework.stereotype.Component;
 
@@ -89,6 +90,7 @@ public class JdbcTemplate {
     public <T> List<T> query(String sql, Class<T> tClass) throws Throwable {
         Connection connect = getConnection();
         PreparedStatement ps = connect.prepareStatement(sql);
+         org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
         ResultSet set = ps.executeQuery(sql);
         // reuse connection
         connectionPool.add(connect);
