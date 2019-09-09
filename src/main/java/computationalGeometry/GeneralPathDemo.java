@@ -3,6 +3,7 @@ package computationalGeometry;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.GeneralPath;
+import java.awt.image.BufferedImage;
 
 public class GeneralPathDemo extends JPanel {
 
@@ -37,6 +38,7 @@ public class GeneralPathDemo extends JPanel {
 
     public static void main(String[] args) {
         JFrame ui = new JFrame("DEMO");
+        ui.setIconImage(new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB));
         ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ui.getContentPane().setLayout(new BorderLayout());
         ui.getContentPane().add(new GeneralPathDemo(), BorderLayout.CENTER);
