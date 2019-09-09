@@ -167,7 +167,7 @@ public class MultipleMatrixTest {
         return s;
     }
 
-    public static int[][] genMatrix(int[] ints, int rows, int columns) {
+    public static int[][] generateMatrix(int[] ints, int rows, int columns) {
         int[][] value = new int[rows][columns];
         for (int i = 0; i < ints.length; i++) {
             int r = i / columns;
@@ -190,16 +190,16 @@ public class MultipleMatrixTest {
 
     public static void main(String[] args) {
 
-        int[][] a1 = genMatrix(IntStream.range(0, 2 * 3).toArray(), 2, 3);
-        int[][] a2 = genMatrix(IntStream.range(0, 3 * 4).toArray(), 3, 4);
+        int[][] a1 = generateMatrix(IntStream.range(0, 2 * 3).toArray(), 2, 3);
+        int[][] a2 = generateMatrix(IntStream.range(0, 3 * 4).toArray(), 3, 4);
         simpleMultiply(a1, a2);
 
-        int[][] a = genMatrix(IntStream.range(0, 30 * 35).toArray(), 30, 35);
-        int[][] b = genMatrix(IntStream.range(0, 35 * 15).toArray(), 35, 15);
-        int[][] c = genMatrix(IntStream.range(0, 15 * 5).toArray(), 15, 5);
-        int[][] d = genMatrix(IntStream.range(0, 5 * 10).toArray(), 5, 10);
-        int[][] e = genMatrix(IntStream.range(0, 10 * 20).toArray(), 10, 20);
-        int[][] f = genMatrix(IntStream.range(0, 20 * 25).toArray(), 20, 25);
+        int[][] a = generateMatrix(IntStream.range(0, 30 * 35).toArray(), 30, 35);
+        int[][] b = generateMatrix(IntStream.range(0, 35 * 15).toArray(), 35, 15);
+        int[][] c = generateMatrix(IntStream.range(0, 15 * 5).toArray(), 15, 5);
+        int[][] d = generateMatrix(IntStream.range(0, 5 * 10).toArray(), 5, 10);
+        int[][] e = generateMatrix(IntStream.range(0, 10 * 20).toArray(), 10, 20);
+        int[][] f = generateMatrix(IntStream.range(0, 20 * 25).toArray(), 20, 25);
         ArrayList<int[][]> matrices = new ArrayList<>(Arrays.asList(a, b, c, d, e, f));
 
         ArrayList<Integer> list = new ArrayList<>(Arrays.asList(30, 35, 15, 5, 10, 20, 25));
