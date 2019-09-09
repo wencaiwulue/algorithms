@@ -177,7 +177,7 @@ public class MultipleMatrixTest {
         return value;
     }
 
-    public static String toString(int[][] ints) {
+    public static String arrayToString(int[][] ints) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ints.length; i++) {
             for (int j = 0; j < ints[i].length; j++) {
@@ -214,7 +214,7 @@ public class MultipleMatrixTest {
 
         System.out.println();
         int[][] matrix = calculate(matrices, ints, 1, 6);
-        System.out.println(toString(matrix));
+        System.out.println(arrayToString(matrix));
 
 
     }
