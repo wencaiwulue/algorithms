@@ -2,13 +2,12 @@ package tree;
 
 import org.junit.Assert;
 
-import static tree.BinNode.updateAndGetHeight;
 
 /**
  * @author fengcaiwen
  * @since 6/28/2019
  */
-public class AVLTree<T extends Comparable> {
+public class AVLTree<T extends Comparable<? super T>> {
     private BinNode<T> root;
 
     public AVLTree(BinNode<T> root) {
@@ -16,14 +15,14 @@ public class AVLTree<T extends Comparable> {
     }
 
     public void insert(T data) {
-        BinNode<Integer> fakeHot = new BinNode<>(-1);
+        BinNode<T> fakeHot = new BinNode<>();
         root.insert(root, data, fakeHot);
-        BinNode hot = fakeHot.parent;
+        BinNode<T> hot = fakeHot.parent;
         if (hot == null) return;
         // rotate
         while (hot != null) {
             BinNode<T> temp = hot;
-            if (Math.abs(updateAndGetHeight(temp.lChild) - updateAndGetHeight(temp.rChild)) > 1) {
+            if (Math.abs(temp.lChild.updateAndGetHeight() - temp.rChild.updateAndGetHeight()) > 1) {
                 rotate(tallerChild(tallerChild(temp)));
             }
             hot = hot.parent;
@@ -31,15 +30,15 @@ public class AVLTree<T extends Comparable> {
     }
 
     public void delete(T data) {
-        BinNode<Integer> fakeHot = new BinNode<>(-1);
+        BinNode<T> fakeHot = new BinNode();
         root.delete(root, data, fakeHot);
-        BinNode hot = fakeHot.parent;
+        BinNode<T> hot = fakeHot.parent;
         if (hot == null) return;
 
         // rotate
         while (hot != null) {
-            BinNode temp = hot.parent;
-            if (Math.abs(updateAndGetHeight(temp.lChild) - updateAndGetHeight(temp.rChild)) > 1) {
+            BinNode<T> temp = hot.parent;
+            if (Math.abs(temp.lChild.updateAndGetHeight() - temp.rChild.updateAndGetHeight()) > 1) {
                 rotate(tallerChild(tallerChild(temp)));
             }
             hot = hot.parent;
@@ -111,9 +110,9 @@ public class AVLTree<T extends Comparable> {
         else if (node3.parent.lChild == node3) node3.parent.lChild = b;
         else node3.parent.rChild = b;
 
-        updateAndGetHeight(node1);
-        updateAndGetHeight(node2);
-        updateAndGetHeight(node3);
+        node1.updateAndGetHeight();
+        node2.updateAndGetHeight();
+        node3.updateAndGetHeight();
 
     }
 
@@ -204,14 +203,11 @@ public class AVLTree<T extends Comparable> {
         if (t3 != null) t3.parent = a;
     }
 
-    public void connect() {
-    }
-
     public BinNode<T> tallerChild(BinNode<T> node) {
         if (node.lChild == null) return node.rChild;
         if (node.rChild == null) return node.lChild;
-        int i = updateAndGetHeight(node.lChild);
-        int j = updateAndGetHeight(node.rChild);
+        int i = node.lChild.updateAndGetHeight();
+        int j = node.rChild.updateAndGetHeight();
         return i > j ? node.lChild : node.rChild;
     }
 

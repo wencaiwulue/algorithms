@@ -2,8 +2,6 @@ package tree;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static tree.BinNode.updateAndGetHeight;
 
 /**
  * @author fengcaiwen
@@ -32,7 +30,7 @@ public class AVLTreeTest {
         System.out.println(node);
         System.out.println(node.size());
 
-        updateAndGetHeight(node);
+        node.updateAndGetHeight();
 
         System.out.println(node.n);
     }

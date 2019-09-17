@@ -6,13 +6,15 @@ package tree;
  * @author fengcaiwen
  * @since 6/12/2019
  */
-@SuppressWarnings("all")
-public class BinNode<T extends Comparable> {
+public class BinNode<T extends Comparable<? super T>> {
     public BinNode<T> parent;
     public BinNode<T> lChild;
     public BinNode<T> rChild;
     public T data;
     public Integer n;
+
+    public BinNode() {
+    }
 
     public BinNode(BinNode<T> parent, T data) {
         this.parent = parent;
@@ -26,17 +28,17 @@ public class BinNode<T extends Comparable> {
     /**
      * update and return height
      */
-    public static int updateAndGetHeight(BinNode node) {
-        if (node == null) return 1;
+    public int updateAndGetHeight() {
+        BinNode<T> node = this;
         int i = 1;
         int j = 1;
         if (node.lChild != null) {
-            i += updateAndGetHeight(node.lChild);
+            i += node.lChild.updateAndGetHeight();
         }
         if (node.rChild != null) {
-            j += updateAndGetHeight(node.rChild);
+            j += node.rChild.updateAndGetHeight();
         }
-        node.n = i > j ? i : j;
+        node.n = Math.max(i, j);
         return node.n;
     }
 
@@ -51,25 +53,25 @@ public class BinNode<T extends Comparable> {
         return s;
     }
 
-    public BinNode insertAsLc(T data) {
+    public BinNode<T> insertAsLc(T data) {
         this.lChild = new BinNode<T>(this, data);
         return this.lChild;
     }
 
-    public BinNode insertAsRc(T data) {
+    public BinNode<T> insertAsRc(T data) {
         this.rChild = new BinNode<T>(this, data);
         return this.rChild;
     }
 
-    public BinNode search(BinNode<T> node, T date, BinNode hot) {
+    public BinNode<T> search(BinNode<T> node, T date, BinNode hot) {
         if (node == null || node.data == date) return node;
         hot.parent = node;
         return search((date.compareTo(node.data) > 0 ? node.rChild : node.lChild), date, hot);
     }
 
-    public BinNode<T> insert(BinNode<T> node, T data, BinNode hot) {
+    public BinNode<T> insert(BinNode<T> node, T data, BinNode<T> hot) {
 
-        BinNode search = search(node, data, hot);
+        BinNode<T> search = search(node, data, hot);
         hot = hot.parent;
         if (search == null) {
             // todo optimze
@@ -143,7 +145,7 @@ public class BinNode<T extends Comparable> {
 
         System.out.println(node);
         System.out.println(node.size());
-        updateAndGetHeight(node);
+        node.updateAndGetHeight();
 
         System.out.println(node.n);
 
