@@ -54,12 +54,12 @@ public class BinNode<T extends Comparable<? super T>> {
     }
 
     public BinNode<T> insertAsLc(T data) {
-        this.lChild = new BinNode<T>(this, data);
+        this.lChild = new BinNode<>(this, data);
         return this.lChild;
     }
 
     public BinNode<T> insertAsRc(T data) {
-        this.rChild = new BinNode<T>(this, data);
+        this.rChild = new BinNode<>(this, data);
         return this.rChild;
     }
 
@@ -76,9 +76,9 @@ public class BinNode<T extends Comparable<? super T>> {
         if (search == null) {
             // todo optimze
             if (data.compareTo(hot.data) > 0)
-                hot.rChild = new BinNode<T>(hot, data);
+                hot.rChild = new BinNode<>(hot, data);
             else
-                hot.lChild = new BinNode<T>(hot, data);
+                hot.lChild = new BinNode<>(hot, data);
         }
         return search;
     }

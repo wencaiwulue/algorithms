@@ -30,7 +30,7 @@ public class AVLTree<T extends Comparable<? super T>> {
     }
 
     public void delete(T data) {
-        BinNode<T> fakeHot = new BinNode();
+        BinNode<T> fakeHot = new BinNode<>();
         root.delete(root, data, fakeHot);
         BinNode<T> hot = fakeHot.parent;
         if (hot == null) return;

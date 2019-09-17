@@ -14,7 +14,6 @@ public class BinTree<T extends Comparable<? super T>> {
     public BinTree() {
     }
 
-    //todo
     public void insert(T data) {
         if (root == null) {
             root = new BinNode<>(data);
@@ -24,19 +23,17 @@ public class BinTree<T extends Comparable<? super T>> {
         }
     }
 
-    // todo
     public BinNode<T> search(T data) {
-        BinNode<T> hot = new BinNode();
+        BinNode<T> hot = new BinNode<>();
         return root.search(root, data, hot);
     }
 
-    // todo
     public void delete(T data) {
-        BinNode<T> hot = new BinNode();
+        BinNode<T> hot = new BinNode<>();
         root.delete(root, data, hot);
     }
 
-    // --------------------1, recursion----------------------------
+    // recursion
     public Iterator<T> traversePre() {
         List<T> result = new ArrayList<>();
         return traversePre(result, root);
@@ -79,8 +76,7 @@ public class BinTree<T extends Comparable<? super T>> {
         return result.iterator();
     }
 
-    // -------------------2, iteration----------------------
-
+    // iteration
     public Iterator<T> traverseLevel() throws InterruptedException {
         LinkedBlockingQueue<BinNode<T>> queue = new LinkedBlockingQueue<>();
         List<T> list = new LinkedList<>();
@@ -94,8 +90,7 @@ public class BinTree<T extends Comparable<? super T>> {
         return list.iterator();
     }
 
-
-    public Iterator<T> traversePre0() {
+    public Iterator<T> traversePreIterator() {
         List<T> result = new ArrayList<>();
         Stack<BinNode<T>> stack = new Stack<>();
         stack.add(root);
@@ -104,19 +99,19 @@ public class BinTree<T extends Comparable<? super T>> {
             // 1, visit this node
             result.add(pop.data);
             // 2, push this node's right node and left node into stack in order
-            traversePre0(stack, pop);
+            traversePreIterator(stack, pop);
         }
         return result.iterator();
     }
 
-    public void traversePre0(Stack<BinNode<T>> stack, BinNode<T> node) {
+    public void traversePreIterator(Stack<BinNode<T>> stack, BinNode<T> node) {
         // this is previous traverse order is: root, left, right. when push into stack order is right left, poll order is left right
         // this mode is just like merge from bottom to up
         if (node.rChild != null) stack.add(node.rChild);
         if (node.lChild != null) stack.add(node.lChild);
     }
 
-    public Iterator traverseIn0() {
+    public Iterator traverseInIterator() {
 //        Stack<BinNode<T>> stack = new Stack<>();
 //        List<Object> result = new ArrayList<>();
 //        stack.add(root);
@@ -127,11 +122,11 @@ public class BinTree<T extends Comparable<? super T>> {
         return null;
     }
 
-    public Iterator travIn0(Stack<BinNode> stack, BinNode node) {
+    public Iterator traverseInIterator(Stack<BinNode> stack, BinNode node) {
         return null;
     }
 
-    public Iterator travPost0() {
+    public Iterator traversePost0() {
 //        Stack<BinNode> stack = new Stack<>();
 //        List<Object> result = new ArrayList<>();
 //        stack.add(root);
@@ -139,7 +134,7 @@ public class BinTree<T extends Comparable<? super T>> {
         return null;
     }
 
-    public Iterator travPost0(Stack<BinNode> stack, BinNode node) {
+    public Iterator traversePost0(Stack<BinNode> stack, BinNode node) {
         return null;
     }
 
@@ -149,7 +144,7 @@ public class BinTree<T extends Comparable<? super T>> {
      * @param node go along with this node
      * @return return the leftest nonnull node
      */
-    public BinNode goAlongLeft(BinNode node) {
+    public BinNode<T> goAlongLeft(BinNode<T> node) {
         if (node.lChild != null) {
             goAlongLeft(node.lChild);
         }
@@ -184,7 +179,7 @@ public class BinTree<T extends Comparable<? super T>> {
         System.out.println();
 
         System.out.println("iteration_pre:");
-        Iterator<Integer> i1 = tree.traversePre0();
+        Iterator<Integer> i1 = tree.traversePreIterator();
         i1.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
 
@@ -203,8 +198,8 @@ public class BinTree<T extends Comparable<? super T>> {
         i4.forEachRemaining(e -> System.out.print(e + " "));
         System.out.println();
 
-        System.out.println(Optional.ofNullable(tree.search(5)).orElse(new BinNode(-1)).data);
-        System.out.println(Optional.ofNullable(tree.search(55)).orElse(new BinNode()).data);
+        System.out.println(Optional.ofNullable(tree.search(5)).orElse(new BinNode<>(-1)).data);
+        System.out.println(Optional.ofNullable(tree.search(55)).orElse(new BinNode<>()).data);
     }
 
 }
