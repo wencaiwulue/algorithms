@@ -2,12 +2,14 @@ package newfeature;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+import org.springframework.util.SimpleIdGenerator;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.time.format.DateTimeFormatter;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,9 +60,22 @@ public class Test {
         System.out.println(s);
 
         List<String> strings = Arrays.asList("a", "b", "c");
+        System.out.println("11111");
+        System.out.println(Joiner.on("','").appendTo(new StringBuilder("'"), strings).append("'"));
+
         System.out.println(strings);
         ObjectMapper objectMapper = new ObjectMapper();
         String[] strings1 = new String[]{"a", "b", "c"};
         System.out.println(strings1.toString());
+
+        int size = 1000000+500;
+        Set<String> set = new HashSet<>();
+        SimpleIdGenerator generator = new SimpleIdGenerator();
+        HashFunction hashFunction = Hashing.md5();
+        for (int i = 0; i < size; i++) {
+            UUID uuid = generator.generateId();
+            set.add(hashFunction.hashString(uuid.toString(), Charset.defaultCharset()).toString().substring(0, 10));
+        }
+        System.out.println(set.size());
     }
 }

@@ -1,7 +1,5 @@
 package util;
 
-//import nl.flotsam.xeger.Xeger;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,39 +10,14 @@ import java.util.regex.Pattern;
 public class PatternMatchTest {
     public static void main(String[] args) {
         String phone = "13512775062";
-        String qq = "1231233584@qq.com";
-        String card = "6215421131521321352";
-        System.out.println(blockKeywords(""));
-        ;
+        String qq = "姓名：宝先生\\n年龄：24\\n婚龄：无\\n咨询问题：脱单（见到女孩第一句话怎么说才能把关系拉上  ）\\n电话号：18325460\"";
+//        System.out.println(blockKeywords(""));
+        System.out.println(qq);
+        System.out.println(blockKey(qq));
 
-//        String replace = s1.replace();
-        Pattern compile = Pattern.compile("(.*?)(\\d{4}?@)");
-        Matcher qqMatcher = compile.matcher(qq);
-        if (qqMatcher.find()) {
-            System.out.println(qq);
-            System.out.println(qq.replace(qqMatcher.group(1), "*".repeat(Math.max(0, qqMatcher.group(1).length()))));
-        }
-
-        compile = Pattern.compile("^\\d{3}(.*?)\\d{4}$");
-        Matcher phoneMatcher = compile.matcher(phone);
-        if (phoneMatcher.find()) {
-            System.out.println(phone);
-            System.out.println(phone.replaceAll(phoneMatcher.group(1), "*".repeat(Math.max(0, phoneMatcher.group(1).length()))));
-        }
-
-        compile = Pattern.compile("^(.*?)\\d{4}$");
-        Matcher cardMatcher = compile.matcher(card);
-        if (cardMatcher.find()) {
-            System.out.println(card);
-            System.out.println(card.replaceAll(cardMatcher.group(1), "*".repeat(Math.max(0, cardMatcher.group(1).length()))));
-        }
-//
-//
 //        String reger = "d{4}";
 //        Xeger xeger = new Xeger(reger);
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(xeger.generate());
-//        }
+//        for (int i = 0; i < 10; i++) System.out.println(xeger.generate());
 
 
     }
@@ -66,6 +39,19 @@ public class PatternMatchTest {
             if (m.find())
                 return source.replace(m.group(1), "*".repeat(Math.max(0, m.group(1).length())));
         }
+        return source;
+    }
+
+    public static String blockKey(String source) {
+        Pattern p = Pattern.compile("(.*?)(\\d{4}?@)");
+        Matcher m = p.matcher(source);
+        while (m.find())
+            source = source.replace(m.group(1), "*".repeat(Math.max(0, m.group(1).length())));
+
+        Pattern p1 = Pattern.compile("\\d{3}(\\d{4})\\d{4}");
+        Matcher m1 = p1.matcher(source);
+        while (m1.find())
+            source = source.replace(m1.group(1), "*".repeat(Math.max(0, m1.group(1).length())));
         return source;
     }
 }

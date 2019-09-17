@@ -1,8 +1,6 @@
 package algorithm;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author fengcaiwen
@@ -10,28 +8,30 @@ import java.util.Map;
  */
 public class TwoSum {
     public static void main(String[] args) {
+
+        List<Integer> list = new ArrayList<>();
+        list.add(null);
+        list.add(1);
+        System.out.println(list.size());
+        System.out.println(list.toString());
+
         int t = 6;
         int[] nums = new int[]{3, 2, 4};
         System.out.println(Arrays.toString(getIndex(nums, t)));
     }
 
     private static int[] getIndex(int[] nums, int target) {
-        Map<Integer, Integer> differenceMap = new HashMap<>();
-        Map<Integer, Integer> indexList = new HashMap<>();
+        int length = nums.length;
+        Map<Integer, Integer> indexMap = new HashMap<>(length);
 
-        for (int i = 0; i < nums.length; i++) {
-            indexList.put(nums[i], i);
-            int difference = target - nums[i];
-            if (!differenceMap.containsKey(difference)) {
-                differenceMap.put(difference, i);
-            }
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (differenceMap.containsKey(nums[i])) {
-                if (differenceMap.get(nums[i]) == i) {
-                    continue;
-                }
-                return new int[]{indexList.get(nums[i]), differenceMap.get(nums[i])};
+        for (int i = 0; i < length; i++)
+            indexMap.put(nums[i], i);
+
+        for (int i = 0; i < length; i++) {
+            if (nums[i] + nums[i] == target) continue;
+            int i1 = target - nums[i];
+            if (indexMap.containsKey(i1)) {
+                return new int[]{i, indexMap.get(i1)};
             }
         }
         return new int[]{-1, -1};
