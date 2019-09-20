@@ -1,7 +1,7 @@
 package tree;
 
 /**
- * 二叉树结构
+ * binary node
  *
  * @author fengcaiwen
  * @since 6/12/2019
@@ -63,6 +63,9 @@ public class BinNode<T extends Comparable<? super T>> {
         return this.rChild;
     }
 
+    /*
+     * hot is a pointer, is found, it's the found's parent, if not found, if the last failure node
+     * */
     public BinNode<T> search(BinNode<T> node, T date, BinNode hot) {
         if (node == null || node.data == date) return node;
         hot.parent = node;
@@ -70,16 +73,14 @@ public class BinNode<T extends Comparable<? super T>> {
     }
 
     public BinNode<T> insert(BinNode<T> node, T data, BinNode<T> hot) {
-
         BinNode<T> search = search(node, data, hot);
         hot = hot.parent;
-        if (search == null) {
-            // todo optimze
+        if (search == null)
             if (data.compareTo(hot.data) > 0)
                 hot.rChild = new BinNode<>(hot, data);
             else
                 hot.lChild = new BinNode<>(hot, data);
-        }
+
         return search;
     }
 

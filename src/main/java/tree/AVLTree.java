@@ -4,6 +4,8 @@ import org.junit.Assert;
 
 
 /**
+ * AVL tree is a self-balancing binary search tree(BST), base on Bin-Node
+ *
  * @author fengcaiwen
  * @since 6/28/2019
  */
@@ -46,6 +48,19 @@ public class AVLTree<T extends Comparable<? super T>> {
 
     }
 
+    /*
+     *           |        |          |         |
+     *           3        3          3         3
+     *          / \      / \        / \       / \
+     *         2        2              2         2
+     *        / \      / \            / \       / \
+     *       1            1          1             1
+     *      / \          / \        / \           / \
+     *
+     *       (1)         (2)         (3)         (4)
+     *
+     *  中序遍历顺序就是从小到大的顺序
+     */
     public void rotate(BinNode<T> node) {
         BinNode<T> a, b, c;
         BinNode<T> t1, t2, t3, t4;
@@ -53,19 +68,7 @@ public class AVLTree<T extends Comparable<? super T>> {
         BinNode<T> node1 = node;
         BinNode<T> node2 = node.parent;
         BinNode<T> node3 = node.parent.parent;
-        /*
-         *           |        |          |         |
-         *           3        3          3         3
-         *          / \      / \        / \       / \
-         *         2        2              2         2
-         *        / \      / \            / \       / \
-         *       1            1          1             1
-         *      / \          / \        / \           / \
-         *
-         *       (1)         (2)         (3)         (4)
-         *
-         *  中序遍历顺序就是从小到大的顺序
-         */
+
         if (node3.lChild == node2) {
             if (node2.lChild == node1) { // circumstance 1
                 a = node1;
@@ -106,6 +109,7 @@ public class AVLTree<T extends Comparable<? super T>> {
         }
         connect34(a, b, c, t1, t2, t3, t4);
 
+        // update the highest node
         if (node3.parent == null) root = b;
         else if (node3.parent.lChild == node3) node3.parent.lChild = b;
         else node3.parent.rChild = b;
@@ -113,10 +117,10 @@ public class AVLTree<T extends Comparable<? super T>> {
         node1.updateAndGetHeight();
         node2.updateAndGetHeight();
         node3.updateAndGetHeight();
-
     }
 
     /*
+     *        |
      *        b
      *      /   \
      *     a     c
@@ -137,7 +141,6 @@ public class AVLTree<T extends Comparable<? super T>> {
         if (t2 != null) t2.parent = a;
         if (t3 != null) t3.parent = c;
         if (t4 != null) t4.parent = c;
-
     }
 
     /*

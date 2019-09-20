@@ -3,13 +3,14 @@ package tree;
 import org.junit.Assert;
 
 /**
+ * red-block tree
+ *
  * @author fengcaiwen
  * @since 9/6/2019
  */
-public class RbTree {
-    private RbNode root;
-    private static RbNode nil;
-
+public class RbTree<K, V> {
+    private RbNode<K, V> root;
+//    private static RbNode nil;
 
     /*
      *       |                       |
@@ -32,15 +33,15 @@ public class RbTree {
         y.l = x;
         y.r = c;
 
-        if (x.p == nil) y = t.root;
+        if (x.p == null) y = t.root;
         else if (x.p.l == x) x.p.l = y;
         else x.p.r = y;
         y.p = x.p;
         x.p = y;
 
-        if (a != nil) a.p = x;
-        if (b != nil) b.p = x;
-        if (c != nil) c.p = y;
+        if (a != null) a.p = x;
+        if (b != null) b.p = x;
+        if (c != null) c.p = y;
     }
 
     /*
@@ -64,15 +65,15 @@ public class RbTree {
         x.l = b;
         x.r = c;
 
-        if (x.p == nil) y = t.root;
+        if (x.p == null) y = t.root;
         else if (x.p.l == x) x.p.l = y;
         else x.p.r = y;
         y.p = x.p;
         x.p = y;
 
-        if (a != nil) a.p = y;
-        if (b != nil) b.p = x;
-        if (c != nil) c.p = x;
+        if (a != null) a.p = y;
+        if (b != null) b.p = x;
+        if (c != null) c.p = x;
     }
 
     /*
@@ -84,8 +85,8 @@ public class RbTree {
      * */
     public void turnColor(RbNode x) {
         if (x.color == RbNode.Color.red) {
-            if (x.p != nil && x.p.color == RbNode.Color.black) {
-                if (x.p.r != nil && x.p.r.color == RbNode.Color.red) {
+            if (x.p != null && x.p.color == RbNode.Color.black) {
+                if (x.p.r != null && x.p.r.color == RbNode.Color.red) {
                     x.color = RbNode.Color.black;
                     x.p.r.color = RbNode.Color.black;
                     x.p.color = RbNode.Color.black;
@@ -95,10 +96,11 @@ public class RbTree {
     }
 
 
-    public static class RbNode {
+    public static class RbNode<K, V> {
         private Color color;
-        private String key;
-        private RbNode p, l, r;
+        private K key;
+        private V val;
+        private RbNode<K, V> p, l, r;
 
         public enum Color {
             red, black

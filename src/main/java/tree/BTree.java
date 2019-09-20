@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * B tree base on inner static class Bt-node
+ *
  * @author fengcaiwen
  * @since 7/5/2019
  */
