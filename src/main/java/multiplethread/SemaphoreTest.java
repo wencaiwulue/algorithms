@@ -7,7 +7,7 @@ package multiplethread;
  * potentially releasing a blocking acquirer.
  * However, no actual permit objects are used; the {@code Semaphore} just
  * keeps a count of the number available and acts accordingly.
- *
+ * <p>
  * 一个计数的信号量，从概念上讲，一个信号量维护了一系列的许可。每一个尝试获取许可的操作将会阻塞，除非一个许可是可用的。并且可以获取到它
  * 每一个release释放操作将会增加一个许可，不管怎样，没有
  *
@@ -121,9 +121,9 @@ package multiplethread;
  * actions following a successful "acquire" method such as {@code acquire()}
  * in another thread.
  *
- * @since 1.5
  * @author Doug Lea
+ * @since 1.5
  */
-public class SemaphereTest {
+public class SemaphoreTest {
 
 }
