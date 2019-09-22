@@ -1,4 +1,4 @@
-package demo.ORMTest.util;
+package sql;
 
 
 import com.google.common.base.Joiner;

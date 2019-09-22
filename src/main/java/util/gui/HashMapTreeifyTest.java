@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author fengcaiwen
  * @since 9/18/2019
  */
-public class Test {
+public class HashMapTreeifyTest {
     public static void main(String[] args) {
         HashMap<Key, Object> map = new HashMap<>();
         for (int i = 0; i < 9; i++) {

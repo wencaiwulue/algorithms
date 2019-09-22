@@ -9,7 +9,7 @@ import java.util.Properties;
  * @author fengcaiwen
  * @since 8/14/2019
  */
-public class SqlTest {
+public class StoreTest {
     public static void main(String[] args) throws SQLException, InterruptedException {
         String url = "jdbc:mysql://localhost:3306/test";
         Properties p = new Properties();

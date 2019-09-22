@@ -4,7 +4,7 @@ package algorithm.dl;
  * @author fengcaiwen
  * @since 9/5/2019
  */
-public class IrobotTest {
+public class IRobotTest {
     public static void main(String[] args) {
 
     }

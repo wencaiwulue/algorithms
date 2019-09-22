@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author fengcaiwen
  * @since 7/11/2019
  */
-public class SetTest {
+public class SubSetTest {
 
     public static void main(String[] args) {
         int[] a = new int[]{0, 1, 2, 3, 4, 6};

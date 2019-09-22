@@ -4,7 +4,7 @@ package collections;
  * @author fengcaiwen
  * @since 4/24/2019
  */
-public class BitSetTest {
+public class ReverseBitTest {
 
     public static void main(String[] args) {
         long a = 123123L;

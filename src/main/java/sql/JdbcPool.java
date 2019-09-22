@@ -1,7 +1,5 @@
-package demo.ORMTest;
+package sql;
 
-import com.mysql.cj.jdbc.PreparedStatementWrapper;
-import demo.ORMTest.util.Result2BeanTools;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -16,35 +14,18 @@ import java.util.concurrent.atomic.LongAdder;
  */
 
 @Component
-public class JdbcTemplate {
-
-    // jdbc url
+public class JdbcPool {
     private String url;
-
     // Normally at least "user" and "password" properties should be included
     private Properties properties;
-
     private static Driver driver;
-
     // available connection
     private static ConcurrentLinkedDeque<Connection> connectionPool = new ConcurrentLinkedDeque<>();
 
     private static final int coreSize = 32;
     private static volatile LongAdder current = new LongAdder();
 
-    public JdbcTemplate() {
-        // if do not set data source, use default
-        String url = "jdbc:mysql://localhost:3306/test";
-        Properties p = new Properties();
-        p.setProperty("user", "root");
-        p.setProperty("password", "12345678");
-
-        this.properties = p;
-        this.url = url;
-        init(1);
-    }
-
-    public JdbcTemplate(String url, Properties p) {
+    public JdbcPool(String url, Properties p) {
         this.url = url;
         this.properties = p;
         init(1);
@@ -90,7 +71,7 @@ public class JdbcTemplate {
     public <T> List<T> query(String sql, Class<T> tClass) throws Throwable {
         Connection connect = getConnection();
         PreparedStatement ps = connect.prepareStatement(sql);
-         org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+        org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
         ResultSet set = ps.executeQuery(sql);
         // reuse connection
         connectionPool.add(connect);

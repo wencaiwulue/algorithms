@@ -15,9 +15,9 @@ public class MaxProfileStock {
         int p = 0;
         int l = prices.length - 1;
         for (int i = l; i >= 0; i--) {
-            m = prices[i] > m ? prices[i] : m;
+            m = Math.max(prices[i], m);
             int i1 = m - prices[i];
-            p = p > i1 ? p : i1;
+            p = Math.max(p, i1);
         }
         return p;
     }

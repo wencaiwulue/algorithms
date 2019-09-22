@@ -30,10 +30,6 @@ public class StrReverse {
             chars[i] = chars[j];
             chars[j] = temp;
         }
-        StringBuilder result = new StringBuilder();
-        for (char c : chars) {
-            result.append(c);
-        }
-        return result.toString();
+        return String.valueOf(chars);
     }
 }

@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static collections.BitSetTest.isHighOrLow;
-import static collections.BitSetTest.setRankReverse;
+import static collections.ReverseBitTest.isHighOrLow;
+import static collections.ReverseBitTest.setRankReverse;
 
 /**
  * @author fengcaiwen

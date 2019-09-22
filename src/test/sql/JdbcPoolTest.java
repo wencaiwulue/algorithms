@@ -1,11 +1,11 @@
-package demo.ORMTest;
+package sql;
 
-import demo.ORMTest.bean.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -13,9 +13,17 @@ import java.util.concurrent.TimeUnit;
  * @author fengcaiwen
  * @since 6/27/2019
  */
-public class JdbcTemplateTest {
+public class JdbcPoolTest {
     @Autowired
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    private static JdbcPool jdbcTemplate;
+
+    static {
+        String url = "jdbc:mysql://localhost:3306/test";
+        Properties p = new Properties();
+        p.setProperty("user", "root");
+        p.setProperty("password", "12345678");
+        jdbcTemplate = new JdbcPool(url, p);
+    }
 
     @Test
     public void query() throws Throwable {
@@ -44,11 +52,11 @@ public class JdbcTemplateTest {
         String sql = "select * from user ";
         Class<User> userClass = User.class;
 
-        int a = Runtime.getRuntime().availableProcessors();
-        System.out.println(a);
-        CountDownLatch latch = new CountDownLatch(a);
+        int threadNum = Runtime.getRuntime().availableProcessors();
+        System.out.println(threadNum);
+        CountDownLatch latch = new CountDownLatch(threadNum);
         List<Thread> threadList = new LinkedList<>();
-        for (int i = 0; i < a; i++)
+        for (int i = 0; i < threadNum; i++)
             threadList.add(new Thread(() -> {
                 try {
                     for (int j = 0; j < 10000; j++)
@@ -67,4 +75,44 @@ public class JdbcTemplateTest {
         latch.await();
         System.out.println(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start) + "ms");
     }
+
+    public static class User {
+
+        public String name;
+        public Integer gender;
+
+
+        public User() {
+        }
+
+        public User(String name, Integer gender) {
+            this.name = name;
+            this.gender = gender;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getGender() {
+            return gender;
+        }
+
+        public void setGender(Integer gender) {
+            this.gender = gender;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", gender=" + gender +
+                    '}';
+        }
+    }
+
 }

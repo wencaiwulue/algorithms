@@ -7,19 +7,8 @@ import java.util.regex.Pattern;
  * @author fengcaiwen
  * @since 8/30/2019
  */
-public class PatternMatchTest {
+public class RegularExpressTest {
     public static void main(String[] args) {
-        String phone = "13512775062";
-        String qq = "姓名：宝先生\\n年龄：24\\n婚龄：无\\n咨询问题：脱单（见到女孩第一句话怎么说才能把关系拉上  ）\\n电话号：18325460\"";
-//        System.out.println(blockKeywords(""));
-        System.out.println(qq);
-        System.out.println(blockKey(qq));
-
-//        String reger = "d{4}";
-//        Xeger xeger = new Xeger(reger);
-//        for (int i = 0; i < 10; i++) System.out.println(xeger.generate());
-
-
     }
 
     public static String blockKeywords(String source) {

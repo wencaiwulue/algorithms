@@ -14,7 +14,7 @@ public class RandomTest {
 
         int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
         for (int i = 0; i < 100; i++) {
-            int id = getWexinIdByWeight(b);
+            int id = getByWeight(b);
             if (id == 11) {
                 a1++;
             } else if (id == 22) {
@@ -31,7 +31,7 @@ public class RandomTest {
     }
 
     @SuppressWarnings("all")
-    public static int getWexinIdByWeight(int[][] source) {
+    public static int getByWeight(int[][] source) {
         int totalWeight = 0;
         int length = source[0].length;
         RangeMap<Integer, Integer> map = TreeRangeMap.create();
