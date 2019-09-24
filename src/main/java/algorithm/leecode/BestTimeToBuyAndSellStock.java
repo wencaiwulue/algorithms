@@ -1,10 +1,10 @@
-package algorithm;
+package algorithm.leecode;
 
 /**
  * @author fengcaiwen
  * @since 8/5/2019
  */
-public class MaxProfileStock {
+public class BestTimeToBuyAndSellStock {
     public static void main(String[] args) {
         int[] ints = new int[]{7, 5, 2, 4, 6, 1, 3};
         System.out.println(maxProfit(ints));
