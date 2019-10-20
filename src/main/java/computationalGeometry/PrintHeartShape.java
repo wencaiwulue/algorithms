@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *
+ * print heart shape
+ *
  * @author fengcaiwen
  * @since 8/9/2019
  */
-public class Print {
+public class PrintHeartShape {
     public static void main(String[] args) {
         printHeart();
         System.out.println("-----");
