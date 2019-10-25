@@ -149,11 +149,17 @@
             <artifactId>pdfbox</artifactId>
             <version>2.0.16</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.pdfbox</groupId>-->
+<!--            <artifactId>fontbox</artifactId>-->
+<!--            <version>2.0.16</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>fontbox</artifactId>
-            <version>2.0.16</version>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>8.2.0</version>
         </dependency>
+
     </dependencies>
 
 </project>
