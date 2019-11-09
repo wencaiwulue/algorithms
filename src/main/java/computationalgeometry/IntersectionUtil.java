@@ -1,4 +1,4 @@
-package computationalGeometry;
+package computationalgeometry;
 
 import java.net.URL;
 import java.nio.file.Files;

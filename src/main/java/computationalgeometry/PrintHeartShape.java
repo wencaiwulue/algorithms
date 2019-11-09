@@ -1,4 +1,4 @@
-package computationalGeometry;
+package computationalgeometry;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

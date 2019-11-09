@@ -1,4 +1,4 @@
-package computationalGeometry;
+package computationalgeometry;
 
 import java.util.Objects;
 

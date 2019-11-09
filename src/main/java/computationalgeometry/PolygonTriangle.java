@@ -1,4 +1,4 @@
-package computationalGeometry;
+package computationalgeometry;
 
 /**
  * 将一个单调多边形三角剖分

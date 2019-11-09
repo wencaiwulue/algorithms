@@ -1,4 +1,4 @@
-package computationalGeometry;
+package computationalgeometry;
 
 import javax.swing.*;
 import java.awt.*;
