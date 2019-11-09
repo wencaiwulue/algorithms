@@ -73,14 +73,14 @@ public class BeautifulArray {
             } else {
                 return b;
             }
-        } else if (b == max) {
+        } else if (max == b) {
             if (a == min) {
                 return c;
             } else {
                 return a;
             }
         } else {
-            if (a == min) {
+            if (min == a) {
                 return b;
             } else {
                 return a;
