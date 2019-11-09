@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * @author fengcaiwen
  * @since 11/8/2019
  */
-public class BeautifulBArray {
+public class BeautifulArray {
     public static void main(String[] args) {
         int n = 100000;
         check(testIdea3(n));
