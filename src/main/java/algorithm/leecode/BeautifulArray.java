@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class BeautifulArray {
     public static void main(String[] args) {
-        int n = 100000;
+        int n = 1000;
         check(testIdea3(n));
     }
 
@@ -21,9 +21,10 @@ public class BeautifulArray {
         int value = BigDecimal.valueOf(log2(i)).setScale(0, RoundingMode.UP).intValue();
         int f = (int) Math.pow(2, value);
         int[] ints = new int[3 * f];
+        // 采用231模式, 还可以使用132, 213, 312模式
         ints[0] = 1 + f;
-        ints[1] = 1 + 2 * f;
-        ints[2] = 1;
+        ints[1] = 1;
+        ints[2] = 1 + 2 * f;
         int size = 3;
         long start = System.nanoTime();
         for (int j = value - 1; j >= 0; j--) {
