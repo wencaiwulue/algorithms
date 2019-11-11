@@ -1,4 +1,4 @@
-package algorithm.dl;
+package algorithm.dynamicprogramming;
 
 import java.util.*;
 import java.util.stream.IntStream;

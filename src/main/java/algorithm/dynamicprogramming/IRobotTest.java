@@ -1,4 +1,4 @@
-package algorithm.dl;
+package algorithm.dynamicprogramming;
 
 /**
  * @author fengcaiwen
