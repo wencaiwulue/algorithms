@@ -16,7 +16,33 @@ public class TransformToChessboard {
         System.out.println(answer(ints));
     }
 
-    private static int cal(int[] ints) {
+    private static int answer(int[][] board) {
+        // 1, check can transform or not
+        int[] last = board[0];
+        for (int i = 1, intsLength = board.length; i < intsLength; i++) {
+            int[] anInt = board[i];
+            if (!can(last, anInt)) return -1;
+            last = anInt;
+        }
+
+        // 2, calculate the shortest step
+        int r;
+        if ((r = calculate(board[0])) < 0) return -1;
+        int c;
+        int[] temp = new int[board.length];
+        for (int i = 0; i < board.length; i++) {
+            int[] anInt = board[i];
+            temp[i] = anInt[0];
+        }
+        if ((c = calculate(temp)) < 0) return -1;
+
+        return r + c;
+    }
+
+    /*
+     * calculate the shortest step to transform
+     * */
+    private static int calculate(int[] ints) {
         int length = ints.length;
         int oneNum = 0;
         for (int anInt : ints) if (anInt == 1) oneNum++;
@@ -75,26 +101,5 @@ public class TransformToChessboard {
             if (i != j) d++;
         }
         return d == 0 || d == a.length;
-    }
-
-    private static int answer(int[][] board) {
-        int[] last = board[0];
-        for (int i = 1, intsLength = board.length; i < intsLength; i++) {
-            int[] anInt = board[i];
-            if (!can(last, anInt)) return -1;
-            last = anInt;
-        }
-
-        int r;
-        if ((r = cal(board[0])) < 0) return -1;
-        int c;
-        int[] temp = new int[board.length];
-        for (int i = 0; i < board.length; i++) {
-            int[] anInt = board[i];
-            temp[i] = anInt[0];
-        }
-        if ((c = cal(temp)) < 0) return -1;
-
-        return r + c;
     }
 }
