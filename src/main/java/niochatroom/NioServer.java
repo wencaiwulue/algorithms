@@ -3,11 +3,14 @@ package niochatroom;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
 
-@SuppressWarnings("all")
+/**
+ * @author fengcaiwen
+ * @since 12/8/2019
+ */
 public class NioServer {
 
     public static void main(String[] args) throws Throwable {
@@ -15,70 +18,63 @@ public class NioServer {
     }
 
     public void start() throws Throwable {
-        // 第一步：创建Selector
         Selector selector = Selector.open();
-        // 第二步：创建ServerSocketChannel，并监听端口
-        ServerSocketChannel channel = ServerSocketChannel.open();
-        channel.bind(new InetSocketAddress("localhost", 8000));
-        // 第三步：设置channel为非阻塞模式
-        channel.configureBlocking(false);
-        // 第四步：将channel注册到Selector上，并监听连接事件
-        channel.register(selector, SelectionKey.OP_ACCEPT);
-        for (; ; ) {
-            // 第五步：调用Selector的select方法，
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        serverSocketChannel.bind(new InetSocketAddress("localhost", 8000));
+        serverSocketChannel.configureBlocking(false);
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        while (true) {
             int select = selector.select();
-            if (select == 0) {
-                return;
-            }
-            // 第六步：调用selectKeys方法，获取到事件
+            if (select == 0) continue;
+
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
             Iterator<SelectionKey> iterator = selectionKeys.iterator();
             while (iterator.hasNext()) {
                 SelectionKey selectionKey = iterator.next();
                 iterator.remove();
-                // 第七步：调用业务逻辑handler，处理业务
-                SelectableChannel channel1 = selectionKey.channel();
-                if (selectionKey.isAcceptable()) {
+                SelectableChannel selectableChannel = selectionKey.channel();
+                if (selectionKey.isAcceptable() || selectionKey.isConnectable()) {
                     acceptHandler(selectionKey, selector);
-                } else if (selectionKey.isConnectable()) {
-                    acceptHandler((ServerSocketChannel) channel1, selector);
                 } else if (selectionKey.isReadable()) {
-                    readHandler((SocketChannel) channel1, selector);
-                } else if (selectionKey.isWritable()) {
-                    writeHandler((SocketChannel) channel1, selector, "sorry");
+                    readHandler((SocketChannel) selectableChannel, selector);
                 }
             }
         }
     }
 
-    public void acceptHandler(SelectionKey selectionKey, Selector selector) throws Exception {
-        ServerSocketChannel channel = (ServerSocketChannel) selectionKey.channel();
-        SocketChannel socketChannel = channel.accept();
+    private void acceptHandler(SelectionKey selectionKey, Selector selector) throws Exception {
+        ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
+        SocketChannel socketChannel = serverSocketChannel.accept();
         socketChannel.configureBlocking(false);
         socketChannel.register(selector, SelectionKey.OP_READ);
     }
 
-    public void acceptHandler(ServerSocketChannel channel, Selector selector) throws Exception {
-        SocketChannel socketChannel = channel.accept();
-        socketChannel.configureBlocking(false);
-        socketChannel.register(selector, SelectionKey.OP_READ);
-    }
+    /*
+     *
+     * get set request
+     * */
+    private void readHandler(SocketChannel socketChannel, Selector selector) throws Exception {
+        if (!socketChannel.isOpen()) return;
 
-    public void readHandler(SocketChannel channel, Selector selector) throws Exception {
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         StringBuilder request = new StringBuilder();
-        while (channel.read(byteBuffer) > 0) {
+        int readLength;
+        while ((readLength = socketChannel.read(byteBuffer)) > 0) {
             byteBuffer.flip();
-            request.append(Charset.forName("UTF-8").decode(byteBuffer));
+            request.append(StandardCharsets.UTF_8.decode(byteBuffer));
         }
-        System.out.println("request:" + request);
-        channel.register(selector, SelectionKey.OP_WRITE);
-    }
+        /*
+         * sun.nio.ch.IOStatus.EOF
+         * sun.nio.ch.IOStatus.UNAVAILABLE
+         * */
+        if (readLength < 0) {
+            socketChannel.close();
+            return;
+        }
 
-    public void writeHandler(SocketChannel channel, Selector selector, String response) throws Exception {
-        channel.write(Charset.forName("UTF-8").encode(response));
-        channel.register(selector, SelectionKey.OP_READ);
+        System.out.println(request);
+        socketChannel.write(StandardCharsets.UTF_8.encode("ok, i got it , i am searching result"));
+        socketChannel.register(selector, SelectionKey.OP_READ);
     }
-
 }
 

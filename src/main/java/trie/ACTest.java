@@ -4,6 +4,8 @@ package trie;
 import java.util.*;
 
 /**
+ * Aho-Corasick automaton
+ *
  * @author fengcaiwen
  * @since 6/19/2019
  */

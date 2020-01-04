@@ -1,5 +1,6 @@
 package util;
 
+import org.junit.Test;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -9,7 +10,12 @@ import java.lang.reflect.Field;
  * @since 7/17/2019
  */
 public class UnsafeThreadTest {
-    public static void main(String[] args) throws Exception {
+
+    /**
+     * 线程一旦提交到线程池，就无法更改了。但是开始修改任务的状态，不可替换任务
+     */
+    @Test
+    public void changeRunnable(String[] args) throws Exception {
         Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
         theUnsafe.setAccessible(true);
         Unsafe unsafe = (Unsafe) theUnsafe.get(null);
@@ -18,49 +24,36 @@ public class UnsafeThreadTest {
             while (true) {
                 try {
                     System.out.println("old");
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
         });
-
-        thread.start();
         thread.start();
 
-        Thread thread2 = new Thread(() -> {
-            thread.run();
-        });
-
+        Runnable printNew = () -> {
+            while (true)
+                try {
+                    System.out.println("new");
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        };
         Thread thread1 = new Thread(() -> {
-            Field field = null;
             try {
-                field = Thread.class.getDeclaredField("target");
+                Field field = Thread.class.getDeclaredField("target");
                 field.setAccessible(true);
                 long offset = unsafe.objectFieldOffset(field);
-                Runnable runnable = () -> {
-                    while (true)
-                        try {
-                            System.out.println("new");
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                };
-                unsafe.getAndSetObject(thread, offset, runnable);
+                unsafe.getAndSetObject(thread, offset, printNew);
                 thread.run();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
-        thread2.start();
-        Thread.sleep(3000);
         thread1.start();
-
-
+        Thread.sleep(3000);
     }
-
-
 }

@@ -1,5 +1,6 @@
 package util;
 
+import org.junit.Test;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -8,50 +9,73 @@ import java.lang.reflect.Field;
  * @author fengcaiwen
  * @since 7/17/2019
  */
-@SuppressWarnings("all")
 public class UnsafeTest {
-    public static void main(String[] args) throws Exception {
-        Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
-        theUnsafe.setAccessible(true);
-        Unsafe unsafe = (Unsafe) theUnsafe.get(null);
-        Test test = new Test();
-        Thread thread = new Thread(() -> {
-            try {
-                test.test1();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                System.out.println("end0");
-            }
 
+    private static Unsafe unsafe;
+
+    static {
+        try {
+            Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+            theUnsafe.setAccessible(true);
+            unsafe = (Unsafe) theUnsafe.get(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void changeStaticField() throws NoSuchFieldException, IllegalAccessException {
+        TestRun testRun = new TestRun();
+        Field number = testRun.getClass().getDeclaredField("number");
+        number.setAccessible(true);
+        number.set(testRun, 12);
+        System.out.println(number.get(testRun));//success
+    }
+
+
+    @Test
+    public void changeThreadTaskStatus() throws Exception {
+        TestRun testRun = new TestRun();
+
+        Thread eventThread = new Thread(() -> {
+            testRun.run();
+            System.out.println("end0");
         });
-        Thread thread1 = new Thread(() -> {
-            Field run = null;
+
+        Thread changeThread = new Thread(() -> {
             try {
-                run = test.getClass().getDeclaredField("run");
-                run.setAccessible(true);
-                run.set(test, 0);
+                Field run = testRun.getClass().getDeclaredField("sign");
+//                run.setAccessible(true);
+//                run.set(test, 0);
                 long l = unsafe.objectFieldOffset(run);
-                System.out.println(l);
-                unsafe.getAndSetObject(test, l, 0);
+                unsafe.getAndSetObject(testRun, l, 0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("end set");
         });
-        thread.start();
-        thread1.start();
-
-
+        eventThread.start();
+        changeThread.start();
+        Thread.sleep(5000);
     }
 
-    public static class Test {
-        private int run = 1;
 
-        public void test1() throws InterruptedException {
-            while (run == 1) {
-                System.out.println("running");
-                Thread.sleep(1000);
+    public static class TestRun {
+        private int sign = 1;
+
+        private static int number = 0;
+
+        public void run() {
+            while (true) {
+                if (sign == 1) {
+                    System.out.println("old");
+                } else {
+                    System.out.println("new");
+                }
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

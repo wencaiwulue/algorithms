@@ -5,55 +5,58 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
 
 /**
  * @author fengcaiwen
- * @since 5/20/2019
+ * @since 12/8/2019
  */
-@SuppressWarnings("all")
 public class NioClientReadHandler implements Runnable {
 
     private Selector selector;
 
-    public NioClientReadHandler(Selector selector) {
+    NioClientReadHandler(Selector selector) {
         this.selector = selector;
     }
 
     @Override
     public void run() {
         try {
-            for (; ; ) {
+            while (true) {
                 int select = selector.select();
-                if (select == 0) {
-                    continue;
-                }
+                if (select == 0) continue;
+
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 Iterator<SelectionKey> iterator = selectionKeys.iterator();
                 while (iterator.hasNext()) {
-                    SelectionKey next = iterator.next();
+                    SelectionKey selectionKey = iterator.next();
                     iterator.remove();
-                    if (next.isReadable()) {
-                        readHandler((SocketChannel) next.channel(), selector);
+                    if (selectionKey.isReadable()) {
+                        readHandler((SocketChannel) selectionKey.channel());
+                        return;
                     }
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void readHandler(SocketChannel channel, Selector selector) throws IOException {
+    private void readHandler(SocketChannel channel) throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         StringBuilder str = new StringBuilder();
         while (channel.read(byteBuffer) > 0) {
             byteBuffer.flip();
-            str.append(Charset.forName("UTF-8").decode(byteBuffer));
+            str.append(StandardCharsets.UTF_8.decode(byteBuffer));
         }
-        System.out.println("read from server: " + str);
-        channel.register(selector, SelectionKey.OP_WRITE);
+        channel.close();
+        System.out.println(str);
+    }
+
+    void writeHandler(SocketChannel channel) throws IOException {
+        channel.write(ByteBuffer.wrap("i am client".getBytes()));
+        channel.register(selector, SelectionKey.OP_READ);
     }
 }

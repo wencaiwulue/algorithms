@@ -7,7 +7,6 @@ import java.util.Set;
  * @author fengcaiwen
  * @since 6/24/2019
  */
-@SuppressWarnings("all")
 public class DiyTrie {
     private int R = 26;
     private Node root = new Node(new Node[R], 0);

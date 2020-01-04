@@ -7,6 +7,10 @@ import com.google.common.collect.TreeRangeMap;
 import java.util.Random;
 
 
+/**
+ * @author fengcaiwen
+ * @since 7/17/2019
+ */
 public class RandomTest {
 
     public static void main(String[] args) {
@@ -30,6 +34,9 @@ public class RandomTest {
 
     }
 
+    /**
+     * 根据权重获取值
+     */
     @SuppressWarnings("all")
     public static int getByWeight(int[][] source) {
         int totalWeight = 0;

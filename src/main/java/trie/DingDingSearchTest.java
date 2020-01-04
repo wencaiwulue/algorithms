@@ -7,7 +7,6 @@ import java.util.Set;
  * @author fengcaiwen
  * @since 6/24/2019
  */
-@SuppressWarnings("all")
 public class DingDingSearchTest {
     private DiyTrie trie;
 
