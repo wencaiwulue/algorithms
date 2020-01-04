@@ -42,7 +42,7 @@ public class NumberTest {
             }
             str.append(j);
         }
-        return Integer.valueOf(str.toString());
+        return Integer.parseInt(str.toString());
     }
 
     // generate the level-th pure number

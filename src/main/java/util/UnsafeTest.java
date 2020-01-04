@@ -32,6 +32,28 @@ public class UnsafeTest {
         System.out.println(number.get(testRun));//success
     }
 
+    @Test
+    public void changeStaticFinalField() throws NoSuchFieldException, IllegalAccessException {
+        TestRun testRun = new TestRun();
+        Field str = testRun.getClass().getDeclaredField("str");
+        str.setAccessible(true);
+//        str.set(testRun, "modified");
+
+        long offset = unsafe.staticFieldOffset(str);
+        Object modified = unsafe.getAndSetObject(testRun, offset, "modified");
+
+        System.out.println(str.get(testRun));//fail
+    }
+
+    @Test
+    public void changeFinalField() throws NoSuchFieldException, IllegalAccessException {
+        TestRun testRun = new TestRun();
+        Field string = testRun.getClass().getDeclaredField("string");
+        string.setAccessible(true);
+        string.set(testRun, "modified");
+        System.out.println(string.get(testRun));//success
+    }
+
 
     @Test
     public void changeThreadTaskStatus() throws Exception {
@@ -63,6 +85,10 @@ public class UnsafeTest {
         private int sign = 1;
 
         private static int number = 0;
+
+        private static String string = "string";
+
+        private static final String str = "unmodifiable";
 
         public void run() {
             while (true) {

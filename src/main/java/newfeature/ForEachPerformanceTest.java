@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ForEachTest {
+public class ForEachPerformanceTest {
 
     public static void main(String[] args) {
         ArrayList<Integer> ints = (ArrayList<Integer>) IntStream.range(1, 1000000).boxed().collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package collections;
+package algorithm;
 
 import java.util.Arrays;
 

@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static collections.ReverseBitTest.isHighOrLow;
-import static collections.ReverseBitTest.setRankReverse;
-
 /**
  * @author fengcaiwen
  * @since 8/5/2019
@@ -56,6 +53,14 @@ public class TotalCandyTest {
         n = (n & 0x00ff00ff) + ((n >> 8) & 0x00ff00ff);
         n = (n & 0x0000ffff) + ((n >> 16) & 0x0000ffff);
         return n;
+    }
+
+    private static long setRankReverse(long a, int rank) {
+        return ~((~a) ^ (1L << rank));
+    }
+
+    public static int isHighOrLow(long a, int rank) {
+        return (int) (1L & (a >> rank));
     }
 
 }

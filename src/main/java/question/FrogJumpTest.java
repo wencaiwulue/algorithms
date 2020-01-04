@@ -1,50 +1,15 @@
 package question;
 
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.c;
-
 /**
  * @author fengcaiwen
  * @since 7/2/2019
  */
 public class FrogJumpTest {
 
-
-    static final int SHARED_SHIFT = 16;
-    static final int SHARED_UNIT = (1 << SHARED_SHIFT);
-    static final int MAX_COUNT = (1 << SHARED_SHIFT) - 1;
-    static final int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
-
-
     public static void main(String[] args) {
         int n = 5;
         System.out.println(climbStairs0(n));
         System.out.println(climbStairs(n));
-
-        System.out.printf("EXCLUSIVE_MASK: %s\n", Integer.toBinaryString(EXCLUSIVE_MASK));
-        System.out.printf("SHARED_UNIT: %s\n", Integer.toBinaryString(SHARED_UNIT));
-        System.out.printf("MAX_COUNT:\t%s\t%s\t%s\n", MAX_COUNT, Integer.toBinaryString(MAX_COUNT), Integer.toBinaryString(MAX_COUNT).length());
-
-
-//        /** Returns the number of shared holds represented in count  */
-//        static int sharedCount(int c)    { return c >>> SHARED_SHIFT; }
-//        /** Returns the number of exclusive holds represented in count  */
-//        static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
-
-        int c = 1 + EXCLUSIVE_MASK;
-
-        System.out.printf("sharedCount:\t%s\n", c >>> SHARED_SHIFT);
-        System.out.printf("sharedCount:\t%s\n", Integer.toBinaryString(c >>> SHARED_SHIFT));
-        System.out.printf("exclusiveCount:\t%s\n", c & EXCLUSIVE_MASK);
-        System.out.printf("exclusiveCount:\t%s\n", Integer.toBinaryString(c & EXCLUSIVE_MASK));
-        System.out.printf("%s:\t\t   %s\n", c, Integer.toBinaryString(c));
-        System.out.printf("SHARED_UNIT:\t%s bit\n", Integer.toBinaryString(SHARED_UNIT).length());
-        System.out.printf("EXCLUSIVE_MASK:\t%s bit\n", Integer.toBinaryString(1 + EXCLUSIVE_MASK).length());
-        System.out.println("10000000000000000".length());
-
-
-//        System.out.printf("lower:\t%s\n", Integer.parseInt("1011001000000111", 2));
-//        System.out.printf("check196:\t%s\n", Integer.parseInt("100000000000000", 2));
-//        System.out.println("100000000000000".length());
     }
 
     /**
