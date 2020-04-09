@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
  */
 public class StorageTest {
     public static void main(String[] args) throws IOException {
-        String path = "D:\\test.txt";
+        String path = "C:\\Users\\89570\\Documents\\test.txt";
         writeTest(path);
         readTest(path);
     }
@@ -40,6 +40,7 @@ public class StorageTest {
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         byte[] bytes = new byte[2];
         while (raf.read(bytes) != -1) {
+            break;
         }
         System.out.println(bytes[0]);
         raf.read(bytes);
