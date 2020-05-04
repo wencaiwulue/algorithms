@@ -10,7 +10,7 @@ import java.util.Objects;
 public class HashMapTreeifyTest {
     public static void main(String[] args) {
         HashMap<Key, Object> map = new HashMap<>();
-        for (int i = 0; i < 5190; i++) {
+        for (int i = 0; i < 1000; i++) {
             map.put(new Key(i), i);// 总共放入1000个元素，会被分成65个bin(bucket)。
         }
         System.out.println(map.entrySet().toArray()[0].getClass());
