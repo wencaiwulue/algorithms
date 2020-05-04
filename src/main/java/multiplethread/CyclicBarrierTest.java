@@ -8,36 +8,34 @@ public class CyclicBarrierTest {
 
     public static void main(String[] args) {
         ExecutorService service = Executors.newCachedThreadPool();
-        final CyclicBarrier cb = new CyclicBarrier(5);//创建CyclicBarrier对象并设置3个公共屏障点
+        final CyclicBarrier barrier = new CyclicBarrier(5);//创建CyclicBarrier对象并设置3个公共屏障点
         for (int i = 0; i < 5; i++) {
-            Runnable runnable = new Runnable() {
-                public void run() {
-                    try {
-                        Thread.sleep((long) (Math.random() * 10000));
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "即将到达集合地点1，当前已有" + cb.getNumberWaiting() + "个已经到达，正在等候" + cb.getParties());
-                        cb.await();//到此如果没有达到公共屏障点，则该线程处于等待状态，如果达到公共屏障点则所有处于等待的线程都继续往下运行
+            Runnable runnable = () -> {
+                try {
+                    Thread.sleep((long) (Math.random() * 10000));
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "即将到达集合地点1，当前已有" + barrier.getNumberWaiting() + "个已经到达，正在等候" + barrier.getParties());
+                    barrier.await();//到此如果没有达到公共屏障点，则该线程处于等待状态，如果达到公共屏障点则所有处于等待的线程都继续往下运行
 
-                        Thread.sleep((long) (Math.random() * 10000));
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "即将到达集合地点2，当前已有" + cb.getNumberWaiting() + "个已经到达，正在等候" + cb.getParties());
-                        cb.await();
-                        cb.reset();
-                        Thread.sleep((long) (Math.random() * 10000));
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "即将到达集合地点3，当前已有" + cb.getNumberWaiting() + "个已经到达，正在等候" + cb.getParties());
-                        cb.await();
-                        Thread.sleep((long) (Math.random() * 10000));
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "即将到达集合地点4，当前已有" + cb.getNumberWaiting() + "个已经到达，正在等候" + cb.getParties());
-                        cb.await();
-                        Thread.sleep((long) (Math.random() * 10000));
-                        System.out.println("线程" + Thread.currentThread().getName() +
-                                "即将到达集合地点5，当前已有" + cb.getNumberWaiting() + "个已经到达，正在等候" + cb.getParties());
-                        cb.await();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    Thread.sleep((long) (Math.random() * 10000));
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "即将到达集合地点2，当前已有" + barrier.getNumberWaiting() + "个已经到达，正在等候" + barrier.getParties());
+                    barrier.await();
+                    barrier.reset();
+                    Thread.sleep((long) (Math.random() * 10000));
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "即将到达集合地点3，当前已有" + barrier.getNumberWaiting() + "个已经到达，正在等候" + barrier.getParties());
+                    barrier.await();
+                    Thread.sleep((long) (Math.random() * 10000));
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "即将到达集合地点4，当前已有" + barrier.getNumberWaiting() + "个已经到达，正在等候" + barrier.getParties());
+                    barrier.await();
+                    Thread.sleep((long) (Math.random() * 10000));
+                    System.out.println("线程" + Thread.currentThread().getName() +
+                            "即将到达集合地点5，当前已有" + barrier.getNumberWaiting() + "个已经到达，正在等候" + barrier.getParties());
+                    barrier.await();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             };
             service.execute(runnable);

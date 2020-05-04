@@ -7,18 +7,18 @@ import java.util.concurrent.Callable;
  * @since 6/20/2019
  */
 public class FutureTest {
-    private Callable callable;
+    private Callable<?> callable;
     private Object result;
 
-    public FutureTest(Callable callable) {
+    public FutureTest(Callable<?> callable) {
         this.callable = callable;
     }
 
-    public Callable getCallable() {
+    public Callable<?> getCallable() {
         return callable;
     }
 
-    public void setCallable(Callable callable) {
+    public void setCallable(Callable<?> callable) {
         this.callable = callable;
     }
 
@@ -40,7 +40,7 @@ public class FutureTest {
 
     public static void main(String[] args) throws Exception {
         ThreadPoolTest01.ThreadPool threadPool = new ThreadPoolTest01.ThreadPool(10);
-        Callable callable = () -> {
+        Callable<?> callable = () -> {
             return "normal";
         };
 

@@ -18,8 +18,8 @@ public class ThreadPoolTest01 {
     public static class ThreadPool {
 
         // task queue
-        private Queue<Runnable> tasks = new ConcurrentLinkedQueue<>();
-        private Queue<FutureTest> futureTasks = new ConcurrentLinkedQueue<>();
+        private final Queue<Runnable> tasks = new ConcurrentLinkedQueue<>();
+        private final Queue<FutureTest> futureTasks = new ConcurrentLinkedQueue<>();
 
         // after expire time free, thread pool will destroy itself
         private long expire = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5);//minutes
@@ -28,10 +28,10 @@ public class ThreadPoolTest01 {
         private final List<Thread> threads = new ArrayList<>();
 
         // running thread amount
-        private volatile AtomicInteger running = new AtomicInteger(0);
+        private final AtomicInteger running = new AtomicInteger(0);
 
         // core thread size
-        private int n;
+        private final int n;
 
         ThreadPool(int n) {
             this.n = n;
@@ -50,7 +50,7 @@ public class ThreadPoolTest01 {
 
         }
 
-        public FutureTest submit(Callable callable) {
+        public FutureTest submit(Callable<?> callable) {
             FutureTest futureTest = new FutureTest(callable);
             futureTasks.add(futureTest);
             if (threads.size() < n)
