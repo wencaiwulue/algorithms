@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author fengcaiwen
  * @since 6/10/2019
  */
-public class PrintTest03 {
+public class PrintTestBaseOnQueue {
     public static void main(String[] args) {
         LinkedBlockingQueue<Thread> queue = new LinkedBlockingQueue<>();
 

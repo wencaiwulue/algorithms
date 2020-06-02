@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author fengcaiwen
  * @since 6/10/2019
  */
-public class PrintTest0 {
+public class PrintTestBaseOnAtomicInteger {
     public static void main(String[] args) {
         AtomicInteger atomicInteger = new AtomicInteger(0);
 

@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author fengcaiwen
  * @since 6/10/2019
  */
-public class PrintTest01 {
+public class PrintBaseOnCondition {
     public static void main(String[] args) {
         Lock lock = new ReentrantLock();
         Condition condition0 = lock.newCondition();
@@ -16,10 +16,10 @@ public class PrintTest01 {
         new Thread(() -> {
             char[] a = new char[]{'a', 'b', 'c', 'd', 'e'};
             while (true) {
-                for (int i = 0; i < a.length; i++) {
+                for (char c : a) {
                     try {
                         lock.lock();
-                        System.out.print(a[i]);
+                        System.out.print(c);
                         condition1.signal();
                         condition0.await();
                     } catch (InterruptedException e) {
@@ -34,10 +34,10 @@ public class PrintTest01 {
         new Thread(() -> {
             int[] a = new int[]{1, 2, 3, 4, 5};
             while (true) {
-                for (int i = 0; i < a.length; i++) {
+                for (int value : a) {
                     try {
                         lock.lock();
-                        System.out.print(a[i]);
+                        System.out.print(value);
                         condition0.signal();
                         condition1.await();
                     } catch (InterruptedException e) {

@@ -6,15 +6,15 @@ import java.util.concurrent.Semaphore;
  * @author fengcaiwen
  * @since 6/10/2019
  */
-public class PrintTest02_fail {
+public class Semaphore_fail {
     public static void main(String[] args) {
-        Semaphore semaphore = new Semaphore(8, false);
+        Semaphore semaphore = new Semaphore(3, false);
         new Thread(() -> {
             int[] a = new int[]{1, 2, 3, 4, 5};
             int i = 0;
             for (int i1 = 0; i1 < a.length; i1++) {
                 i += 2;
-                while (semaphore.availablePermits() == i1) {
+                while (semaphore.availablePermits() == 2) {
                     try {
                         semaphore.acquire(i);
                     } catch (InterruptedException e) {
