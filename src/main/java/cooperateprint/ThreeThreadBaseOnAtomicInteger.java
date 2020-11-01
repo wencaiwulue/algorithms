@@ -3,7 +3,7 @@ package cooperateprint;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-public class Test {
+public class ThreeThreadBaseOnAtomicInteger {
     private static final int[] ints = IntStream.range(1, 101).toArray();
     private static int i = 0;
     private static final AtomicInteger ai = new AtomicInteger(0);
